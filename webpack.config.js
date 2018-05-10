@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   chunks: [],
+  inject: false,
   template: path.join(__dirname, "src/examples/index.html"),
   filename: "examples/index.html"
 });
@@ -10,7 +11,13 @@ module.exports = {
   // TODO: Swap entry for a function that builds object for all components
   entry: {
     "examples/index": path.join(__dirname, "src/examples/index.js"),
+    "components/index": path.join(__dirname, "src/components/index.js"),
     "components/Form": path.join(__dirname, "src/components/Form.js"),
+    "components/FormContext": path.join(
+      __dirname,
+      "src/components/FormContext.js"
+    ),
+
     "components/FormFragment": path.join(
       __dirname,
       "src/components/FormFragment.js"
@@ -48,5 +55,9 @@ module.exports = {
   },
   externals: {
     react: "commonjs react" // this line is just to use the React dependency of our parent-testing-project instead of using our own React.
+  },
+  devtool: "inline-source-map",
+  optimization: {
+    minimizer: []
   }
 };

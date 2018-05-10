@@ -1,10 +1,6 @@
 {
-  "private": true,
-  "workspaces": ["packages/*"],
-  "name": "react-forms-processor",
+  "name": "react-forms-processor-examples",
   "version": "0.0.1",
-  "description":
-    "A forms processor for statically declaring forms with dynamic behaviour",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,8 +24,10 @@
     "@atlaskit/single-select": "^3.3.1",
     "@atlaskit/tabs": "^6.0.1",
     "@atlaskit/tooltip": "^9.1.4",
-    "lerna": "^2.11.0",
-    "styled-components": "^3.2.6"
+    "styled-components": "^3.2.6",
+    "react-forms-processor": "0.0.1",
+    "react-forms-processor-atlaskit": "0.0.1",
+    "react-forms-processor-formbuilder": "0.0.1"
   },
   "peerDependencies": {
     "react": "^16.3.2",
