@@ -1,7 +1,8 @@
 {
   "name": "react-forms-processor",
   "version": "0.0.1",
-  "description": "A forms processor for statically declaring forms with dynamic behaviour",
+  "description":
+    "A forms processor for statically declaring forms with dynamic behaviour",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +10,7 @@
     "transpile": "babel src -d dist --copy-files",
     "prepublishOnly": "npm run transpile",
     "build": "webpack --mode production",
-    "deploy": "gh-pages -d examples/dist",
+    "deploy": "gh-pages -d dist/examples",
     "publish-demo": "npm run build && npm run deploy"
   },
   "license": "MIT",
@@ -42,6 +43,7 @@
     "css-loader": "^0.28.11",
     "flow-bin": "^0.72.0",
     "flow-types": "^1.0.0",
+    "gh-pages": "^1.1.0",
     "html-webpack-plugin": "^3.2.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
