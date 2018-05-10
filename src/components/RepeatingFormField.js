@@ -1,13 +1,13 @@
 // @flow
-import React, { Component, PureComponent } from 'react';
-import Form, { FormContext } from './Form';
-import renderField from '../renderers/AtlasKitFields';
-import type { FieldDef } from '../types';
-import Button from '@atlaskit/button';
-import ChevronDownIcon from '@atlaskit/icon/glyph/chevron-down';
-import ChevronRightIcon from '@atlaskit/icon/glyph/chevron-right';
-import CrossCircleIcon from '@atlaskit/icon/glyph/cross-circle';
-import './RepeatingFormField.css';
+import React, { Component, PureComponent } from "react";
+import Form, { FormContext } from "./Form";
+import renderField from "../renderers/AtlaskitFields";
+import type { FieldDef } from "../types";
+import Button from "@atlaskit/button";
+import ChevronDownIcon from "@atlaskit/icon/glyph/chevron-down";
+import ChevronRightIcon from "@atlaskit/icon/glyph/chevron-right";
+import CrossCircleIcon from "@atlaskit/icon/glyph/cross-circle";
+import "./RepeatingFormField.css";
 
 type ChevronProps = {
   isExpanded: boolean,
@@ -52,13 +52,13 @@ class Chevron extends PureComponent<ChevronProps, ChevronState> {
     const { isExpanded /*ariaControls*/ } = this.props;
     // const { isFocused, isHovered } = this.state;
     const iconProps = {
-      size: 'medium'
+      size: "medium"
       //   primaryColor: isHovered || isFocused ? iconColorFocus : iconColor
     };
     return (
       <span>
         <button
-          type={'button'}
+          type={"button"}
           //   aria-controls={ariaControls}
           onClick={this.handleClick}
           onFocus={this.handleFocus}
@@ -111,7 +111,7 @@ class Expander extends Component<ExpanderProps, ExpanderState> {
         <CrossCircleIcon onClick={remove} />
         <div
           className="content"
-          style={{ display: isExpanded ? 'block' : 'none' }}
+          style={{ display: isExpanded ? "block" : "none" }}
         >
           {children}
         </div>
@@ -198,11 +198,11 @@ export default class RepeatingFormField extends Component<Props, State> {
   render() {
     const { items, values } = this.state;
     const {
-      idAttribute = 'id',
-      label = 'Item',
-      addButtonLabel = 'Add item',
-      unidentifiedLabel = 'Unidentified item',
-      noItemsMessage = 'No items yet'
+      idAttribute = "id",
+      label = "Item",
+      addButtonLabel = "Add item",
+      unidentifiedLabel = "Unidentified item",
+      noItemsMessage = "No items yet"
     } = this.props;
 
     const fields = items.map((builder, index) => {

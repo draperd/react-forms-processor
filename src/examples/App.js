@@ -4,7 +4,7 @@ import Tabs from "@atlaskit/tabs";
 
 import Form from "../components/Form";
 import FormFragment from "../components/FormFragment";
-import renderAkField from "../renderers/AtlasKitFields";
+import renderAkField from "../renderers/AtlaskitFields";
 import FormBuilder from "../components/FormBuilder";
 import FieldText from "../components/fields/atlaskit/FieldText";
 import FormButton from "../components/buttons/atlaskit/FormButton";

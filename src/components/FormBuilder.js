@@ -1,16 +1,16 @@
 // @flow
-import React, { Component } from 'react';
-import Form, { FormContext } from './Form';
-import FormButton from './buttons/atlaskit/FormButton';
-import renderField from '../renderers/AtlasKitFields';
+import React, { Component } from "react";
+import Form, { FormContext } from "./Form";
+import FormButton from "./buttons/atlaskit/FormButton";
+import renderField from "../renderers/AtlaskitFields";
 import type {
   FieldDef,
   FormContextData,
   FormValue,
   Options,
   OptionsHandler
-} from '../types';
-import { formBuilder } from '../examples/definitions';
+} from "../types";
+import { formBuilder } from "../examples/definitions";
 
 type Props = {};
 
@@ -51,7 +51,7 @@ const getDefinedFields: GetDefinedFields = parentContext => {
 };
 
 const optionsHandler: OptionsHandler = (id, fields, parentContext) => {
-  if (id === 'FIELD') {
+  if (id === "FIELD") {
     const definedFields = getDefinedFields(parentContext);
     return definedFields;
   }
@@ -95,7 +95,7 @@ export default class FormBuilder extends Component<Props, State> {
             <FormButton
               label="Test"
               onClick={(value: FormValue) =>
-                console.log('Form preview value', value)
+                console.log("Form preview value", value)
               }
             />
           </Form>

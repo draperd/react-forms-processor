@@ -23,7 +23,8 @@ module.exports = {
   output: {
     publicPath: "/",
     path: path.join(__dirname, "dist"),
-    filename: "[name].js"
+    filename: "[name].js",
+    libraryTarget: "commonjs2"
   },
   module: {
     rules: [
@@ -44,5 +45,8 @@ module.exports = {
   },
   devServer: {
     port: 3001
+  },
+  externals: {
+    react: "commonjs react" // this line is just to use the React dependency of our parent-testing-project instead of using our own React.
   }
 };
