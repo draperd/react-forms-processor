@@ -1,0 +1,41 @@
+.repeating-form-field {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.repeating-form-field > .label {
+  color: #6b778c;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3333333333333333;
+}
+
+.repeating-form-field .no-items {
+  display: inline-block;
+  margin: 10px 0;
+  color: #aaa;
+  font-style: italic;
+}
+
+.expander {
+  margin: 10px;
+  border: 1px solid #eee;
+  padding: 5px 0;
+}
+
+.expander > span > button {
+  background: none;
+  border: none;
+}
+
+.expander > span.label {
+  display: inline-block;
+  line-height: 28px;
+  vertical-align: text-bottom;
+  margin-right: 10px;
+}
+
+.expander > div.content {
+  padding-left: 40px;
+  padding-bottom: 20px;
+}

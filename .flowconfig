@@ -1,0 +1,15 @@
+[ignore]
+dist
+node_modules
+.*/node_modules/@atlaskit/.*\.flow
+
+[include]
+
+[libs]
+flow-typed
+
+[lints]
+
+[options]
+
+[strict]
