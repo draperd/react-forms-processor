@@ -2,7 +2,7 @@
 import React, { Component, PureComponent } from "react";
 import { Form, FormContext } from "react-forms-processor";
 import renderField from "../../renderer";
-import type { FieldDef } from "../../types";
+import type { FieldDef } from "../../../../../types";
 import Button from "@atlaskit/button";
 import ChevronDownIcon from "@atlaskit/icon/glyph/chevron-down";
 import ChevronRightIcon from "@atlaskit/icon/glyph/chevron-right";

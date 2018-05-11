@@ -16,7 +16,7 @@ import type {
   FormState,
   OnFieldChange,
   Value
-} from "../types";
+} from "../../../../types";
 import renderer from "../renderer";
 
 export default class Form extends Component<FormProps, FormState> {

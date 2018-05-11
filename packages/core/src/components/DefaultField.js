@@ -1,6 +1,6 @@
 // @flow
-import React, { Component } from 'react';
-import type { FieldDef, OnFieldChange } from '../types';
+import React, { Component } from "react";
+import type { FieldDef, OnFieldChange } from "../../../../types";
 
 type DefaultFieldProps = {
   field: FieldDef,
@@ -11,7 +11,7 @@ export default class DefaultField extends Component<DefaultFieldProps, void> {
   render() {
     const { field, onChange } = this.props;
     const { name, id, value, type, placeholder, disabled, required } = field;
-    const checked = type === 'checkbox' ? value : undefined;
+    const checked = type === "checkbox" ? value : undefined;
     return (
       <div>
         <input
@@ -26,7 +26,7 @@ export default class DefaultField extends Component<DefaultFieldProps, void> {
           onChange={evt =>
             onChange(
               id,
-              type === 'checkbox' ? evt.target.checked : evt.target.value
+              type === "checkbox" ? evt.target.checked : evt.target.value
             )
           }
         />

@@ -2,7 +2,7 @@
 import React from "react";
 import Button from "@atlaskit/button";
 import { FormContext } from "react-forms-processor";
-import type { FormValue } from "../../types";
+import type { FormValue } from "../../../../../types";
 
 export type FormButtonProps = {
   label?: string,

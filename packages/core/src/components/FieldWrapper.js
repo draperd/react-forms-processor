@@ -2,7 +2,7 @@
 import React, { type Node } from "react";
 import styled from "styled-components";
 import FormContext from "./FormContext";
-import type { Field, FieldDef } from "../types";
+import type { Field, FieldDef } from "../../../../types";
 
 const Layout = styled.div`
   > div {

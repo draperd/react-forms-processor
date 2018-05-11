@@ -1,5 +1,9 @@
 // @flow
-import type { Value, ValidateField, ValidateAllFields } from '../types';
+import type {
+  Value,
+  ValidateField,
+  ValidateAllFields
+} from "../../../../types";
 
 export type LengthIsGreaterThan = ({
   value: Value,
@@ -32,7 +36,7 @@ export const lengthIsGreaterThan: LengthIsGreaterThan = ({
   length,
   message
 }) => {
-  if (isNaN(length) || (value || '').length > length) {
+  if (isNaN(length) || (value || "").length > length) {
     return;
   } else {
     return message || `Should have more than ${length} characters`;
@@ -44,7 +48,7 @@ export const lengthIsLessThan: LengthIsLessThan = ({
   length,
   message
 }) => {
-  if (isNaN(length) || (value || '').length < length) {
+  if (isNaN(length) || (value || "").length < length) {
     return;
   } else {
     return message || `Should have more than ${length} characters`;
@@ -54,12 +58,12 @@ export const lengthIsLessThan: LengthIsLessThan = ({
 // TODO: Consider option for inverting rule...
 export const matchesRegEx: MatchesRegEx = ({
   value,
-  pattern = '.*',
+  pattern = ".*",
   message
 }) => {
   const regExObj = new RegExp(pattern);
   if (!regExObj.test(value)) {
-    return message || 'Invalid input provided'; // <= Terrible message!
+    return message || "Invalid input provided"; // <= Terrible message!
   }
 };
 
@@ -67,11 +71,11 @@ export const getDefaultNumericalRangeErrorMessages = (
   min: number | void,
   max: number | void
 ) => {
-  if (typeof min !== 'undefined' && typeof max !== 'undefined') {
+  if (typeof min !== "undefined" && typeof max !== "undefined") {
     return `Value cannot be less than ${min} or greater than ${max}`;
-  } else if (typeof min !== 'undefined') {
+  } else if (typeof min !== "undefined") {
     return `Value cannot be less than ${min}`;
-  } else if (typeof max !== 'undefined') {
+  } else if (typeof max !== "undefined") {
     return `Value cannot be greater than ${max}`;
   }
 };
@@ -85,12 +89,12 @@ export const fallsWithinNumericalRange: FallsWithinNumericalRange = ({
 }) => {
   const parsedValue = parseFloat(value);
   if (isNaN(parsedValue)) {
-    return message || 'Value must be a number';
+    return message || "Value must be a number";
   }
-  if (typeof min !== 'undefined' && value < min) {
+  if (typeof min !== "undefined" && value < min) {
     return message || getDefaultNumericalRangeErrorMessages(min, max);
   }
-  if (typeof max !== 'undefined' && value > max) {
+  if (typeof max !== "undefined" && value > max) {
     return message || getDefaultNumericalRangeErrorMessages(min, max);
   }
 };
@@ -114,7 +118,7 @@ export const validateField: ValidateField = field => {
 
     isValid =
       Object.keys(validWhen).reduce((allValidatorsPass, validator) => {
-        if (typeof validators[validator] === 'function') {
+        if (typeof validators[validator] === "function") {
           // $FlowFixMe
           let validationConfig = validWhen[validator];
           validationConfig.value = value;
@@ -124,14 +128,14 @@ export const validateField: ValidateField = field => {
             errorMessages.push(message);
           }
         } else {
-          console.warn('The requested validator does not exist', validator);
+          console.warn("The requested validator does not exist", validator);
         }
         return allValidatorsPass;
       }, isValid) && isValid;
   }
   return Object.assign({}, field, {
     isValid,
-    errorMessages: errorMessages.join(', ')
+    errorMessages: errorMessages.join(", ")
   });
 };
 

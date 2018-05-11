@@ -7,7 +7,7 @@ import RadioGroup from "./components/fields/RadioGroup";
 import SingleSelect from "./components/fields/Select";
 import MultiSelect from "./components/fields/MultiSelect";
 import RepeatingFormField from "./components/fields/RepeatingFormField";
-import type { RenderField, FieldDef, OnFieldChange } from "./types";
+import type { RenderField, FieldDef, OnFieldChange } from "../../../types";
 
 const renderField: RenderField = (field: FieldDef, onChange: OnFieldChange) => {
   const { id, type, label, misc = {} } = field;

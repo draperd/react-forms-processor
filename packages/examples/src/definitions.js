@@ -1,5 +1,5 @@
 // @flow
-import type { FieldDef } from "./types";
+import type { FieldDef } from "../../../types";
 
 const createTeamForm: FieldDef[] = [
   {

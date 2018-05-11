@@ -1,6 +1,6 @@
 // @flow
 import React from "react";
-import type { RenderField, FieldDef, OnFieldChange } from "./types";
+import type { RenderField, FieldDef, OnFieldChange } from "../../../types";
 
 const renderer: RenderField = (field: FieldDef, onChange: OnFieldChange) => {
   const {

@@ -3,7 +3,7 @@ import React from "react";
 import SingleSelect from "@atlaskit/single-select";
 import { FieldWrapper } from "react-forms-processor";
 import Description from "./Description";
-import type { Field, FieldDef } from "../../types";
+import type { Field, FieldDef } from "../../../../../types";
 
 class AtlaskitSelect extends React.Component<Field> {
   render() {

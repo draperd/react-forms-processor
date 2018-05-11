@@ -3,7 +3,7 @@ import React from "react";
 import FieldText from "@atlaskit/field-text";
 import Description from "./Description";
 import { FieldWrapper } from "react-forms-processor";
-import type { Field, FieldDef } from "../../types";
+import type { Field, FieldDef } from "../../../../../types";
 
 class AtlaskitFieldText extends React.Component<Field> {
   render() {

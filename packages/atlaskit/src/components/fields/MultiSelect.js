@@ -3,7 +3,7 @@ import React from "react";
 import MultiSelect from "@atlaskit/multi-select";
 import { FieldWrapper } from "react-forms-processor";
 import Description from "./Description";
-import type { Field, FieldDef } from "../../types";
+import type { Field, FieldDef } from "../../../../../types";
 
 class AtlaskitMultiSelect extends React.Component<Field> {
   render() {

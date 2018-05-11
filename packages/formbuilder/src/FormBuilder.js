@@ -8,7 +8,7 @@ import type {
   FormValue,
   Options,
   OptionsHandler
-} from "./types";
+} from "../../../types";
 import { formBuilder } from "./definitions";
 
 type Props = {};

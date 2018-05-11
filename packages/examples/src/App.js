@@ -10,7 +10,7 @@ import {
 } from "react-forms-processor-atlaskit";
 import LiveEditor from "./LiveEditor";
 
-import type { FormValue, OptionsHandler, Options } from "./types";
+import type { FormValue, OptionsHandler, Options } from "../../../types";
 import { createTeamForm, frag1, frag2, form1 } from "./definitions";
 
 const teamFormOptionsHandler: OptionsHandler = (

@@ -20,7 +20,7 @@ import type {
   SplitDelimitedValue,
   UpdateFieldValue,
   Value
-} from "../types";
+} from "../../../../types";
 
 export const getNextStateFromFields: GetNextStateFromProps = (
   fields,
