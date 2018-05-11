@@ -161,9 +161,10 @@ const AppTabs = [
 class App extends Component<*, *> {
   render() {
     return (
-      <div>
+      <article>
+        <h1>React Forms Processor Demo</h1>
         <Tabs tabs={AppTabs} />
-      </div>
+      </article>
     );
   }
 }

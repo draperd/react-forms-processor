@@ -134,8 +134,9 @@ const form1: FieldDef[] = [
     id: "NAME",
     name: "name",
     label: "Name?",
+    description: "Some additional information",
     placeholder: "Your name...",
-    value: "",
+    defaultValue: "Bob",
     type: "text",
     required: true,
     validWhen: {
@@ -151,7 +152,7 @@ const form1: FieldDef[] = [
     label: "Address",
     type: "textarea",
     placeholder: "Enter address...",
-    value: "",
+    defaultValue: "",
     required: false,
     disabledWhen: [
       {
@@ -164,14 +165,14 @@ const form1: FieldDef[] = [
     id: "SUBSCRIBE",
     name: "subscribe",
     label: "Would you like to receive regular updates?",
-    value: false,
+    defaultValue: true,
     type: "checkbox"
   },
   {
     id: "EMAIL",
     name: "email",
     label: "What's your e-mail address?",
-    value: "",
+    defaultValue: "",
     type: "text",
     visibleWhen: [
       {
@@ -185,7 +186,7 @@ const form1: FieldDef[] = [
     name: "reason",
     label: "How did you hear about us?",
     placeholder: "Where?",
-    value: "b",
+    defaultValue: "Advert",
     type: "radiogroup",
     options: [
       {
@@ -199,7 +200,7 @@ const form1: FieldDef[] = [
     name: "reason",
     label: "What was the reason?",
     type: "textarea",
-    value: "",
+    defaultValue: "",
     visibleWhen: [
       {
         field: "REASON",
@@ -213,7 +214,7 @@ const form1: FieldDef[] = [
     name: "colours",
     label: "Choose a colour",
     placeholder: "Pick a colour",
-    value: "G",
+    defaultValue: "G",
     type: "multiselect",
     options: [
       {
@@ -240,7 +241,7 @@ const form1: FieldDef[] = [
     label: "Pick some fruit",
     placeholder: "Available fruits...",
     type: "multiselect",
-    value: "apple,banana",
+    defaultValue: "apple,banana",
     valueDelimiter: ",",
     useChangesAsValues: true,
     options: [

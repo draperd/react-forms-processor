@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from "react";
 import { Form, FormFragment } from "react-forms-processor";
-import { renderer } from "react-forms-processor-atlaskit";
+import { renderer, FormButton } from "react-forms-processor-atlaskit";
 import { form1 } from "./definitions";
 
 import brace from "brace";
@@ -60,6 +60,10 @@ export default class LiveEditor extends Component<
       <div className="live-editor">
         <div className="editor">
           <h2>Editor</h2>
+          <p>
+            Try experimenting with the form definition in the editor and see how
+            it updates the form rendered in the preview.
+          </p>
           <AceEditor
             width="800px"
             value={prettyDefinition}
@@ -73,7 +77,9 @@ export default class LiveEditor extends Component<
         </div>
         <div className="preview">
           <h2>Preview</h2>
-          <Form renderField={renderer} defaultFields={fieldsToRender} />
+          <Form renderField={renderer} defaultFields={fieldsToRender}>
+            <FormButton label="Preview" />
+          </Form>
         </div>
       </div>
     );
