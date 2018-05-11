@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from "react";
 import Tabs from "@atlaskit/tabs";
-
 import { Form, FormFragment } from "react-forms-processor";
 import { FormBuilder } from "react-forms-processor-formbuilder";
 import {

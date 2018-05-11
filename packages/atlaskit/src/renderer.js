@@ -11,13 +11,11 @@ import type { RenderField, FieldDef, OnFieldChange } from "./types";
 
 const renderField: RenderField = (field: FieldDef, onChange: OnFieldChange) => {
   const { id, type, label, misc = {} } = field;
-  console.log("Rendering field", field);
   switch (type) {
     case "text":
       return <FieldText key={id} {...field} />;
 
     case "textarea":
-      console.log("Blah");
       return <FieldTextArea key={id} {...field} />;
 
     case "checkbox":

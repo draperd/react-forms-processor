@@ -15,13 +15,11 @@ export type FormFragmentProps = {
 class FormFragment extends Component<InnerFormFragmentProps, void> {
   constructor(props: InnerFormFragmentProps) {
     super(props);
-    console.log("Fragment props are", props);
     const { defaultFields = [], registerField, fields = [] } = props;
     defaultFields.forEach(field => {
       if (fields.find(existingField => existingField.id === field.id)) {
         console.warn("Fragment tried to re-register field", field.id);
       } else {
-        console.log("about to register a field");
         registerField(field);
       }
     });
@@ -43,7 +41,6 @@ class FormFragment extends Component<InnerFormFragmentProps, void> {
           value[field.name],
           field.value
         );
-        console.log("Render field", fieldToRender);
         return renderField(fieldToRender, onFieldChange);
       }
       return null;
@@ -56,7 +53,6 @@ class FormFragment extends Component<InnerFormFragmentProps, void> {
 export default (props: FormFragmentProps) => (
   <FormContext.Consumer>
     {form => {
-      console.log("Fragment form context", form);
       return <FormFragment {...form} {...props} />;
     }}
   </FormContext.Consumer>

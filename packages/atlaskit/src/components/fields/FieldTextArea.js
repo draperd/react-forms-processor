@@ -6,7 +6,6 @@ import type { Field, FieldDef } from "../../types";
 
 class AtlaskitFieldTextArea extends React.Component<Field> {
   render() {
-    console.log("Rendering a textarea");
     const {
       disabled,
       errorMessages,

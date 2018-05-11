@@ -161,7 +161,6 @@ export default class Form extends Component<FormProps, FormState> {
     const { children, defaultFields } = this.props;
     const { fields } = this.state;
     const context = this.createFormContext();
-    console.log("Form context on render", context);
     return (
       <FormContext.Provider value={context}>
         {defaultFields && <FormFragment defaultFields={fields} />}

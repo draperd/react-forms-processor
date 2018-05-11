@@ -8,7 +8,6 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 });
 
 module.exports = {
-  // TODO: Swap entry for a function that builds object for all components
   entry: {
     index: path.join(__dirname, "src/index.js")
   },

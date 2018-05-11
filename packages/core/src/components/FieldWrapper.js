@@ -25,10 +25,8 @@ export type FieldWrapperProps = Field & {
 class FieldWrapper extends React.Component<FieldWrapperProps> {
   constructor(props: FieldWrapperProps) {
     super(props);
-    console.log("Field wrapper props", props);
     const { registerField, onFieldChange, ...fieldDef } = props;
     if (registerField) {
-      console.log("Registering field", fieldDef);
       registerField(fieldDef);
     } else {
       console.warn(
@@ -67,7 +65,6 @@ class FieldWrapper extends React.Component<FieldWrapperProps> {
 export default (props: FieldDef & { children: Node }) => (
   <FormContext.Consumer>
     {form => {
-      console.log("Field wrapper consumer", form);
       return (
         <FieldWrapper {...form} {...props}>
           {props.children}
