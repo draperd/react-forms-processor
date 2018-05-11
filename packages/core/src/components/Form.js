@@ -17,6 +17,7 @@ import type {
   OnFieldChange,
   Value
 } from "../types";
+import renderer from "../renderer";
 
 export default class Form extends Component<FormProps, FormState> {
   constructor(props: FormProps) {
@@ -111,7 +112,7 @@ export default class Form extends Component<FormProps, FormState> {
   createFormContext() {
     const { fields, value, isValid } = this.state;
     const {
-      renderField = this.renderField,
+      renderField = renderer,
       optionsHandler,
       parentContext
     } = this.props;
@@ -130,14 +131,6 @@ export default class Form extends Component<FormProps, FormState> {
     };
 
     return context;
-  }
-
-  renderField(field: FieldDef, onChange: OnFieldChange) {
-    const { visible } = field;
-    if (!visible) {
-      return null;
-    }
-    return <DefaultField key={field.id} field={field} onChange={onChange} />;
   }
 
   renderFields(context: FormContextData) {
