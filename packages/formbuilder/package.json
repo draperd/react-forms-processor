@@ -1,6 +1,6 @@
 {
   "name": "react-forms-processor-formbuilder",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,8 +11,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "react-forms-processor": "^0.0.1",
-    "react-forms-processor-atlaskit": "^0.0.1"
+    "react-forms-processor": "^0.0.3",
+    "react-forms-processor-atlaskit": "^0.0.3"
   },
   "peerDependencies": {
     "react": "^16.3.2",
