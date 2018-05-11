@@ -1,5 +1,5 @@
 // @flow
-import type { Node } from 'react';
+import type { Node } from "react";
 
 export type Value = any;
 
@@ -12,10 +12,10 @@ export type Rule = {
 export type OnFieldChange = (id: string, value: any) => void;
 
 export type ValidatorId =
-  | 'lengthIsGreaterThan'
-  | 'lengthIsLessThan'
-  | 'matchesRegEx'
-  | 'fallsWithinNumericalRange';
+  | "lengthIsGreaterThan"
+  | "lengthIsLessThan"
+  | "matchesRegEx"
+  | "fallsWithinNumericalRange";
 
 export type ValidationConfig = any;
 
@@ -81,7 +81,7 @@ export type Field = FieldDef & {
   registerField?: FieldDef => void
 };
 
-export type RenderField = (FieldDef, OnFieldChange) => any;
+export type FieldRenderer = (FieldDef, OnFieldChange) => any;
 
 export type FormValue = {
   [string]: Value
@@ -89,17 +89,17 @@ export type FormValue = {
 
 export type OnFormChange = (FormValue, boolean) => void;
 
-export type FormProps = {
+export type FormComponentProps = {
   defaultFields?: FieldDef[],
   value?: FormValue,
   onChange?: OnFormChange,
-  renderField?: RenderField,
+  renderer?: FieldRenderer,
   optionsHandler?: OptionsHandler,
   children?: Node,
   parentContext?: FormContextData
 };
 
-export type FormState = {
+export type FormComponentState = {
   fields: FieldDef[],
   value: FormValue,
   isValid: boolean,
@@ -155,7 +155,7 @@ export type GetNextStateFromProps = (
   FieldDef[],
   ?OptionsHandler,
   ?FormContextData
-) => $Shape<FormState>;
+) => $Shape<FormComponentState>;
 
 export type CalculateFormValue = (FieldDef[]) => FormValue;
 
@@ -170,7 +170,7 @@ export type FormContextData = {
   },
   optionsHandler?: OptionsHandler,
   registerField: any,
-  renderField: RenderField,
+  renderer: FieldRenderer,
   onFieldChange: OnFieldChange,
   parentContext?: FormContextData
 };

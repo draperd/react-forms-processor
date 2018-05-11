@@ -81,7 +81,7 @@ export default class FormBuilder extends Component<Props, State> {
         <section>
           <Form
             defaultFields={formBuilder}
-            renderField={renderer}
+            renderer={renderer}
             onChange={(value, isValid) =>
               this.onBuilderFormChange(value, isValid)
             }
@@ -90,7 +90,7 @@ export default class FormBuilder extends Component<Props, State> {
         </section>
         <section>
           <div> Preview </div>
-          <Form defaultFields={previewFields.slice()} renderField={renderer}>
+          <Form defaultFields={previewFields.slice()} renderer={renderer}>
             <FormButton
               label="Test"
               onClick={(value: FormValue) =>

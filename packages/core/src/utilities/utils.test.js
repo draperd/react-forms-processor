@@ -16,7 +16,7 @@ import {
   splitDelimitedValue,
   updateFieldValue
 } from "./utils";
-import type { FieldDef, FormState } from "../../../../types";
+import type { FieldDef, FormComponentState } from "../../../../types";
 
 const field1 = createField({
   id: "one",

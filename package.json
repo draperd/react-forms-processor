@@ -1,19 +1,13 @@
 {
   "private": true,
   "workspaces": ["packages/*"],
-  "name": "react-forms-processor",
+  "name": "react-forms-processor-monorepo",
   "version": "0.0.1",
   "description":
     "A forms processor for statically declaring forms with dynamic behaviour",
-  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --mode development",
-    "transpile": "babel src -d dist --copy-files",
-    "prepublishOnly": "npm run transpile",
-    "build": "webpack --mode production",
-    "deploy": "gh-pages -d dist/examples",
-    "publish-demo": "npm run build && npm run deploy"
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build"
   },
   "license": "MIT",
   "devDependencies": {

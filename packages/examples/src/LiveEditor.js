@@ -77,7 +77,7 @@ export default class LiveEditor extends Component<
         </div>
         <div className="preview">
           <h2>Preview</h2>
-          <Form renderField={renderer} defaultFields={fieldsToRender}>
+          <Form renderer={renderer} defaultFields={fieldsToRender}>
             <FormButton label="Preview" />
           </Form>
         </div>

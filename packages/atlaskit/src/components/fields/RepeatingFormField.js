@@ -1,7 +1,7 @@
 // @flow
 import React, { Component, PureComponent } from "react";
 import { Form, FormContext } from "react-forms-processor";
-import renderField from "../../renderer";
+import renderer from "../../renderer";
 import type { FieldDef } from "../../../../../types";
 import Button from "@atlaskit/button";
 import ChevronDownIcon from "@atlaskit/icon/glyph/chevron-down";
@@ -157,7 +157,7 @@ export default class RepeatingFormField extends Component<Props, State> {
               parentContext={value}
               key={`FIELD_${targetIndex}`}
               defaultFields={fields}
-              renderField={renderField}
+              renderer={renderer}
               optionsHandler={value && value.optionsHandler}
               onChange={(value, isValid) => {
                 const { values } = this.state;

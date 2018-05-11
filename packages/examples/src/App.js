@@ -76,7 +76,7 @@ const AppTabs = [
         <Form
           defaultFields={createTeamForm}
           optionsHandler={teamFormOptionsHandler}
-          renderField={renderer}
+          renderer={renderer}
         >
           <FormButton
             onClick={(value: FormValue) =>
@@ -132,7 +132,7 @@ const AppTabs = [
           (each with their own definition) nested within a Tab container layout
           component.
         </p>
-        <Form renderField={renderer}>
+        <Form renderer={renderer}>
           <Tabs tabs={tabs} />
           <FormButton
             label="Frags"

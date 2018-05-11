@@ -12,15 +12,18 @@ import {
 import type {
   FieldDef,
   FormContextData,
-  FormProps,
-  FormState,
+  FormComponentProps,
+  FormComponentState,
   OnFieldChange,
   Value
 } from "../../../../types";
-import renderer from "../renderer";
+import defaultRenderer from "../renderer";
 
-export default class Form extends Component<FormProps, FormState> {
-  constructor(props: FormProps) {
+export default class Form extends Component<
+  FormComponentProps,
+  FormComponentState
+> {
+  constructor(props: FormComponentProps) {
     super(props);
     this.state = {
       fields: [],
@@ -30,7 +33,10 @@ export default class Form extends Component<FormProps, FormState> {
     };
   }
 
-  static getDerivedStateFromProps(nextProps: FormProps, prevState: FormState) {
+  static getDerivedStateFromProps(
+    nextProps: FormComponentProps,
+    prevState: FormComponentState
+  ) {
     if (
       nextProps.defaultFields &&
       nextProps.defaultFields !== prevState.defaultFields
@@ -112,7 +118,7 @@ export default class Form extends Component<FormProps, FormState> {
   createFormContext() {
     const { fields, value, isValid } = this.state;
     const {
-      renderField = renderer,
+      renderer = defaultRenderer,
       optionsHandler,
       parentContext
     } = this.props;
@@ -123,7 +129,7 @@ export default class Form extends Component<FormProps, FormState> {
       isValid,
       value,
       registerField: this.registerField.bind(this),
-      renderField,
+      renderer,
       optionsHandler,
       options: {},
       onFieldChange,
@@ -134,11 +140,11 @@ export default class Form extends Component<FormProps, FormState> {
   }
 
   renderFields(context: FormContextData) {
-    const { fields, onFieldChange, renderField } = context;
+    const { fields, onFieldChange, renderer } = context;
     const renderedFields = fields.map(field => {
       const { visible } = field;
       if (visible) {
-        return renderField(field, onFieldChange);
+        return renderer(field, onFieldChange);
       }
       return null;
     });
