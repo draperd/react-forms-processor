@@ -1,6 +1,7 @@
 // @flow
 import React from "react";
 import FieldText from "@atlaskit/field-text";
+import Description from "./Description";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "../../types";
 
@@ -39,5 +40,6 @@ export default (props: FieldDef) => (
   <FieldWrapper {...props}>
     {/* $FlowFixMe */}
     <AtlaskitFieldText />
+    {/* <Description {...props} /> */}
   </FieldWrapper>
 );

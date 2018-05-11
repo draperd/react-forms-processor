@@ -190,3 +190,5 @@ const formBuilder = [
     }
   }
 ];
+
+export { formBuilder };

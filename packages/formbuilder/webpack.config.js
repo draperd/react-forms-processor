@@ -32,6 +32,7 @@ module.exports = {
   externals: {
     react: "commonjs react",
     "react-forms-processor": "react-forms-processor",
+    "styled-components": "styled-components",
     "react-forms-processor-atlaskit": "react-forms-processor-atlaskit"
   },
   devtool: "source-map"

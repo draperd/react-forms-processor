@@ -31,7 +31,8 @@ module.exports = {
     port: 3001
   },
   externals: {
-    react: "commonjs react"
+    react: "commonjs react",
+    "styled-components": "styled-components"
   },
   devtool: "source-map"
 };
