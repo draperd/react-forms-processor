@@ -5,7 +5,7 @@
     "A forms processor for statically declaring forms with dynamic behaviour",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "webpack-dev-server --mode development",
     "transpile": "babel src -d dist --copy-files",
     "prepublishOnly": "npm run transpile",
@@ -14,8 +14,6 @@
     "publish-demo": "npm run build && npm run deploy"
   },
   "license": "MIT",
-  "dependencies": {
-  },
   "peerDependencies": {
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
@@ -23,6 +21,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-jest": "^22.4.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -33,8 +32,10 @@
     "flow-types": "^1.0.0",
     "gh-pages": "^1.1.0",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^22.4.3",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "regenerator-runtime": "^0.11.1",
     "style-loader": "^0.21.0",
     "webpack": "^4.8.1",
     "webpack-cli": "^2.1.3",
