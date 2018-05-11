@@ -8,9 +8,10 @@ import {
   FormButton,
   renderer
 } from "react-forms-processor-atlaskit";
+import LiveEditor from "./LiveEditor";
 
 import type { FormValue, OptionsHandler, Options } from "./types";
-import { createTeamForm, frag1, frag2 } from "./definitions";
+import { createTeamForm, frag1, frag2, form1 } from "./definitions";
 
 const teamFormOptionsHandler: OptionsHandler = (
   fieldId,
@@ -55,7 +56,13 @@ const tabs = [
   }
 ];
 
+const codeValue = JSON.stringify({ bob: { ted: "value" } });
+
 const AppTabs = [
+  {
+    label: "Live editor",
+    content: <LiveEditor defaultDefinition={JSON.stringify(form1)} />
+  },
   {
     label: "Single Definition",
     content: (

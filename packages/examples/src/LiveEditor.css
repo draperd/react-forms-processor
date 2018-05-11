@@ -1,0 +1,7 @@
+.live-editor {
+  display: flex;
+}
+
+.live-editor > div {
+  margin: 20px;
+}
