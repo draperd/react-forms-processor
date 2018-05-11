@@ -9,8 +9,8 @@ export type DescriptionProps = {
 
 export default class Description extends React.Component<DescriptionProps> {
   render() {
-    const { description = "" } = this.props;
-    if (description.trim !== "") {
+    const { description } = this.props;
+    if (description) {
       return (
         <Tooltip content={description} position="right">
           <InfoIcon primaryColor="#6554C0" />

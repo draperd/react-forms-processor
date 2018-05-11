@@ -40,6 +40,6 @@ export default (props: FieldDef) => (
   <FieldWrapper {...props}>
     {/* $FlowFixMe */}
     <AtlaskitFieldText />
-    {/* <Description {...props} /> */}
+    <Description {...props} />
   </FieldWrapper>
 );

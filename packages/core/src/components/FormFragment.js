@@ -18,7 +18,7 @@ class FormFragment extends Component<InnerFormFragmentProps, void> {
     const { defaultFields = [], registerField, fields = [] } = props;
     defaultFields.forEach(field => {
       if (fields.find(existingField => existingField.id === field.id)) {
-        console.warn("Fragment tried to re-register field", field.id);
+        // console.warn("Fragment tried to re-register field", field.id);
       } else {
         registerField(field);
       }

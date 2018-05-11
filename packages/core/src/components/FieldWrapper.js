@@ -1,20 +1,20 @@
 // @flow
 import React, { type Node } from "react";
-// import styled from "styled-components";
+import styled from "styled-components";
 import FormContext from "./FormContext";
 import type { Field, FieldDef } from "../types";
 
-// const Layout = styled.div`
-//   > div {
-//     display: inline-block;
-//   }
+const Layout = styled.div`
+  > div {
+    display: inline-block;
+  }
 
-//   > div:nth-child(2) {
-//     margin-left: 10px;
-//     line-height: 32px;
-//     vertical-align: bottom;
-//   }
-// `;
+  > div:nth-child(2) {
+    margin-left: 10px;
+    line-height: 32px;
+    vertical-align: bottom;
+  }
+`;
 
 export type FieldWrapperProps = Field & {
   children: Node
@@ -44,16 +44,7 @@ class FieldWrapper extends React.Component<FieldWrapperProps> {
         })
       );
       const { description, id } = fieldToRender;
-      return (
-        <div id={id}>
-          {processedChildren}
-          {/* {description && (
-            <Tooltip content={description} position="right">
-              <InfoIcon primaryColor="#6554C0" />
-            </Tooltip>
-          )} */}
-        </div>
-      );
+      return <Layout id={id}>{processedChildren}</Layout>;
     }
 
     return null;

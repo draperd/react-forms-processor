@@ -7,6 +7,7 @@ import Button from "@atlaskit/button";
 import ChevronDownIcon from "@atlaskit/icon/glyph/chevron-down";
 import ChevronRightIcon from "@atlaskit/icon/glyph/chevron-right";
 import CrossCircleIcon from "@atlaskit/icon/glyph/cross-circle";
+import Description from "./Description";
 import "./RepeatingFormField.css";
 
 type ChevronProps = {

@@ -2,6 +2,7 @@
 import React from "react";
 import MultiSelect from "@atlaskit/multi-select";
 import { FieldWrapper } from "react-forms-processor";
+import Description from "./Description";
 import type { Field, FieldDef } from "../../types";
 
 class AtlaskitMultiSelect extends React.Component<Field> {
@@ -81,5 +82,6 @@ export default (props: FieldDef) => (
   <FieldWrapper {...props}>
     {/* $FlowFixMe */}
     <AtlaskitMultiSelect />
+    <Description {...props} />
   </FieldWrapper>
 );

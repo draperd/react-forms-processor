@@ -2,6 +2,7 @@
 import React from "react";
 import Checkbox from "@atlaskit/checkbox";
 import { FieldWrapper } from "react-forms-processor";
+import Description from "./Description";
 import type { Field, FieldDef } from "../../types";
 
 class AtlaskitCheckbox extends React.Component<Field> {
@@ -36,5 +37,6 @@ export default (props: FieldDef) => (
   <FieldWrapper {...props}>
     {/* $FlowFixMe */}
     <AtlaskitCheckbox />
+    <Description {...props} />
   </FieldWrapper>
 );
