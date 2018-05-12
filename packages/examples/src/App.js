@@ -35,6 +35,18 @@ const teamFormOptionsHandler: OptionsHandler = (
         }
       ];
       return options;
+    case "MEMBERS":
+      return fetch("https://swapi.co/api/people/")
+        .then(response => response.json())
+        .then(json => {
+          const items = json.results.map(character => character.name);
+          const options: Options = [
+            {
+              items
+            }
+          ];
+          return options;
+        });
     default: {
       return null;
     }

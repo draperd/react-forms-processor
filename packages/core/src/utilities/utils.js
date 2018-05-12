@@ -8,11 +8,13 @@ import type {
   EvaluateRule,
   EvaluateAllRules,
   FieldDef,
+  FormComponentState,
   GetMissingItems,
   GetNextStateFromProps,
   JoinDelimitedValue,
   MapFieldsById,
   OmitFieldValue,
+  Options,
   ProcessFields,
   ProcessOptions,
   RegisterField,
@@ -40,6 +42,28 @@ export const getNextStateFromFields: GetNextStateFromProps = (
     isValid
   };
   return nextState;
+};
+
+export const setOptionsInFieldInState = (
+  prevState: FormComponentState,
+  field: FieldDef,
+  options: Options
+) => {
+  const fieldIndex = prevState.fields.findIndex(
+    prevField => prevField.id === field.id
+  );
+
+  field.options = options;
+  field.pendingOptions = undefined;
+
+  const { fields: prevFields } = prevState;
+  return {
+    fields: [
+      ...prevFields.slice(0, fieldIndex),
+      field,
+      ...prevFields.slice(fieldIndex + 1)
+    ]
+  };
 };
 
 // A field definition is valid if a field with the same id does not already exist in
@@ -146,8 +170,12 @@ export const processOptions: ProcessOptions = (
   return fields.map(field => {
     const { id } = field;
     const options = optionsHandler(id, fields, parentContext);
-    if (options) {
+    if (options instanceof Promise) {
+      field.options = [];
+      field.pendingOptions = options;
+    } else if (options) {
       field.options = options;
+      field.pendingOptions = undefined;
     }
     return field;
   });

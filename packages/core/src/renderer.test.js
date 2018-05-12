@@ -1,9 +1,10 @@
+// @flow
 import React from "react";
 import Enzyme, { mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 // import { expect } from "chai";
 import Form from "./components/Form";
-import { FieldDef } from "./types";
+import type { FieldDef } from "../../../types";
 
 Enzyme.configure({ adapter: new Adapter() });
 

@@ -5,6 +5,7 @@ import FormFragment from "./FormFragment";
 import DefaultField from "./DefaultField";
 import {
   getNextStateFromFields,
+  setOptionsInFieldInState,
   registerField,
   registerFields,
   updateFieldValue
@@ -15,6 +16,7 @@ import type {
   FormComponentProps,
   FormComponentState,
   OnFieldChange,
+  Options,
   Value
 } from "../../../../types";
 import defaultRenderer from "../renderer";
@@ -139,26 +141,20 @@ export default class Form extends Component<
     return context;
   }
 
-  renderFields(context: FormContextData) {
-    const { fields, onFieldChange, renderer } = context;
-    const renderedFields = fields.map(field => {
-      const { visible } = field;
-      if (visible) {
-        return renderer(field, onFieldChange);
-      }
-      return null;
-    });
-
-    return (
-      <FormContext.Provider value={context}>
-        {renderedFields}
-      </FormContext.Provider>
-    );
-  }
-
   render() {
     const { children, defaultFields } = this.props;
     const { fields } = this.state;
+
+    fields.forEach(field => {
+      if (field.pendingOptions) {
+        field.pendingOptions.then(options =>
+          this.setState(prevState =>
+            setOptionsInFieldInState(prevState, field, options)
+          )
+        );
+      }
+    });
+
     const context = this.createFormContext();
     return (
       <FormContext.Provider value={context}>

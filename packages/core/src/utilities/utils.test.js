@@ -13,10 +13,11 @@ import {
   shouldOmitFieldValue,
   processFields,
   registerFields,
+  setOptionsInFieldInState,
   splitDelimitedValue,
   updateFieldValue
 } from "./utils";
-import type { FieldDef, FormComponentState } from "../../../../types";
+import type { FieldDef, FormComponentState, Options } from "../../../../types";
 
 const field1 = createField({
   id: "one",
@@ -502,5 +503,59 @@ describe("trimming behaviour", () => {
     const processedFields = processFields([field]);
     const trimmedField = processedFields[0];
     expect(trimmedField.value).toEqual("foo");
+  });
+});
+
+describe("setOptionsInFieldInState", () => {
+  const field1 = createField({
+    id: "a",
+    name: "a",
+    type: "text"
+  });
+  const field2 = createField({
+    id: "b",
+    name: "b",
+    type: "text"
+  });
+  const field3 = createField({
+    id: "c",
+    name: "c",
+    type: "text"
+  });
+
+  const fields: FieldDef[] = [field1, field2, field3];
+  const state: FormComponentState = {
+    fields,
+    value: {},
+    isValid: true,
+    defaultFields: []
+  };
+
+  const options: Options = [
+    {
+      items: ["one", "two", "three"]
+    }
+  ];
+
+  const updatedState = setOptionsInFieldInState(state, field2, options);
+
+  test("leaves fields in state with the correct length", () => {
+    expect(updatedState.fields).toHaveLength(3);
+  });
+
+  test("leaves fields in state in the same order", () => {
+    expect(updatedState.fields[0].id).toBe("a");
+    expect(updatedState.fields[1].id).toBe("b");
+    expect(updatedState.fields[2].id).toBe("c");
+  });
+
+  test("assigns options to teh correct field", () => {
+    expect(updatedState.fields[0].options).toBeUndefined();
+    expect(updatedState.fields[1].options).toBe(options);
+    expect(updatedState.fields[2].options).toBeUndefined();
+  });
+
+  test("assigns pending options as undefined", () => {
+    expect(updatedState.fields[1].pendingOptions).toBeUndefined();
   });
 });

@@ -42,7 +42,7 @@ export type OptionsHandler = (
   string,
   FieldDef[],
   ?FormContextData
-) => Options | null;
+) => Options | null | Promise<Options>;
 
 export type FieldDef = {
   id: string,
@@ -69,6 +69,7 @@ export type FieldDef = {
   addedSuffix?: string,
   removedSuffix?: string,
   options?: Options,
+  pendingOptions?: Promise<Options>,
   misc?: {
     [string]: any
   },
