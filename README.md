@@ -32,6 +32,32 @@ You can build a form from multiple fragments that each have their own definition
 ### Are there any limitations?
 This project uses the new React Context API so you are required to use at least version 16.3 of React.
 
+### How to I define a field?
+A field is a simple JavaScript object. The current set of attributes you can use in that object are:
+ 
+ * id - A unique ID for the field
+ * name - The attribute that the field value will be assigned to (can be shared by multiple fields)
+ * type - The type of field (renderers use this to map the field to a specific field component)
+ * defaultValue - An initial value for the field
+ * label - The label for the field
+ * description - A description of the field (i.e. for tooltips)
+ * placeholder - Placeholder text for fields that support it
+ * required - If a value for the field must be provided
+ * visible - Whether or not the field can be seen
+ * disabled - Whether or not the field is disabled
+ * trimValue - Whether or not leading and trailing whitespace should be trimmed from the value
+ * visibleWhen - Rules that define when the field should be visible
+ * requiredWhen - Rules that define when a value for the field must be provided
+ * disabledWhen - Rules that define when the field is disabled
+ * options - A static list of options for fields that support options (dynamic options can be provided through a function handler passed as a property to the form)
+ * omitWhenHidden - Indicates whether the field value should be included in the form value when the field is hidden
+ * omitWhenValueIs - Possible values of the field that should not be included in the form value
+ * useChangesAsValues - When multiple options can be set as values this will set the changes as values rather than the final list of options
+ * valueDelimiter - When multiple options can be set as values this will convert the array into a string delimited by this value
+ * addedSuffix - When using changes as values, this string will be appended to the `name` for the values added
+ * removedSuffix - When using changes as values, this string will be appended to the `name` for the values removed
+ * misc - Any else
+
 ### Anything else I should know?
 Because the forms can be defined declaratively it means that you can build and render forms dynamically in an application - check out the example in the [demo page](https://draperd.github.io/react-forms-processor/).
 
