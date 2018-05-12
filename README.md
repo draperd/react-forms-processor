@@ -1,10 +1,10 @@
 # React Forms Processor
 
 ### What problem does this project solve?
-React Forms Processor allows you to create a form where updates in one field can change the attributes of another without requiring you to write the code to implement that relationship
+React Forms Processor allows you to create a form where updates in one field can change the attributes of another without requiring you to write the code to implement that relationship.
 
 ### What sort of relationships are we talking about?
-Well, let's say that you have one field that is only visible when another has a certain value (for example a checkbox being checked) then you can define this through the specification of the form. You can configure when fields are visible, disabled, required and if their value should be included in the overall form value based on the value of other fields.
+Well, let's say that you have one field that is only visible when another has a certain value (for example a checkbox being checked) then you can define this through a simple specification. You can configure when fields are visible, disabled, required and if their value should be included in the overall form value based on the value of other fields.
 
 ### What about validation?
 The form has an overall validity state that is based on the validity of all the fields. If a required field is empty then the form is invalid. If the value of a field fails to pass the validation rules it has been declared with then the form is invalid. The only exception to this is for invalid fields that are not visible - these do not effect the form validity.
@@ -16,7 +16,7 @@ At the moment there are rules of Regular Expression matching, minimum and maximu
 It is possible to declare static options for a field in it's definition. In the future I'll be looking to expand this to allow you to define URLs to retrieve options from but as a catch-all fallback you can provide the form component with an options handler function that allows you to return options for a field that might be related to the value of other fields - this also allows you to return promises of options if you're fetching them via an XHR request.
 
 ### What fields are available?
-That's up to you. React Forms Processor is intended to abstract the logic of forms processing away from the rendering implementation. It comes with an [Atlaskit](https://atlaskit.atlassian.com/) renderer out of the box but I'll be adding more renderers soon or you can write you own - it's simply a case of matching a field type to a React field implementation and mapping the props provided. 
+That's up to you. React Forms Processor is intended to abstract the logic of forms processing away from the rendering implementation. It comes with an [Atlaskit](https://atlaskit.atlassian.com/) renderer out of the box but I'll be adding more renderers soon or you can write you own - it's simply a case of matching a field type to a React field implementation and mapping the props provided. You can use any fields available in another library or write your own custom fields.
 
 The fields that are currently available in the Atlaskit renderer are:
 * text
@@ -73,7 +73,7 @@ You can import and use the `Form` and `FormFragment` components from the core mo
 <Form defaultFields={myFieldsDefinition} 
       renderer={atlaskitRenderer} 
       optionsHandler={myCustomOptionsHandler}>
-  <FormButton label="Save" onClick={value => doSomethingWithThFormValue()}/>
+  <FormButton label="Save" onClick={value => doSomethingWithTheFormValue()}/>
 </Form>
 ```
 
@@ -84,7 +84,7 @@ You can import and use the `Form` and `FormFragment` components from the core mo
       optionsHandler={myCustomOptionsHandler}>
   <FormFragment defaultFields={definition1} />
   <FormFragment defaultFields={definition2} />
-  <FormButton label="Save" onClick={value => doSomethingWithThFormValue()}/>
+  <FormButton label="Save" onClick={value => doSomethingWithTheFormValue()}/>
 </Form>
 ```
 
