@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Form, FormFragment, FormContext } from "react-forms-processor";
 import { renderer, FormButton } from "react-forms-processor-atlaskit";
 import { form1 } from "./definitions";
+import type { FormValue } from "../../../types";
 
 import brace from "brace";
 import AceEditor from "react-ace";
@@ -17,7 +18,8 @@ export type LiveEditorProps = {
 
 export type LiveEditorState = {
   definition: string,
-  fields: any
+  fields: any,
+  value?: FormValue
 };
 
 const editorOptions = {
@@ -46,7 +48,7 @@ export default class LiveEditor extends Component<
   }
 
   render() {
-    const { definition } = this.state;
+    const { definition, value } = this.state;
 
     let fieldsToRender, prettyDefinition;
     try {
@@ -57,7 +59,13 @@ export default class LiveEditor extends Component<
     }
 
     return (
-      <Form renderer={renderer}>
+      <Form
+        renderer={renderer}
+        onChange={value => {
+          this.setState({ value });
+        }}
+        value={value}
+      >
         <div className="live-editor">
           <div className="editor">
             <h2>Editor</h2>

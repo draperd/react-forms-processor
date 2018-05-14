@@ -37,10 +37,18 @@ class FormFragment extends Component<InnerFormFragmentProps, void> {
         registeredField => registeredField.id === field.id
       );
       if (fieldToRender && fieldToRender.visible) {
-        fieldToRender.value = getFirstDefinedValue(
-          value[field.name],
-          field.value
-        );
+        const { name, omitWhenValueIs } = field;
+        const formValueForName = value[name];
+        if (
+          omitWhenValueIs &&
+          omitWhenValueIs.find(
+            targetValue => targetValue === formValueForName
+          ) === -1
+        ) {
+          fieldToRender.value = field.value;
+        } else {
+          getFirstDefinedValue(value[field.name], field.value);
+        }
         return renderer(fieldToRender, onFieldChange);
       }
       return null;

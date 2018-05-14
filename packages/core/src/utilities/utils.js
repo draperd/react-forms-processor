@@ -274,7 +274,12 @@ export const registerFields: RegisterFields = (fieldsToValidate, formValue) => {
 export const updateFieldValue: UpdateFieldValue = (id, value, fields) => {
   const fieldsById = mapFieldsById(fields);
   const updateValue = typeof value !== "undefined" && value;
-  fieldsById[id].value = updateValue;
+  const field = fieldsById[id];
+  if (field.omitWhenHidden && !field.visible) {
+    console.log("Not updating field value for", field);
+  } else {
+    field.value = updateValue;
+  }
   return fields;
 };
 
