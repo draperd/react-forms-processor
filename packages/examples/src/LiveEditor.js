@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from "react";
-import { Form, FormFragment } from "react-forms-processor";
+import { Form, FormFragment, FormContext } from "react-forms-processor";
 import { renderer, FormButton } from "react-forms-processor-atlaskit";
 import { form1 } from "./definitions";
 
@@ -57,31 +57,46 @@ export default class LiveEditor extends Component<
     }
 
     return (
-      <div className="live-editor">
-        <div className="editor">
-          <h2>Editor</h2>
-          <p>
-            Try experimenting with the form definition in the editor and see how
-            it updates the form rendered in the preview.
-          </p>
-          <AceEditor
-            width="800px"
-            value={prettyDefinition}
-            mode="json"
-            theme="monokai"
-            onChange={definition => this.updateDefinition(definition)}
-            name="EDITOR"
-            editorProps={{ $blockScrolling: true }}
-            wrapEnabled={true}
-          />
+      <Form renderer={renderer}>
+        <div className="live-editor">
+          <div className="editor">
+            <h2>Editor</h2>
+            <p>
+              Try experimenting with the form definition in the editor and see
+              how it updates the form rendered in the preview.
+            </p>
+            <AceEditor
+              width="800px"
+              value={prettyDefinition}
+              mode="json"
+              theme="monokai"
+              onChange={definition => this.updateDefinition(definition)}
+              name="EDITOR"
+              editorProps={{ $blockScrolling: true }}
+              wrapEnabled={true}
+            />
+          </div>
+          <div className="preview">
+            <h2>Preview</h2>
+            <p>
+              The form defintion will be rendered here - if the definition is
+              invalid then the form will not be displayed
+            </p>
+            <FormFragment defaultFields={fieldsToRender}>
+              <FormButton label="Preview" />
+            </FormFragment>
+          </div>
+          <div>
+            <h2>Form value</h2>
+            <p>This shows the current value of the form in the preview</p>
+            <FormContext.Consumer>
+              {context => (
+                <pre>{JSON.stringify(context.value, null, "\t")})}</pre>
+              )}
+            </FormContext.Consumer>
+          </div>
         </div>
-        <div className="preview">
-          <h2>Preview</h2>
-          <Form renderer={renderer} defaultFields={fieldsToRender}>
-            <FormButton label="Preview" />
-          </Form>
-        </div>
-      </div>
+      </Form>
     );
   }
 }
