@@ -9,6 +9,7 @@ import {
   renderer
 } from "react-forms-processor-atlaskit";
 import LiveEditor from "./LiveEditor";
+import Tutorial from "./tutorial/Tutorial";
 
 import type { FormValue, OptionsHandler, Options } from "../../../types";
 import { createTeamForm, frag1, frag2, form1 } from "./definitions";
@@ -72,8 +73,12 @@ const codeValue = JSON.stringify({ bob: { ted: "value" } });
 
 const AppTabs = [
   {
+    label: "Tutorial",
+    content: <Tutorial />
+  },
+  {
     label: "Live editor",
-    content: <LiveEditor defaultDefinition={JSON.stringify(form1)} />
+    content: <LiveEditor defaultDefinition={form1} />
   },
   {
     label: "Single Definition",

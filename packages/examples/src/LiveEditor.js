@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Form, FormFragment, FormContext } from "react-forms-processor";
 import { renderer, FormButton } from "react-forms-processor-atlaskit";
 import { form1 } from "./definitions";
-import type { FormValue } from "../../../types";
+import type { FieldDef, FormValue } from "../../../types";
 
 import brace from "brace";
 import AceEditor from "react-ace";
@@ -13,7 +13,13 @@ import "brace/theme/monokai";
 import "./LiveEditor.css";
 
 export type LiveEditorProps = {
-  defaultDefinition: string
+  defaultDefinition: FieldDef[],
+  editorTitle?: string,
+  editorDescription?: string,
+  previewTitle?: string,
+  previewDescription?: string,
+  formValueTitle?: string,
+  formValueDescription?: string
 };
 
 export type LiveEditorState = {
@@ -36,8 +42,8 @@ export default class LiveEditor extends Component<
 
     const { defaultDefinition } = props;
     this.state = {
-      definition: defaultDefinition,
-      fields: JSON.parse(defaultDefinition)
+      definition: JSON.stringify(defaultDefinition),
+      fields: defaultDefinition
     };
   }
 
@@ -49,6 +55,14 @@ export default class LiveEditor extends Component<
 
   render() {
     const { definition, value } = this.state;
+    const {
+      editorTitle = "Editor",
+      editorDescription = "Try experimenting with the form definition in the editor and see how it updates the form rendered in the preview.",
+      previewTitle = "Preview",
+      previewDescription = "The form defintion will be rendered here - if the definition is invalid then the form will not be displayed",
+      formValueTitle = "Value",
+      formValueDescription = "This shows the current value of the form in the preview"
+    } = this.props;
 
     let fieldsToRender, prettyDefinition;
     try {
@@ -68,11 +82,8 @@ export default class LiveEditor extends Component<
       >
         <div className="live-editor">
           <div className="editor">
-            <h2>Editor</h2>
-            <p>
-              Try experimenting with the form definition in the editor and see
-              how it updates the form rendered in the preview.
-            </p>
+            <h2>{editorTitle}</h2>
+            <p>{editorDescription}</p>
             <AceEditor
               width="800px"
               value={prettyDefinition}
@@ -85,21 +96,17 @@ export default class LiveEditor extends Component<
             />
           </div>
           <div className="preview">
-            <h2>Preview</h2>
-            <p>
-              The form defintion will be rendered here - if the definition is
-              invalid then the form will not be displayed
-            </p>
-            <FormFragment defaultFields={fieldsToRender}>
-              <FormButton label="Preview" />
-            </FormFragment>
+            <h2>{previewTitle}</h2>
+            <p>{previewDescription}</p>
+            <FormFragment defaultFields={fieldsToRender} />
+            <FormButton label="Preview" />
           </div>
           <div>
-            <h2>Form value</h2>
-            <p>This shows the current value of the form in the preview</p>
+            <h2>{formValueTitle}</h2>
+            <p>{formValueDescription}</p>
             <FormContext.Consumer>
               {context => (
-                <pre>{JSON.stringify(context.value, null, "\t")})}</pre>
+                <pre>{JSON.stringify(context.value, null, "\t")}</pre>
               )}
             </FormContext.Consumer>
           </div>
