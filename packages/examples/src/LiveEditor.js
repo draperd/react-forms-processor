@@ -10,10 +10,12 @@ import AceEditor from "react-ace";
 import "brace/mode/json";
 import "brace/theme/monokai";
 
+import ReactMarkdown from "react-markdown";
+
 import "./LiveEditor.css";
 
 export type LiveEditorProps = {
-  defaultDefinition: FieldDef[],
+  defaultDefinition: string,
   editorTitle?: string,
   editorDescription?: string,
   previewTitle?: string,
@@ -42,8 +44,8 @@ export default class LiveEditor extends Component<
 
     const { defaultDefinition } = props;
     this.state = {
-      definition: JSON.stringify(defaultDefinition),
-      fields: defaultDefinition
+      definition: defaultDefinition,
+      fields: JSON.parse(defaultDefinition)
     };
   }
 
@@ -73,17 +75,11 @@ export default class LiveEditor extends Component<
     }
 
     return (
-      <Form
-        renderer={renderer}
-        onChange={value => {
-          this.setState({ value });
-        }}
-        value={value}
-      >
+      <div>
         <div className="live-editor">
           <div className="editor">
             <h2>{editorTitle}</h2>
-            <p>{editorDescription}</p>
+            <ReactMarkdown source={editorDescription} />
             <AceEditor
               width="800px"
               value={prettyDefinition}
@@ -98,20 +94,24 @@ export default class LiveEditor extends Component<
           <div className="preview">
             <h2>{previewTitle}</h2>
             <p>{previewDescription}</p>
-            <FormFragment defaultFields={fieldsToRender} />
-            <FormButton label="Preview" />
+            <Form
+              renderer={renderer}
+              onChange={value => {
+                this.setState({ value });
+              }}
+              value={value}
+              defaultFields={fieldsToRender}
+            >
+              <FormButton label="Preview" />
+            </Form>
           </div>
           <div>
             <h2>{formValueTitle}</h2>
             <p>{formValueDescription}</p>
-            <FormContext.Consumer>
-              {context => (
-                <pre>{JSON.stringify(context.value, null, "\t")}</pre>
-              )}
-            </FormContext.Consumer>
+            <pre>{JSON.stringify(value, null, "\t")}</pre>
           </div>
         </div>
-      </Form>
+      </div>
     );
   }
 }

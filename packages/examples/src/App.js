@@ -72,13 +72,13 @@ const tabs = [
 const codeValue = JSON.stringify({ bob: { ted: "value" } });
 
 const AppTabs = [
-  {
-    label: "Tutorial",
-    content: <Tutorial />
-  },
+  // {
+  //   label: "Tutorial",
+  //   content: <Tutorial />
+  // },
   {
     label: "Live editor",
-    content: <LiveEditor defaultDefinition={form1} />
+    content: <LiveEditor defaultDefinition={JSON.stringify(form1)} />
   },
   {
     label: "Single Definition",
