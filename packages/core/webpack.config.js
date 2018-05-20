@@ -2,6 +2,7 @@ const path = require("path");
 
 module.exports = {
   // TODO: Swap entry for a function that builds object for all components
+  mode: "development",
   entry: {
     index: path.join(__dirname, "src/index.js")
   },

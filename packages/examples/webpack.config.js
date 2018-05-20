@@ -8,6 +8,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 });
 
 module.exports = {
+  mode: "development",
   entry: {
     index: path.join(__dirname, "src/index.js")
   },
@@ -18,6 +19,11 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        use: ["source-map-loader"],
+        enforce: "pre"
+      },
       {
         test: /\.md$/,
         use: [{ loader: "html-loader" }]
