@@ -105,7 +105,7 @@ export default class LiveEditor extends Component<
               <FormButton label="Preview" />
             </Form>
           </div>
-          <div>
+          <div className="value">
             <h2>{formValueTitle}</h2>
             <p>{formValueDescription}</p>
             <pre>{JSON.stringify(value, null, "\t")}</pre>

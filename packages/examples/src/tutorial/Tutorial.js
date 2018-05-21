@@ -1,9 +1,17 @@
 // @flow
 import React, { Component } from "react";
 import LiveEditor from "../LiveEditor";
-import { singleField } from "./definitions";
+import {
+  singleField,
+  visibility,
+  requiredAndDisabledRules,
+  fieldsWithOptions
+} from "./definitions";
 
-import markdown from "./tutorial1.md";
+import singleFieldDescription from "./tutorial1.md";
+import visibilityDescription from "./tutorial2.md";
+import requirementDescription from "./tutorial3.md";
+import optionsDescription from "./tutorial4.md";
 
 // const markdown = "# This is a header\n\nAnd this is a paragraph";
 
@@ -19,8 +27,27 @@ class Tutorial extends Component<*, *> {
         <LiveEditor
           defaultDefinition={JSON.stringify(singleField)}
           editorTitle="A single field"
-          editorDescription={markdown}
+          editorDescription={singleFieldDescription}
         />
+        <LiveEditor
+          defaultDefinition={JSON.stringify(visibility)}
+          editorTitle="Making one field control the visibility of another"
+          editorDescription={visibilityDescription}
+        />
+        <LiveEditor
+          defaultDefinition={JSON.stringify(requiredAndDisabledRules)}
+          editorTitle="Requirement and disablement rules"
+          editorDescription={requirementDescription}
+        />
+        <LiveEditor
+          defaultDefinition={JSON.stringify(fieldsWithOptions)}
+          editorTitle="Fields with options"
+          editorDescription={optionsDescription}
+        />
+        <h3>
+          There are more examples still to be written - lots more to
+          demonstrate!
+        </h3>
       </article>
     );
   }
