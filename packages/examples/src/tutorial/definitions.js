@@ -8,7 +8,8 @@ export const singleField = [
     type: "text",
     label: "My first field",
     description: "This is an example field",
-    defaultValue: "value",
+    placeholder: "Enter a value",
+    defaultValue: "",
     visible: true,
     required: false,
     disabled: false
@@ -101,5 +102,55 @@ export const fieldsWithOptions = [
         items: [{ label: "Banana", value: "B" }, { label: "Pear", value: "C" }]
       }
     ]
+  },
+  {
+    id: "OPTIONS3",
+    name: "characters",
+    type: "multiselect",
+    label: "Pick some characters?",
+    defaultValue: []
+  }
+];
+
+export const manipulateOptions = [
+  {
+    id: "FRUITS",
+    name: "fruit",
+    type: "multiselect",
+    label: "Pick some fruit?",
+    defaultValue: "apple,pear",
+    options: [
+      {
+        items: ["apple", "banana", "orange", "pear"]
+      }
+    ],
+    valueDelimiter: ",",
+    useChangesAsValues: true,
+    addedSuffix: "",
+    removedSuffix: ""
+  }
+];
+
+export const duplicateNames = [
+  {
+    id: "DEFAULTS",
+    name: "number",
+    type: "radiogroup",
+    label: "Pick a number",
+    defaultValue: "One",
+    options: [
+      {
+        items: ["One", "Two", "Three", "Four", "Other"]
+      }
+    ],
+    omitWhenValueIs: ["Other"]
+  },
+  {
+    id: "CUSTOM",
+    name: "number",
+    type: "text",
+    label: "Enter a number",
+    visibleWhen: [{ field: "DEFAULTS", is: ["Other"] }],
+    omitWhenHidden: true
   }
 ];

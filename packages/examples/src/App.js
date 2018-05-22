@@ -13,6 +13,7 @@ import Tutorial from "./tutorial/Tutorial";
 
 import type { FormValue, OptionsHandler, Options } from "../../../types";
 import { createTeamForm, frag1, frag2, form1 } from "./definitions";
+import { getOptions } from "./SwapiOptionsHandler";
 
 const teamFormOptionsHandler: OptionsHandler = (
   fieldId,
@@ -37,17 +38,7 @@ const teamFormOptionsHandler: OptionsHandler = (
       ];
       return options;
     case "MEMBERS":
-      return fetch("https://swapi.co/api/people/")
-        .then(response => response.json())
-        .then(json => {
-          const items = json.results.map(character => character.name);
-          const options: Options = [
-            {
-              items
-            }
-          ];
-          return options;
-        });
+      return getOptions();
     default: {
       return null;
     }

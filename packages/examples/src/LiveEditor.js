@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Form, FormFragment, FormContext } from "react-forms-processor";
 import { renderer, FormButton } from "react-forms-processor-atlaskit";
 import { form1 } from "./definitions";
-import type { FieldDef, FormValue } from "../../../types";
+import type { FieldDef, FormValue, OptionsHandler } from "../../../types";
 
 import brace from "brace";
 import AceEditor from "react-ace";
@@ -21,7 +21,8 @@ export type LiveEditorProps = {
   previewTitle?: string,
   previewDescription?: string,
   formValueTitle?: string,
-  formValueDescription?: string
+  formValueDescription?: string,
+  optionsHandler?: OptionsHandler
 };
 
 export type LiveEditorState = {
@@ -63,7 +64,8 @@ export default class LiveEditor extends Component<
       previewTitle = "Preview",
       previewDescription = "The form defintion will be rendered here - if the definition is invalid then the form will not be displayed",
       formValueTitle = "Value",
-      formValueDescription = "This shows the current value of the form in the preview"
+      formValueDescription = "This shows the current value of the form in the preview",
+      optionsHandler
     } = this.props;
 
     let fieldsToRender, prettyDefinition;
@@ -101,6 +103,7 @@ export default class LiveEditor extends Component<
               }}
               value={value}
               defaultFields={fieldsToRender}
+              optionsHandler={optionsHandler}
             >
               <FormButton label="Preview" />
             </Form>

@@ -5,16 +5,23 @@ import {
   singleField,
   visibility,
   requiredAndDisabledRules,
-  fieldsWithOptions
+  fieldsWithOptions,
+  manipulateOptions,
+  duplicateNames
 } from "./definitions";
+import type { OptionsHandler } from "../../../../types";
+import { getOptions } from "../SwapiOptionsHandler";
 
 import singleFieldDescription from "./tutorial1.md";
 import visibilityDescription from "./tutorial2.md";
 import requirementDescription from "./tutorial3.md";
 import optionsDescription from "./tutorial4.md";
+import manipulateOptionsDescription from "./tutorial5.md";
+import duplicateNamesDescription from "./tutorial6.md";
 
-// const markdown = "# This is a header\n\nAnd this is a paragraph";
-
+const swapiOptions: OptionsHandler = (fieldId, fields, parentContext) => {
+  return getOptions();
+};
 class Tutorial extends Component<*, *> {
   render() {
     return (
@@ -43,7 +50,18 @@ class Tutorial extends Component<*, *> {
           defaultDefinition={JSON.stringify(fieldsWithOptions)}
           editorTitle="Fields with options"
           editorDescription={optionsDescription}
+          optionsHandler={swapiOptions}
         />
+        <LiveEditor
+          defaultDefinition={JSON.stringify(manipulateOptions)}
+          editorTitle="Handling multi-value fields"
+          editorDescription={manipulateOptionsDescription}
+        />
+        {/* <LiveEditor
+          defaultDefinition={JSON.stringify(duplicateNames)}
+          editorTitle="Using the multiple fields to control the same value"
+          editorDescription={duplicateNamesDescription}
+        /> */}
         <h3>
           There are more examples still to be written - lots more to
           demonstrate!

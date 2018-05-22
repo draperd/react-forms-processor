@@ -168,14 +168,16 @@ export const processOptions: ProcessOptions = (
   parentContext
 ) => {
   return fields.map(field => {
-    const { id } = field;
-    const options = optionsHandler(id, fields, parentContext);
-    if (options instanceof Promise) {
-      field.options = [];
-      field.pendingOptions = options;
-    } else if (options) {
-      field.options = options;
-      field.pendingOptions = undefined;
+    const { id, options } = field;
+    if (!options) {
+      const handlerOptions = optionsHandler(id, fields, parentContext);
+      if (handlerOptions instanceof Promise) {
+        field.options = [];
+        field.pendingOptions = handlerOptions;
+      } else if (handlerOptions) {
+        field.options = handlerOptions;
+        field.pendingOptions = undefined;
+      }
     }
     return field;
   });
@@ -338,11 +340,11 @@ export const determineChangedValues: DetermineChangedValues = field => {
 
     outputValues.push(
       {
-        name: name + addedSuffix,
+        name: name + (addedSuffix || "_added"),
         value: added
       },
       {
-        name: name + removedSuffix,
+        name: name + (removedSuffix || "_removed"),
         value: removed
       }
     );
