@@ -154,3 +154,33 @@ export const duplicateNames = [
     omitWhenHidden: true
   }
 ];
+
+export const validation = [
+  {
+    id: "VALIDATED",
+    name: "name",
+    type: "text",
+    label: "Get it right!",
+    trimValue: true,
+    validWhen: {
+      lengthIsGreaterThan: {
+        length: 3,
+        message: "The value must have more than 3 characterrs"
+      },
+      lengthIsLessThan: {
+        length: 6,
+        message: "The value must less than 6 characters"
+      },
+      fallsWithinNumericalRange: {
+        min: 150,
+        max: 80000,
+        message: "The value must be more than 150 and less than 80000"
+      },
+      matchesRegEx: {
+        value: "1234",
+        pattern: "^[\\d]+$",
+        message: "Only numbers allowed"
+      }
+    }
+  }
+];
