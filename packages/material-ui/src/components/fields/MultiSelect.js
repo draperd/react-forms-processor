@@ -4,9 +4,11 @@ import { withStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
+import ListItemText from "@material-ui/core/ListItemText";
 import Select from "@material-ui/core/Select";
+import Checkbox from "@material-ui/core/Checkbox";
+import Chip from "@material-ui/core/Chip";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "../../../../../types";
 
@@ -17,20 +19,23 @@ const styles = theme => ({
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120
+    minWidth: 120,
+    maxWidth: 300
   },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2
+  chips: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  chip: {
+    margin: theme.spacing.unit / 4
   }
 });
 
-class MaterialUiSelect extends React.Component<Field> {
+class MaterialUiMultiSelect extends React.Component<Field> {
   render() {
     // $FlowFixMe - HOC adds this class
     const classes = this.props.classes;
-
     const {
-      description,
       disabled,
       id,
       isValid,
@@ -38,10 +43,11 @@ class MaterialUiSelect extends React.Component<Field> {
       options = [],
       placeholder,
       required,
-      value,
+      value = [],
       label,
       onFieldChange
     } = this.props;
+
     const items = options.reduce((itemsSoFar, option) => {
       return itemsSoFar.concat(
         option.items.map(item => {
@@ -57,28 +63,41 @@ class MaterialUiSelect extends React.Component<Field> {
     }, []);
 
     return (
-      <FormControl key={id} disabled={disabled}>
-        <InputLabel htmlFor={id}>{label}</InputLabel>
-        <Select
-          value={value}
-          onChange={evt => {
-            onFieldChange(id, evt.target.value);
-          }}
-          input={<Input name={name} id={id} />}
+      <div key={id}>
+        <FormControl
+          key={id}
+          disabled={disabled}
+          className={classes.formControl}
         >
-          {items}
-        </Select>
-        {description && <FormHelperText>{description}</FormHelperText>}
-      </FormControl>
+          <InputLabel htmlFor={id}>{label}</InputLabel>
+          <Select
+            multiple
+            value={value}
+            onChange={evt => {
+              onFieldChange(id, evt.target.value);
+            }}
+            input={<Input name={name} id={id} />}
+            renderValue={selected => (
+              <div className={classes.chips}>
+                {selected.map(value => (
+                  <Chip key={value} label={value} className={classes.chip} />
+                ))}
+              </div>
+            )}
+          >
+            {items}
+          </Select>
+        </FormControl>
+      </div>
     );
   }
 }
 
-const StyledMaterialUiSelect = withStyles(styles)(MaterialUiSelect);
+const StyledMaterialUiMultiSelect = withStyles(styles)(MaterialUiMultiSelect);
 
 export default (props: FieldDef) => (
   <FieldWrapper {...props}>
     {/* $FlowFixMe */}
-    <StyledMaterialUiSelect />
+    <StyledMaterialUiMultiSelect />
   </FieldWrapper>
 );

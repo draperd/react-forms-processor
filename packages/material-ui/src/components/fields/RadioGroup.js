@@ -1,36 +1,33 @@
 // @flow
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import FormLabel from "@material-ui/core/FormLabel";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "../../../../../types";
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap"
+    display: "flex"
   },
   formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120
+    margin: theme.spacing.unit * 3
   },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2
+  group: {
+    margin: `${theme.spacing.unit}px 0`
   }
 });
 
-class MaterialUiSelect extends React.Component<Field> {
+class MaterialUiRadioGroup extends React.Component<Field> {
   render() {
     // $FlowFixMe - HOC adds this class
     const classes = this.props.classes;
 
     const {
-      description,
       disabled,
       id,
       isValid,
@@ -42,14 +39,21 @@ class MaterialUiSelect extends React.Component<Field> {
       label,
       onFieldChange
     } = this.props;
+
     const items = options.reduce((itemsSoFar, option) => {
       return itemsSoFar.concat(
         option.items.map(item => {
           if (typeof item === "string") {
-            return <MenuItem value={item}>{item}</MenuItem>;
+            return (
+              <FormControlLabel value={item} control={<Radio />} label={item} />
+            );
           } else {
             return (
-              <MenuItem value={item.value}>{item.label || item.value}</MenuItem>
+              <FormControlLabel
+                value={item.value}
+                control={<Radio />}
+                label={item.label || item.value}
+              />
             );
           }
         })
@@ -57,28 +61,28 @@ class MaterialUiSelect extends React.Component<Field> {
     }, []);
 
     return (
-      <FormControl key={id} disabled={disabled}>
-        <InputLabel htmlFor={id}>{label}</InputLabel>
-        <Select
+      <FormControl component="fieldset" required={required}>
+        <FormLabel component="legend">{label}</FormLabel>
+        <RadioGroup
+          aria-label={label}
+          name={name}
           value={value}
           onChange={evt => {
             onFieldChange(id, evt.target.value);
           }}
-          input={<Input name={name} id={id} />}
         >
           {items}
-        </Select>
-        {description && <FormHelperText>{description}</FormHelperText>}
+        </RadioGroup>
       </FormControl>
     );
   }
 }
 
-const StyledMaterialUiSelect = withStyles(styles)(MaterialUiSelect);
+const StyledMaterialUiRadioGroup = withStyles(styles)(MaterialUiRadioGroup);
 
 export default (props: FieldDef) => (
   <FieldWrapper {...props}>
     {/* $FlowFixMe */}
-    <StyledMaterialUiSelect />
+    <StyledMaterialUiRadioGroup />
   </FieldWrapper>
 );

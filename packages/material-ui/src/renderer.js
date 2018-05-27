@@ -1,5 +1,7 @@
 // @flow
 import React from "react";
+import MultiSelect from "./components/fields/MultiSelect";
+import RadioGroup from "./components/fields/RadioGroup";
 import Select from "./components/fields/Select";
 import TextField from "./components/fields/TextField";
 import Checkbox from "./components/fields/Checkbox";
@@ -20,6 +22,12 @@ const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
 
     case "select":
       return <Select key={id} {...field} />;
+
+    case "multiselect":
+      return <MultiSelect key={id} {...field} />;
+
+    case "radiogroup":
+      return <RadioGroup key={id} {...field} />;
 
     default:
       return <div>No mapped field</div>;
