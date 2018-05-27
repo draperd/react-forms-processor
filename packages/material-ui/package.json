@@ -1,6 +1,5 @@
 {
-  "private": true,
-  "name": "react-forms-processor-examples",
+  "name": "react-forms-processor-material-ui",
   "version": "0.0.5",
   "main": "dist/index.js",
   "scripts": {
@@ -8,23 +7,16 @@
     "start": "webpack-dev-server --mode development",
     "transpile": "babel src -d dist --copy-files",
     "prepublishOnly": "npm run transpile",
-    "build": "webpack --mode production",
-    "deploy": "gh-pages -d dist",
-    "publish-demo": "yarn run build && yarn run deploy"
+    "build": "webpack --mode production"
   },
   "license": "MIT",
   "dependencies": {
-    "@atlaskit/tabs": "^6.0.1",
-    "react-ace": "^6.1.1",
-    "react-forms-processor": "^0.0.5",
-    "react-forms-processor-atlaskit": "^0.0.5",
-    "react-forms-processor-formbuilder": "^0.0.5",
-    "react-forms-processor-material-ui": "^0.0.5",
-    "react-markdown": "^3.3.2"
+    "@material-ui/core": "^1.1.0"
   },
   "peerDependencies": {
     "react": "^16.4",
-    "react-dom": "^16.4"
+    "react-dom": "^16.4",
+    "react-forms-processor": "0.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -38,12 +30,9 @@
     "flow-bin": "^0.72.0",
     "flow-types": "^1.0.0",
     "gh-pages": "^1.1.0",
-    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
-    "markdown-loader": "^2.0.2",
     "react": "^16.4",
     "react-dom": "^16.4",
-    "source-map-loader": "^0.2.3",
     "style-loader": "^0.21.0",
     "webpack": "^4.8.1",
     "webpack-cli": "^2.1.3",
