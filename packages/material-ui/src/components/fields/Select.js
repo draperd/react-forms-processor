@@ -12,8 +12,8 @@ import type { Field, FieldDef } from "../../../../../types";
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap"
+    display: "flex !important",
+    flexWrap: "nowrap"
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -57,7 +57,7 @@ class MaterialUiSelect extends React.Component<Field> {
     }, []);
 
     return (
-      <FormControl key={id} disabled={disabled}>
+      <FormControl key={id} disabled={disabled} className={classes.root}>
         <InputLabel htmlFor={id}>{label}</InputLabel>
         <Select
           value={value}

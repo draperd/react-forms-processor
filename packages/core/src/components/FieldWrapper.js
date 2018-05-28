@@ -4,9 +4,18 @@ import styled from "styled-components";
 import FormContext from "./FormContext";
 import type { Field, FieldDef } from "../../../../types";
 
+/*
+NOTE: This would work better with Material, and Atlaskit once the description is swapped out
+display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    margin-bottom: 20px;
+    */
+
 const Layout = styled.div`
   > div {
     display: inline-block;
+    margin-bottom: 20px;
   }
 
   > div:nth-child(2) {
