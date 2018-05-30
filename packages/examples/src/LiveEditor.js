@@ -1,9 +1,14 @@
 // @flow
 import React, { Component } from "react";
 import { Form, FormFragment, FormContext } from "react-forms-processor";
-import { renderer, FormButton } from "react-forms-processor-atlaskit";
+import { FormButton } from "react-forms-processor-atlaskit";
 import { form1 } from "./definitions";
-import type { FieldDef, FormValue, OptionsHandler } from "../../../types";
+import type {
+  FieldDef,
+  FieldRenderer,
+  FormValue,
+  OptionsHandler
+} from "../../../types";
 
 import brace from "brace";
 import AceEditor from "react-ace";
@@ -22,7 +27,8 @@ export type LiveEditorProps = {
   previewDescription?: string,
   formValueTitle?: string,
   formValueDescription?: string,
-  optionsHandler?: OptionsHandler
+  optionsHandler?: OptionsHandler,
+  renderer: FieldRenderer
 };
 
 export type LiveEditorState = {
@@ -58,6 +64,8 @@ export default class LiveEditor extends Component<
 
   render() {
     const { definition, value } = this.state;
+    const { renderer } = this.props;
+
     const {
       editorTitle = "Editor",
       editorDescription = "Try experimenting with the form definition in the editor and see how it updates the form rendered in the preview.",
@@ -101,7 +109,7 @@ export default class LiveEditor extends Component<
               onChange={value => {
                 this.setState({ value });
               }}
-              value={value}
+              // value={value}
               defaultFields={fieldsToRender}
               optionsHandler={optionsHandler}
             >

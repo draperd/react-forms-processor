@@ -10,7 +10,7 @@ import {
   duplicateNames,
   validation
 } from "./definitions";
-import type { OptionsHandler } from "../../../../types";
+import type { FieldRenderer, OptionsHandler } from "../../../../types";
 import { getOptions } from "../SwapiOptionsHandler";
 
 import singleFieldDescription from "./tutorial1.md";
@@ -24,8 +24,16 @@ import validationDescription from "./tutorial7.md";
 const swapiOptions: OptionsHandler = (fieldId, fields, parentContext) => {
   return getOptions();
 };
-class Tutorial extends Component<*, *> {
+
+type TutorialProps = {
+  renderer: FieldRenderer
+};
+
+type TutorialState = {};
+
+class Tutorial extends Component<TutorialProps, *> {
   render() {
+    const { renderer } = this.props;
     return (
       <article>
         <h2>Step-by-Step Examples</h2>
@@ -37,37 +45,44 @@ class Tutorial extends Component<*, *> {
           defaultDefinition={JSON.stringify(singleField)}
           editorTitle="A single field"
           editorDescription={singleFieldDescription}
+          renderer={renderer}
         />
         <LiveEditor
           defaultDefinition={JSON.stringify(visibility)}
           editorTitle="Making one field control the visibility of another"
           editorDescription={visibilityDescription}
+          renderer={renderer}
         />
         <LiveEditor
           defaultDefinition={JSON.stringify(requiredAndDisabledRules)}
           editorTitle="Requirement and disablement rules"
           editorDescription={requirementDescription}
+          renderer={renderer}
         />
         <LiveEditor
           defaultDefinition={JSON.stringify(fieldsWithOptions)}
           editorTitle="Fields with options"
           editorDescription={optionsDescription}
           optionsHandler={swapiOptions}
+          renderer={renderer}
         />
         <LiveEditor
           defaultDefinition={JSON.stringify(manipulateOptions)}
           editorTitle="Handling multi-value fields"
           editorDescription={manipulateOptionsDescription}
+          renderer={renderer}
         />
         <LiveEditor
           defaultDefinition={JSON.stringify(duplicateNames)}
           editorTitle="Using the multiple fields to control the same value"
           editorDescription={duplicateNamesDescription}
+          renderer={renderer}
         />
         <LiveEditor
           defaultDefinition={JSON.stringify(validation)}
           editorTitle="Validating fields"
           editorDescription={validationDescription}
+          renderer={renderer}
         />
       </article>
     );

@@ -151,6 +151,7 @@ export const processFields: ProcessFields = fields => {
     ) {
       processedValue = processedValue.trim();
     }
+
     return {
       ...field,
       value: processedValue,

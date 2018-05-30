@@ -1,6 +1,30 @@
 // @flow
 import type { FieldDef } from "../../../types";
 
+const rendererChoice: FieldDef[] = [
+  {
+    id: "RENDERER",
+    type: "select",
+    label: "Select renderer",
+    name: "renderer",
+    defaultValue: "ATLASKIT",
+    options: [
+      {
+        items: [
+          {
+            label: "Atlaskit",
+            value: "ATLASKIT"
+          },
+          {
+            label: "Material UI",
+            value: "MATERIALUI"
+          }
+        ]
+      }
+    ]
+  }
+];
+
 const createTeamForm: FieldDef[] = [
   {
     id: "PLAN_TYPE",
@@ -36,7 +60,8 @@ const createTeamForm: FieldDef[] = [
     id: "ISSUE_SOURCE",
     type: "select",
     name: "issueSource",
-    label: "Associated issue source"
+    label: "Associated issue source",
+    defaultValue: "BOARD1"
   },
   {
     id: "TEAM_TYPE",
@@ -275,4 +300,4 @@ const frag2: FieldDef[] = [
   }
 ];
 
-export { createTeamForm, form1, frag1, frag2 };
+export { createTeamForm, form1, frag1, frag2, rendererChoice };

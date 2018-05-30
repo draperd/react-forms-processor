@@ -45,7 +45,8 @@ class MaterialUiMultiSelect extends React.Component<Field> {
       required,
       value = [],
       label,
-      onFieldChange
+      onFieldChange,
+      valueDelimiter
     } = this.props;
 
     const items = options.reduce((itemsSoFar, option) => {
@@ -62,6 +63,15 @@ class MaterialUiMultiSelect extends React.Component<Field> {
       );
     }, []);
 
+    let processedValue = value;
+    if (valueDelimiter && typeof value === "string") {
+      processedValue = value.split(valueDelimiter);
+    }
+
+    if (processedValue && !Array.isArray(processedValue)) {
+      processedValue = [processedValue];
+    }
+
     return (
       <div key={id}>
         <FormControl
@@ -72,16 +82,18 @@ class MaterialUiMultiSelect extends React.Component<Field> {
           <InputLabel htmlFor={id}>{label}</InputLabel>
           <Select
             multiple
-            value={value}
+            value={processedValue}
             onChange={evt => {
               onFieldChange(id, evt.target.value);
             }}
             input={<Input name={name} id={id} />}
             renderValue={selected => (
               <div className={classes.chips}>
-                {selected.map(value => (
-                  <Chip key={value} label={value} className={classes.chip} />
-                ))}
+                {selected &&
+                  typeof selected.map === "function" &&
+                  selected.map(value => (
+                    <Chip key={value} label={value} className={classes.chip} />
+                  ))}
               </div>
             )}
           >
