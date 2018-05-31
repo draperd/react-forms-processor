@@ -230,7 +230,15 @@ class App extends Component<AppProps, AppState> {
     return (
       <article>
         <section className="header">
-          <h1>React Forms Processor Demo</h1>
+          <div>
+            <h1>React Forms Processor Demo</h1>
+            <a
+              href="https://github.com/draperd/react-forms-processor"
+              target="_blank"
+            >
+              GitHub Project Link
+            </a>
+          </div>
           <Form
             defaultFields={rendererChoice}
             renderer={renderer}
