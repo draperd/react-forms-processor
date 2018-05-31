@@ -11,6 +11,7 @@ import {
 import { renderer as materialUiRenderer } from "react-forms-processor-material-ui";
 import LiveEditor from "./LiveEditor";
 import Tutorial from "./tutorial/Tutorial";
+import "./App.css";
 
 import type {
   FieldRenderer,
@@ -116,7 +117,9 @@ const getTabs = (renderer: FieldRenderer) => {
       content: (
         <div>
           <p>
-            This is an example of a Form component with Field component children
+            This is an example of a Form component with Field component
+            children. These will always be displayed as Atlaskit fields because
+            those are the components that have been specifically used.
           </p>
           <Form renderer={renderer}>
             <FieldText
@@ -186,14 +189,16 @@ const getTabs = (renderer: FieldRenderer) => {
 type AppProps = {};
 
 type AppState = {
-  renderer: FieldRenderer
+  renderer: FieldRenderer,
+  selectedTab: any
 };
 
 class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = {
-      renderer: atlaskitRenderer
+      renderer: atlaskitRenderer,
+      selectedTab: null
     };
   }
 
@@ -215,18 +220,28 @@ class App extends Component<AppProps, AppState> {
     });
   }
 
+  handleUpdate(selectedTab: any) {
+    this.setState({ selectedTab: selectedTab.label });
+  }
+
   render() {
-    const { renderer } = this.state;
+    const { renderer, selectedTab } = this.state;
     const tabs = getTabs(renderer);
     return (
       <article>
-        <h1>React Forms Processor Demo</h1>
-        <Form
-          defaultFields={rendererChoice}
-          renderer={renderer}
-          onChange={(value, isValid) => this.setRenderer(value)}
+        <section className="header">
+          <h1>React Forms Processor Demo</h1>
+          <Form
+            defaultFields={rendererChoice}
+            renderer={renderer}
+            onChange={(value, isValid) => this.setRenderer(value)}
+          />
+        </section>
+        <Tabs
+          tabs={tabs}
+          onSelect={selectedTab => this.handleUpdate(selectedTab)}
+          isSelectedTest={(selected, tab) => selectedTab === tab.label}
         />
-        <Tabs tabs={tabs} />
       </article>
     );
   }
