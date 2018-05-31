@@ -27,22 +27,6 @@ const rendererChoice: FieldDef[] = [
 
 const createTeamForm: FieldDef[] = [
   {
-    id: "PLAN_TYPE",
-    type: "radiogroup",
-    label: "Plan type",
-    name: "planType",
-    defaultValue: "POINTS",
-    options: [
-      {
-        items: [
-          { label: "Points", value: "POINTS" },
-          { label: "Hours", value: "HOURS" },
-          { label: "Days", value: "DAYS" }
-        ]
-      }
-    ]
-  },
-  {
     id: "TEAMNAME",
     type: "text",
     name: "name",
@@ -55,13 +39,6 @@ const createTeamForm: FieldDef[] = [
         message: "Team names can be a maximum of 255 characters in length"
       }
     }
-  },
-  {
-    id: "ISSUE_SOURCE",
-    type: "select",
-    name: "issueSource",
-    label: "Associated issue source",
-    defaultValue: "BOARD1"
   },
   {
     id: "TEAM_TYPE",
@@ -81,6 +58,22 @@ const createTeamForm: FieldDef[] = [
     ]
   },
   {
+    id: "SIZING_METRIC",
+    type: "radiogroup",
+    label: "Estimation Metric",
+    name: "metric",
+    defaultValue: "POINTS",
+    options: [
+      {
+        items: [
+          { label: "Points", value: "POINTS" },
+          { label: "Hours", value: "HOURS" },
+          { label: "Days", value: "DAYS" }
+        ]
+      }
+    ]
+  },
+  {
     id: "VELOCITY_POINTS",
     type: "text",
     name: "velocity",
@@ -89,7 +82,7 @@ const createTeamForm: FieldDef[] = [
     defaultValue: 30,
     visibleWhen: [
       {
-        field: "PLAN_TYPE",
+        field: "SIZING_METRIC",
         is: ["POINTS"]
       }
     ],
@@ -104,7 +97,7 @@ const createTeamForm: FieldDef[] = [
     defaultValue: 200,
     visibleWhen: [
       {
-        field: "PLAN_TYPE",
+        field: "SIZING_METRIC",
         is: ["HOURS"]
       }
     ],
@@ -118,7 +111,7 @@ const createTeamForm: FieldDef[] = [
     description: "Something about velocity",
     visibleWhen: [
       {
-        field: "PLAN_TYPE",
+        field: "SIZING_METRIC",
         is: ["DAYS"]
       }
     ],
