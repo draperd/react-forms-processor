@@ -27,10 +27,9 @@ const getDefinedFields: GetDefinedFields = parentContext => {
   if (
     parentContext &&
     parentContext.parentContext &&
-    parentContext.parentContext.fields.length &&
-    parentContext.parentContext.fields[0].value
+    parentContext.parentContext.fields.length
   ) {
-    const value = parentContext.parentContext.fields[0].value;
+    const value = parentContext.parentContext.fields;
     if (Array.isArray(value)) {
       const fields = [];
       value.forEach(field => {
