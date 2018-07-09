@@ -1,7 +1,7 @@
 // @flow
 import React, { Component, PureComponent } from "react";
+import get from "lodash/get";
 import { Form, FormContext } from "react-forms-processor";
-import renderer from "../../renderer";
 import type { FieldDef } from "../../../../../types";
 import Button from "@atlaskit/button";
 import ChevronDownIcon from "@atlaskit/icon/glyph/chevron-down";
@@ -151,14 +151,15 @@ export default class RepeatingFormField extends Component<Props, State> {
     const targetIndex = items.length;
     items[targetIndex] = (
       <FormContext.Consumer>
-        {value => {
+        {context => {
+          const { renderer, optionsHandler } = context;
           return (
             <Form
-              parentContext={value}
+              parentContext={context}
               key={`FIELD_${targetIndex}`}
               defaultFields={fields}
               renderer={renderer}
-              optionsHandler={value && value.optionsHandler}
+              optionsHandler={optionsHandler}
               onChange={(value, isValid) => {
                 const { values } = this.state;
                 values[targetIndex] = value;
@@ -207,8 +208,7 @@ export default class RepeatingFormField extends Component<Props, State> {
     } = this.props;
 
     const fields = items.map((builder, index) => {
-      const label =
-        (values[index] && values[index][idAttribute]) || unidentifiedLabel;
+      const label = get(values[index], idAttribute, unidentifiedLabel);
       return (
         <Expander
           key={`exp_${index}`}

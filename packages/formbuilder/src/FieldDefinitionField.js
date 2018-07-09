@@ -1,0 +1,105 @@
+// @flow
+import React, { Component, PureComponent } from "react";
+import { Form, FormContext, FormFragment } from "react-forms-processor";
+import Tabs from "@atlaskit/tabs";
+import {
+  basicInfo,
+  optionsInfo,
+  rulesInfo,
+  validationInfo
+} from "./definitions";
+import type { FieldDef, FieldRenderer } from "../../../types";
+
+const getTabs = (renderer: FieldRenderer) => {
+  return [
+    {
+      label: "Basics",
+      content: (
+        <div>
+          <div>
+            <FormFragment defaultFields={basicInfo} />
+          </div>
+        </div>
+      )
+    },
+    {
+      label: "Options",
+      content: (
+        <div data-options="b">
+          <FormFragment defaultFields={optionsInfo} />
+        </div>
+      )
+    },
+    {
+      label: "Dynamic Rules",
+      content: (
+        <div>
+          <div>
+            <div data-rules="c">
+              <FormFragment defaultFields={rulesInfo} />
+            </div>
+          </div>
+        </div>
+      )
+    },
+    {
+      label: "Validation",
+      content: (
+        <div>
+          <div>
+            <div>
+              <div data-validation="d">
+                <FormFragment defaultFields={validationInfo} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  ];
+};
+
+type State = {
+  selectedTab: any
+};
+
+export default class RepeatingFormField extends Component<FieldDef, State> {
+  constructor(props: FieldDef) {
+    super(props);
+    this.state = {
+      selectedTab: null
+    };
+  }
+  handleUpdate(selectedTab: any) {
+    this.setState({ selectedTab: selectedTab.label });
+  }
+
+  render() {
+    const { value, id } = this.props;
+    const { selectedTab } = this.state;
+    return (
+      <FormContext.Consumer>
+        {context => {
+          const { renderer, optionsHandler, onFieldChange } = context;
+          return (
+            <Form
+              value={value}
+              parentContext={context}
+              renderer={renderer}
+              optionsHandler={optionsHandler}
+              onChange={(value, isValid) => {
+                onFieldChange(id, value);
+              }}
+            >
+              <Tabs
+                tabs={getTabs(renderer)}
+                onSelect={selectedTab => this.handleUpdate(selectedTab)}
+                isSelectedTest={(selected, tab) => selectedTab === tab.label}
+              />
+            </Form>
+          );
+        }}
+      </FormContext.Consumer>
+    );
+  }
+}

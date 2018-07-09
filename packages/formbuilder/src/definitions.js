@@ -175,6 +175,97 @@ const field = [
   }
 ];
 
+const basicInfo = [
+  {
+    id: "ID",
+    name: "id",
+    type: "text",
+    required: true,
+    value: "",
+    label: "ID",
+    placeholder: "Enter a unique ID..."
+  },
+  {
+    id: "NAME",
+    name: "name",
+    type: "text",
+    required: true,
+    value: "",
+    label: "Name",
+    placeholder: "Enter the name for the field"
+  },
+  {
+    id: "TYPE",
+    name: "type",
+    type: "select",
+    value: "text",
+    label: "Type",
+    placeholder: "Choose a field type",
+    options: [
+      { items: ["text", "textarea", "select", "radiogroup", "checkbox"] }
+    ]
+  },
+  {
+    id: "LABEL",
+    name: "label",
+    type: "text",
+    required: false,
+    value: "",
+    label: "Label",
+    placeholder: "Enter the label for the field"
+  },
+  {
+    id: "PLACEHOLDER",
+    name: "placeholder",
+    type: "text",
+    required: false,
+    value: "",
+    label: "Placeholder Text",
+    placeholder: "Placeholder..."
+  },
+  {
+    id: "VALUE",
+    name: "value",
+    type: "text",
+    value: "",
+    label: "Initial value",
+    placeholder: "Enter initial value for the field..."
+  }
+];
+
+const optionsInfo = [
+  {
+    id: "OPTIONS",
+    name: "options",
+    type: "repeating",
+    value: [],
+    misc: {
+      fields: optionGroups,
+      idAttribute: "heading",
+      addButtonLabel: "Add Option Group",
+      noItemsMessage: "No options have been added!",
+      unidentifiedLabel: "Unidentified Option Group"
+    }
+  }
+];
+
+const rulesInfo = [
+  {
+    id: "VISIBLE_WHEN",
+    name: "visibleWhen",
+    type: "repeating",
+    label: "This field is visible when...",
+    value: [],
+    misc: {
+      fields: fieldRules,
+      addButtonLabel: "Add Rule",
+      unidentifiedLabel: "Unidentified rule"
+    }
+  }
+];
+
+const validationInfo = [];
+
 const formBuilder = [
   {
     id: "FORM",
@@ -183,12 +274,19 @@ const formBuilder = [
     label: "Form Definition",
     value: [],
     misc: {
+      idAttribute: "field.id",
       addButtonLabel: "Add Field",
       unidentifiedLabel: "Unidentified field",
       noItemsMessage: "No fields configured yet!",
-      fields: field
+      fields: [
+        {
+          id: "FIELD",
+          name: "field",
+          type: "field"
+        }
+      ]
     }
   }
 ];
 
-export { formBuilder };
+export { formBuilder, basicInfo, optionsInfo, rulesInfo, validationInfo };

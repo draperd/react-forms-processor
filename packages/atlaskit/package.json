@@ -20,7 +20,8 @@
     "@atlaskit/icon": "^11.0.1",
     "@atlaskit/multi-select": "^8.1.1",
     "@atlaskit/single-select": "^3.3.1",
-    "@atlaskit/tooltip": "^9.1.4"
+    "@atlaskit/tooltip": "^9.1.4",
+    "lodash": "^4.17.10"
   },
   "peerDependencies": {
     "react": "^16.4",

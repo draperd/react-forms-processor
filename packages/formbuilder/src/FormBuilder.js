@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from "react";
 import { Form, FormContext } from "react-forms-processor";
-import { FormButton, renderer } from "react-forms-processor-atlaskit";
+import { FormButton } from "react-forms-processor-atlaskit";
 import type {
   FieldDef,
   FormContextData,
@@ -9,6 +9,7 @@ import type {
   Options,
   OptionsHandler
 } from "../../../types";
+import renderer from "./renderer";
 import { formBuilder } from "./definitions";
 
 type Props = {};
@@ -69,8 +70,9 @@ export default class FormBuilder extends Component<Props, State> {
   }
 
   onBuilderFormChange(value: FormValue, isValid: boolean) {
+    const previewFields = value.fields.map(value => value.field);
     this.setState({
-      previewFields: value.fields
+      previewFields
     });
   }
 
@@ -82,9 +84,9 @@ export default class FormBuilder extends Component<Props, State> {
           <Form
             defaultFields={formBuilder}
             renderer={renderer}
-            onChange={(value, isValid) =>
-              this.onBuilderFormChange(value, isValid)
-            }
+            onChange={(value, isValid) => {
+              this.onBuilderFormChange(value, isValid);
+            }}
             optionsHandler={optionsHandler}
           />
         </section>
