@@ -1,6 +1,13 @@
 // @flow
 import type { Node } from "react";
 
+export type FormButtonProps = {
+  label?: string,
+  onClick: (value: FormValue) => void,
+  value?: FormValue,
+  isValid?: boolean
+};
+
 export type Value = any;
 
 export type Rule = {

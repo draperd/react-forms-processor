@@ -1,20 +1,21 @@
 // @flow
 import React from "react";
-import Button from "@atlaskit/button";
 import { FormContext } from "react-forms-processor";
-import type { FormValue, FormButtonProps } from "../../../../../types";
+import type { FormValue, FormButtonProps } from "../../../../types";
 
 class FormButton extends React.Component<FormButtonProps> {
   render() {
     const { isValid, label = "OK", onClick, value = {} } = this.props;
     return (
-      <Button
-        appearance="primary"
-        isDisabled={!isValid}
-        onClick={() => onClick(value)}
+      <button
+        type="button"
+        disabled={!isValid}
+        onClick={() => {
+          onClick(value);
+        }}
       >
-        {label}{" "}
-      </Button>
+        {label}
+      </button>
     );
   }
 }
