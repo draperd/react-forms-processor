@@ -254,7 +254,31 @@ const rulesInfo = [
     id: "VISIBLE_WHEN",
     name: "visibleWhen",
     type: "repeating",
-    label: "This field is visible when...",
+    label: "This field is VISIBLE when...",
+    value: [],
+    misc: {
+      fields: fieldRules,
+      addButtonLabel: "Add Rule",
+      unidentifiedLabel: "Unidentified rule"
+    }
+  },
+  {
+    id: "REQUIRED_WHEN",
+    name: "requiredWhen",
+    type: "repeating",
+    label: "This field is REQUIRED when...",
+    value: [],
+    misc: {
+      fields: fieldRules,
+      addButtonLabel: "Add Rule",
+      unidentifiedLabel: "Unidentified rule"
+    }
+  },
+  {
+    id: "DISABLED_WHEN",
+    name: "disabledWhen",
+    type: "repeating",
+    label: "This field is DISABLED when...",
     value: [],
     misc: {
       fields: fieldRules,
