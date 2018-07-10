@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "react-forms-processor-examples",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,10 +16,10 @@
   "dependencies": {
     "@atlaskit/tabs": "^6.0.1",
     "react-ace": "^6.1.1",
-    "react-forms-processor": "^0.0.6",
-    "react-forms-processor-atlaskit": "^0.0.6",
-    "react-forms-processor-formbuilder": "^0.0.6",
-    "react-forms-processor-material-ui": "^0.0.6",
+    "react-forms-processor": "^0.0.7",
+    "react-forms-processor-atlaskit": "^0.0.7",
+    "react-forms-processor-formbuilder": "^0.0.7",
+    "react-forms-processor-material-ui": "^0.0.7",
     "react-markdown": "^3.3.2"
   },
   "peerDependencies": {
