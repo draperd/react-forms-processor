@@ -331,6 +331,12 @@ describe("calculateFormValue", () => {
     name: "test3",
     value: "ted"
   };
+  const field5 = {
+    ...baseField,
+    id: "TEST5",
+    name: "test.dot.notation",
+    value: "ted"
+  };
 
   const value = calculateFormValue([field1, field2, field3, field4]);
   test("two field values should be omitted", () => {
@@ -344,6 +350,11 @@ describe("calculateFormValue", () => {
   });
   test("last field wins", () => {
     expect(value.test3).toEqual("ted");
+  });
+
+  test("dot-notation names can be provided", () => {
+    const value = calculateFormValue([field5]);
+    expect(value.test.dot.notation).toEqual("ted");
   });
 
   test("get added and removed values", () => {

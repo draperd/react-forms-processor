@@ -1,5 +1,5 @@
 // @flow
-// import set from 'lodash/get';
+import set from "lodash/set";
 import { validateAllFields } from "../utilities/validation";
 import type {
   CalculateFormValue,
@@ -368,12 +368,11 @@ export const calculateFormValue: CalculateFormValue = fields => {
     if (shouldOmitFieldValue(field)) {
       return formValue;
     } else if (useChangesAsValues) {
-      determineChangedValues(field).forEach(
-        ({ name, value }) => (formValue[name] = value)
+      determineChangedValues(field).forEach(({ name, value }) =>
+        set(formValue, name, value)
       );
     } else {
-      // set(formValue, name, value);
-      formValue[name] = value;
+      set(formValue, name, value);
     }
 
     return formValue;

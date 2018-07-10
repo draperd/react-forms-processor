@@ -102,6 +102,9 @@ export default class FormBuilder extends Component<Props, State> {
             />
           </Form>
         </section>
+        <section>
+          <pre>{JSON.stringify(previewFields.slice(), null, 2)}</pre>
+        </section>
       </div>
     );
   }

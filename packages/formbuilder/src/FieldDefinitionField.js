@@ -6,7 +6,8 @@ import {
   basicInfo,
   optionsInfo,
   rulesInfo,
-  validationInfo
+  validationInfo,
+  advancedInfo
 } from "./definitions";
 import type { FieldDef, FieldRenderer } from "../../../types";
 
@@ -25,7 +26,7 @@ const getTabs = (renderer: FieldRenderer) => {
     {
       label: "Options",
       content: (
-        <div data-options="b">
+        <div>
           <FormFragment defaultFields={optionsInfo} />
         </div>
       )
@@ -35,7 +36,7 @@ const getTabs = (renderer: FieldRenderer) => {
       content: (
         <div>
           <div>
-            <div data-rules="c">
+            <div>
               <FormFragment defaultFields={rulesInfo} />
             </div>
           </div>
@@ -48,8 +49,24 @@ const getTabs = (renderer: FieldRenderer) => {
         <div>
           <div>
             <div>
-              <div data-validation="d">
+              <div>
                 <FormFragment defaultFields={validationInfo} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    },
+    {
+      label: "Advanced",
+      content: (
+        <div>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <FormFragment defaultFields={advancedInfo} />
+                </div>
               </div>
             </div>
           </div>

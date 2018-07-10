@@ -215,6 +215,15 @@ const basicInfo = [
     placeholder: "Enter the label for the field"
   },
   {
+    id: "DESCRIPTION",
+    name: "description",
+    type: "textarea",
+    required: false,
+    value: "",
+    label: "Description",
+    placeholder: "Enter a description for the field"
+  },
+  {
     id: "PLACEHOLDER",
     name: "placeholder",
     type: "text",
@@ -288,7 +297,259 @@ const rulesInfo = [
   }
 ];
 
-const validationInfo = [];
+const validationInfo = [
+  {
+    id: "SHOULD_MATCH_REGEX",
+    name: "field",
+    type: "checkbox",
+    label: "Value should match a regular expression?",
+    defaultValue: false
+  },
+  {
+    id: "MATCHES_REGEX",
+    name: "validWhen.matchesRegEx.pattern",
+    type: "text",
+    label: "Regular expression",
+    defaultValue: "",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        field: "SHOULD_MATCH_REGEX",
+        is: [true]
+      }
+    ]
+  },
+  {
+    id: "MATCHES_REGEX_MESSAGE",
+    name: "validWhen.matchesRegEx.message",
+    type: "text",
+    label: "Error message to show when pattern does not match",
+    defaultValue: "",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        field: "SHOULD_MATCH_REGEX",
+        is: [true]
+      }
+    ]
+  },
+  {
+    id: "HAS_MIN_LENGTH",
+    name: "field",
+    type: "checkbox",
+    label: "Value should have a minimum length?",
+    defaultValue: false
+  },
+  {
+    id: "LENGTH_IS_GREATER_THAN",
+    name: "validWhen.lengthIsGreaterThan.length",
+    type: "text",
+    label: "Length is greater than",
+    defaultValue: "",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        field: "HAS_MIN_LENGTH",
+        is: [true]
+      }
+    ],
+    validWhen: {
+      matchesRegEx: {
+        pattern: "^[\\d]+$",
+        message: "Length can only be in whole numbers"
+      }
+    }
+  },
+  {
+    id: "LENGTH_IS_GREATER_THAN_MESSAGE",
+    name: "validWhen.lengthIsGreaterThan.message",
+    type: "text",
+    label: "Error message to show when not enough characters are provided",
+    defaultValue: "",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        field: "HAS_MIN_LENGTH",
+        is: [true]
+      }
+    ]
+  },
+  {
+    id: "HAS_MAX_LENGTH",
+    name: "field",
+    type: "checkbox",
+    label: "Value should have a maximum length?",
+    defaultValue: false
+  },
+  {
+    id: "LENGTH_IS_LESS_THAN",
+    name: "validWhen.lengthIsLessThan.length",
+    type: "text",
+    label: "Length is less than",
+    defaultValue: "",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        field: "HAS_MAX_LENGTH",
+        is: [true]
+      }
+    ],
+    validWhen: {
+      matchesRegEx: {
+        pattern: "^[\\d]+$",
+        message: "Length can only be in whole numbers"
+      }
+    }
+  },
+  {
+    id: "LENGTH_IS_LESS_THAN_MESSAGE",
+    name: "validWhen.lengthIsLessThan.message",
+    type: "text",
+    label: "Error message to show when too many characters are provided",
+    defaultValue: "",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        field: "HAS_MAX_LENGTH",
+        is: [true]
+      }
+    ]
+  },
+  {
+    id: "FALLS_WITHIN_NUMERICAL_RANGE",
+    name: "field",
+    type: "checkbox",
+    label: "Value should fall within numerical range?",
+    defaultValue: false
+  },
+  {
+    id: "FALLS_WITHIN_NUMERICAL_RANGE_MIN",
+    name: "validWhen.fallsWithinNumericalRange.min",
+    type: "text",
+    label: "Value must be greater or equal to",
+    defaultValue: "",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        field: "FALLS_WITHIN_NUMERICAL_RANGE",
+        is: [true]
+      }
+    ],
+    validWhen: {
+      matchesRegEx: {
+        pattern: "^[\\d]+$",
+        message: "Length can only be in whole numbers"
+      }
+    }
+  },
+  {
+    id: "FALLS_WITHIN_NUMERICAL_RANGE_MAX",
+    name: "validWhen.fallsWithinNumericalRange.max",
+    type: "text",
+    label: "Value must be less than or equal to",
+    defaultValue: "",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        field: "FALLS_WITHIN_NUMERICAL_RANGE",
+        is: [true]
+      }
+    ],
+    validWhen: {
+      matchesRegEx: {
+        pattern: "^[\\d]+$",
+        message: "Length can only be in whole numbers"
+      }
+    }
+  },
+  {
+    id: "FALLS_WITHIN_NUMERICAL_RANGE_MESSAGE",
+    name: "validWhen.fallsWithinNumericalRange.message",
+    type: "text",
+    label: "Error message to show when value falls outside of range",
+    defaultValue: "",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        field: "FALLS_WITHIN_NUMERICAL_RANGE",
+        is: [true]
+      }
+    ]
+  }
+];
+
+const advancedInfo = [
+  {
+    id: "OMIT_WHEN_HIDDEN",
+    name: "omitWhenHidden",
+    label: "Exclude the field value when the field is hidden?",
+    type: "checkbox",
+    defaultValue: false
+  },
+  {
+    id: "OMIT_WHEN_VALUE_IS",
+    name: "omitWhenValueIs",
+    type: "repeating",
+    label: "Exclude the field value if it is one of these values",
+    misc: {
+      fields: [
+        {
+          id: "VALUE",
+          name: "value",
+          type: "text",
+          label: "Value",
+          required: true
+        }
+      ],
+      idAttribute: "value",
+      addButtonLabel: "Add value",
+      unidentifiedLabel: "Unidentified value",
+      noItemsMessage: "No value added"
+    }
+  },
+  {
+    id: "VALUE_DELIMITER",
+    name: "valueDelimiter",
+    label: "Split value using this string",
+    type: "text",
+    defaultValue: ""
+  },
+  {
+    id: "USE_CHANGES_AS_VALUES",
+    name: "useChangesAsValues",
+    label: "Use field changes as values",
+    type: "checkbox",
+    defaultValue: false
+  },
+  {
+    id: "ADDED_SUFFIX",
+    name: "addedSuffix",
+    label: "Apply this string to the field name for added values",
+    type: "text",
+    defaultValue: "_added",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        field: "USE_CHANGES_AS_VALUES",
+        is: [true]
+      }
+    ]
+  },
+  {
+    id: "REMOVED_SUFFIX",
+    name: "removedSuffix",
+    label: "Apply this string to the field name for removed values",
+    type: "text",
+    defaultValue: "_removed",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        field: "USE_CHANGES_AS_VALUES",
+        is: [true]
+      }
+    ]
+  }
+];
 
 const formBuilder = [
   {
@@ -313,4 +574,11 @@ const formBuilder = [
   }
 ];
 
-export { formBuilder, basicInfo, optionsInfo, rulesInfo, validationInfo };
+export {
+  formBuilder,
+  basicInfo,
+  optionsInfo,
+  rulesInfo,
+  validationInfo,
+  advancedInfo
+};
