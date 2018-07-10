@@ -32,7 +32,7 @@ const getTabs = (renderer: FieldRenderer) => {
       )
     },
     {
-      label: "Dynamic Rules",
+      label: "Attributes",
       content: (
         <div>
           <div>

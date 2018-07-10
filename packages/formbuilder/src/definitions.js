@@ -234,7 +234,7 @@ const basicInfo = [
   },
   {
     id: "VALUE",
-    name: "value",
+    name: "defaultValue",
     type: "text",
     value: "",
     label: "Initial value",
@@ -259,6 +259,27 @@ const optionsInfo = [
 ];
 
 const rulesInfo = [
+  {
+    id: "VISIBLE",
+    name: "visible",
+    type: "checkbox",
+    label: "Initially visible",
+    defaultValue: true
+  },
+  {
+    id: "REQUIRED",
+    name: "required",
+    type: "checkbox",
+    label: "Initially required",
+    defaultValue: false
+  },
+  {
+    id: "DISABLED",
+    name: "disabled",
+    type: "checkbox",
+    label: "Initially disabled",
+    defaultValue: false
+  },
   {
     id: "VISIBLE_WHEN",
     name: "visibleWhen",
