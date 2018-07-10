@@ -21,6 +21,7 @@ class AtlaskitFieldText extends React.Component<Field> {
     } = this.props;
     return (
       <FieldText
+        autoComplete="off"
         key={id}
         name={name}
         label={label}
