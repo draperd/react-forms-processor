@@ -179,7 +179,7 @@ const getTabs = (renderer: FieldRenderer) => {
             This is an example the FormBuilder component that can be used to
             dynamically build forms
           </p>
-          <FormBuilder />
+          <FormBuilder renderer={renderer} />
         </div>
       )
     }
@@ -206,6 +206,9 @@ class App extends Component<AppProps, AppState> {
     let renderer = atlaskitRenderer;
     if (value.renderer) {
       switch (value.renderer) {
+        case "NATIVE":
+          renderer = undefined;
+          break;
         case "ATLASKIT":
           renderer = atlaskitRenderer;
           break;

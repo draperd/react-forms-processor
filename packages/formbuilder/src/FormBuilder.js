@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Form, FormContext } from "react-forms-processor";
 import { FormButton } from "react-forms-processor-atlaskit";
 import type {
+  FieldRenderer,
   FieldDef,
   FormContextData,
   FormValue,
@@ -12,7 +13,9 @@ import type {
 import renderer from "./renderer";
 import { formBuilder } from "./definitions";
 
-type Props = {};
+type Props = {
+  renderer?: FieldRenderer
+};
 
 type State = {
   previewFields: FieldDef[],
@@ -79,6 +82,7 @@ export default class FormBuilder extends Component<Props, State> {
 
   render() {
     const { previewFields } = this.state;
+    const previewRenderer = this.props.renderer || renderer;
     return (
       <div className="App">
         <section>
@@ -93,7 +97,10 @@ export default class FormBuilder extends Component<Props, State> {
         </section>
         <section>
           <div> Preview </div>
-          <Form defaultFields={previewFields.slice()} renderer={renderer}>
+          <Form
+            defaultFields={previewFields.slice()}
+            renderer={previewRenderer}
+          >
             <FormButton
               label="Test"
               onClick={(value: FormValue) =>

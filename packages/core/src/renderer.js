@@ -1,6 +1,96 @@
 // @flow
 import React from "react";
-import type { FieldRenderer, FieldDef, OnFieldChange } from "../../../types";
+import type {
+  FieldRenderer,
+  FieldDef,
+  OnFieldChange,
+  Option
+} from "../../../types";
+
+const mapOptionItems = (optionGroupItems: Option[]) =>
+  optionGroupItems.map(item => {
+    if (typeof item === "string") {
+      return (
+        <option key={item} value={item}>
+          {item}
+        </option>
+      );
+    } else {
+      return (
+        <option key={item.value} value={item.value}>
+          {item.label || item.value}
+        </option>
+      );
+    }
+  });
+
+const renderSelect = (
+  field: FieldDef,
+  onChange: OnFieldChange,
+  multiple: boolean
+) => {
+  const {
+    disabled,
+    id,
+    name,
+    required,
+    value,
+    label,
+    options = [],
+    valueDelimiter
+  } = field;
+
+  let items = [];
+  options.forEach(optionGroup => {
+    const { heading } = optionGroup;
+    const optionItems = mapOptionItems(optionGroup.items);
+    if (heading) {
+      items.push(
+        <optgroup key={heading} label={heading}>
+          {optionItems}
+        </optgroup>
+      );
+    } else {
+      items = items.concat(optionItems);
+    }
+  });
+
+  let processedValue = value;
+  if (valueDelimiter && typeof value === "string" && multiple) {
+    processedValue = value.split(valueDelimiter);
+  }
+
+  if (processedValue && !Array.isArray(processedValue) && multiple) {
+    processedValue = [processedValue];
+  }
+
+  return (
+    <div key={id}>
+      <label htmlFor={id}>{label}</label>
+      <select
+        multiple={multiple}
+        id={id}
+        name={name}
+        value={processedValue}
+        disabled={disabled}
+        required={required}
+        onChange={evt => {
+          if (multiple) {
+            const options = evt.target.options;
+            const value = [...evt.target.options]
+              .filter(({ selected }) => selected)
+              .map(({ value }) => value);
+            onChange(id, value);
+          } else {
+            onChange(id, evt.target.value);
+          }
+        }}
+      >
+        {items}
+      </select>
+    </div>
+  );
+};
 
 const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
   const {
@@ -35,40 +125,10 @@ const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
         </div>
       );
     case "select":
-      items = options.reduce((itemsSoFar, option) => {
-        return itemsSoFar.concat(
-          option.items.map(item => {
-            if (typeof item === "string") {
-              return (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              );
-            } else {
-              return (
-                <option key={item.value} value={item.value}>
-                  {item.label || item.value}
-                </option>
-              );
-            }
-          })
-        );
-      }, []);
-      return (
-        <div key={id}>
-          <label htmlFor={id}>{label}</label>
-          <select
-            id={id}
-            name={name}
-            value={value}
-            disabled={disabled}
-            required={required}
-            onChange={evt => onChange(id, evt.target.value)}
-          >
-            {items}
-          </select>
-        </div>
-      );
+      return renderSelect(field, onChange, false);
+
+    case "multiselect":
+      return renderSelect(field, onChange, true);
 
     case "radiogroup":
       items = options.reduce((itemsSoFar, option) => {

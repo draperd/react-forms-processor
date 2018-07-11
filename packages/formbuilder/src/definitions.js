@@ -92,89 +92,6 @@ const optionGroups = [
   }
 ];
 
-const field = [
-  {
-    id: "ID",
-    name: "id",
-    type: "text",
-    required: true,
-    value: "",
-    label: "ID",
-    placeholder: "Enter a unique ID..."
-  },
-  {
-    id: "NAME",
-    name: "name",
-    type: "text",
-    required: true,
-    value: "",
-    label: "Name",
-    placeholder: "Enter the name for the field"
-  },
-  {
-    id: "TYPE",
-    name: "type",
-    type: "select",
-    value: "text",
-    label: "Type",
-    placeholder: "Choose a field type",
-    options: [
-      { items: ["text", "textarea", "select", "radiogroup", "checkbox"] }
-    ]
-  },
-  {
-    id: "LABEL",
-    name: "label",
-    type: "text",
-    required: false,
-    value: "",
-    label: "Label",
-    placeholder: "Enter the label for the field"
-  },
-  {
-    id: "PLACEHOLDER",
-    name: "placeholder",
-    type: "text",
-    required: false,
-    value: "",
-    label: "Placeholder Text",
-    placeholder: "Placeholder..."
-  },
-  {
-    id: "VALUE",
-    name: "value",
-    type: "text",
-    value: "",
-    label: "Initial value",
-    placeholder: "Enter initial value for the field..."
-  },
-  {
-    id: "OPTIONS",
-    name: "options",
-    type: "repeating",
-    value: [],
-    misc: {
-      fields: optionGroups,
-      idAttribute: "heading",
-      addButtonLabel: "Add Option Group",
-      noItemsMessage: "No options have been added!",
-      unidentifiedLabel: "Unidentified Option Group"
-    }
-  },
-  {
-    id: "VISIBLE_WHEN",
-    name: "visibleWhen",
-    type: "repeating",
-    label: "This field is visible when...",
-    value: [],
-    misc: {
-      fields: fieldRules,
-      addButtonLabel: "Add Rule",
-      unidentifiedLabel: "Unidentified rule"
-    }
-  }
-];
-
 const basicInfo = [
   {
     id: "ID",
@@ -202,7 +119,16 @@ const basicInfo = [
     label: "Type",
     placeholder: "Choose a field type",
     options: [
-      { items: ["text", "textarea", "select", "radiogroup", "checkbox"] }
+      {
+        items: [
+          "text",
+          "textarea",
+          "select",
+          "mulitselect",
+          "radiogroup",
+          "checkbox"
+        ]
+      }
     ]
   },
   {

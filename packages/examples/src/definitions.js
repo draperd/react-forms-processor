@@ -12,6 +12,10 @@ const rendererChoice: FieldDef[] = [
       {
         items: [
           {
+            label: "Native HTML",
+            value: "NATIVE"
+          },
+          {
             label: "Atlaskit",
             value: "ATLASKIT"
           },
