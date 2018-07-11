@@ -11,7 +11,7 @@ class FormButton extends React.Component<FormButtonProps> {
       <Button
         appearance="primary"
         isDisabled={!isValid}
-        onClick={() => onClick(value)}
+        onClick={() => onClick && onClick(value)}
       >
         {label}{" "}
       </Button>
