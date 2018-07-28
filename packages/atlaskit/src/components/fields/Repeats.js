@@ -41,6 +41,14 @@ const createFormForItem = (
     <FormContext.Consumer>
       {context => {
         const { renderer, optionsHandler } = context;
+        // TODO: Figure out why value isn't being set...
+        //       Fields rather then default fields?
+        console.log(
+          "Creating form with fields",
+          fieldsForForm,
+          " and value ",
+          item
+        );
         return (
           <Form
             parentContext={context}
@@ -68,16 +76,13 @@ const reorder = (list, startIndex, endIndex) => {
 const grid = 8;
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  width: 400
+  background: isDraggingOver ? "lightblue" : "lightgrey"
 });
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: "none",
   padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
 
   // change background colour if dragging
   background: isDragging ? "lightgreen" : "white",
@@ -101,35 +106,40 @@ export default class Repeats extends Component<Props, State> {
   }
 
   addItem() {
-    const { items } = this.state;
+    let { items } = this.state;
+    items = [...items, { id: uniqueId(), data: {} }];
+    // this.updateItemState(items);
     this.setState({
-      items: [...items, { id: uniqueId(), data: {} }]
+      items
     });
   }
 
   removeItem(id: string) {
-    const { items } = this.state;
-    this.setState({
-      items: items.filter(item => item.id !== id)
-    });
+    let { items } = this.state;
+    items = items.filter(item => item.id !== id);
+    this.updateItemState(items);
   }
 
   createFormChangeHandler(index: number): OnFormChange {
     return (value, isValid) => {
       const { items } = this.state;
       items[index].data = value;
-      this.setState(
-        {
-          items
-        },
-        () => {
-          const { onChange } = this.props;
-          const { items } = this.state;
-          const value = items.map(item => item.data);
-          onChange && onChange(value);
-        }
-      );
+      this.updateItemState(items);
     };
+  }
+
+  updateItemState(items: Item[]) {
+    this.setState(
+      {
+        items
+      },
+      () => {
+        const { onChange } = this.props;
+        const { items } = this.state;
+        const value = items.map(item => item.data);
+        onChange && onChange(value);
+      }
+    );
   }
 
   onDragEnd(result: any) {
@@ -144,17 +154,7 @@ export default class Repeats extends Component<Props, State> {
       result.destination.index
     );
 
-    this.setState(
-      {
-        items
-      },
-      () => {
-        const { onChange } = this.props;
-        const { items } = this.state;
-        const value = items.map(item => item.data);
-        onChange && onChange(value);
-      }
-    );
+    this.updateItemState(items);
   }
 
   getForms() {
@@ -178,7 +178,7 @@ export default class Repeats extends Component<Props, State> {
               {items.map((item, index) => {
                 const formChangeHandler = this.createFormChangeHandler(index);
                 const form = createFormForItem(
-                  item,
+                  item.data,
                   index,
                   fields,
                   formChangeHandler
