@@ -13,6 +13,8 @@ import LiveEditor from "./LiveEditor";
 import Tutorial from "./tutorial/Tutorial";
 import "./App.css";
 
+import Repeats from "./Repeats";
+
 import type {
   FieldRenderer,
   FormValue,
@@ -57,6 +59,15 @@ const teamFormOptionsHandler: OptionsHandler = (
     }
   }
 };
+
+const repeatingFields = [
+  {
+    id: "ID",
+    name: "id",
+    label: "An id",
+    type: "text"
+  }
+];
 
 const getTabs = (renderer: FieldRenderer) => {
   const tabs = [
@@ -180,6 +191,23 @@ const getTabs = (renderer: FieldRenderer) => {
             dynamically build forms
           </p>
           <FormBuilder renderer={renderer} />
+        </div>
+      )
+    },
+    {
+      label: "Experiments",
+      content: (
+        <div>
+          <p>Testing ground</p>
+          <Form defaultFields={[]} renderer={renderer}>
+            <Repeats
+              defaultValue={[
+                { id: "test", value: "bob" },
+                { id: "moomin", value: "ted" }
+              ]}
+              fields={repeatingFields}
+            />
+          </Form>
         </div>
       )
     }
