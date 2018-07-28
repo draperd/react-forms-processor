@@ -15,7 +15,9 @@
   "license": "MIT",
   "dependencies": {
     "@atlaskit/tabs": "^6.0.1",
+    "lodash": "^4.17.10",
     "react-ace": "^6.1.1",
+    "react-beautiful-dnd": "^8.0.5",
     "react-forms-processor": "^0.0.8",
     "react-forms-processor-atlaskit": "^0.0.8",
     "react-forms-processor-formbuilder": "^0.0.8",

@@ -294,6 +294,13 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@babel/runtime@7.0.0-beta.52":
+  version "7.0.0-beta.52"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.52.tgz#3f3b42b82b92b4e1a283fc78df1bb2fd4ba8d0c7"
+  dependencies:
+    core-js "^2.5.7"
+    regenerator-runtime "^0.12.0"
+
 "@babel/runtime@^7.0.0-beta.42":
   version "7.0.0-beta.49"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.49.tgz#03b3bf07eb982072c8e851dd2ddd5110282e61bf"
@@ -2528,7 +2535,7 @@ core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.6.tgz#0fe6d45bf3cac3ac364a9d72de7576f4eb221b9d"
 
-core-js@^2.5.6:
+core-js@^2.5.6, core-js@^2.5.7:
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
 
@@ -2613,6 +2620,10 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+css-box-model@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/css-box-model/-/css-box-model-1.0.0.tgz#60142814f2b25be00c4aac65ea1a55a531b18922"
 
 css-color-keywords@^1.0.0:
   version "1.0.0"
@@ -4502,7 +4513,7 @@ into-stream@^3.1.0:
     from2 "^2.1.1"
     p-is-promise "^1.1.0"
 
-invariant@^2.2.2:
+invariant@^2.0.0, invariant@^2.2.2:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   dependencies:
@@ -5678,6 +5689,10 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
+lodash-es@^4.17.5:
+  version "4.17.10"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.10.tgz#62cd7104cdf5dd87f235a837f0ede0e8e5117e05"
+
 lodash._reinterpolate@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
@@ -5894,6 +5909,10 @@ mem@^1.1.0:
   resolved "https://registry.yarnpkg.com/mem/-/mem-1.1.0.tgz#5edd52b485ca1d900fe64895505399a0dfa45f76"
   dependencies:
     mimic-fn "^1.0.0"
+
+memoize-one@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-4.0.0.tgz#fc5e2f1427a216676a62ec652cf7398cfad123db"
 
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
@@ -6804,6 +6823,10 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+performance-now@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-0.2.0.tgz#33ef30c5c77d4ea21c5a53869d91b56d8f2555e5"
+
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
@@ -7269,7 +7292,11 @@ quick-lru@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-1.1.0.tgz#4360b17c61136ad38078397ff11416e186dcfbb8"
 
-raf@^3.4.0:
+raf-schd@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/raf-schd/-/raf-schd-4.0.0.tgz#9855756c5045ff4ed4516e14a47719387c3c907b"
+
+raf@^3.1.0, raf@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.0.tgz#a28876881b4bc2ca9117d4138163ddb80f781575"
   dependencies:
@@ -7349,6 +7376,20 @@ react-addons-text-content@^0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/react-addons-text-content/-/react-addons-text-content-0.0.4.tgz#d2e259fdc951d1d8906c08902002108dce8792e5"
 
+react-beautiful-dnd@^8.0.5:
+  version "8.0.5"
+  resolved "https://registry.yarnpkg.com/react-beautiful-dnd/-/react-beautiful-dnd-8.0.5.tgz#962faf703f1334679b779936674f2da0dd8791f1"
+  dependencies:
+    "@babel/runtime" "7.0.0-beta.52"
+    css-box-model "^1.0.0"
+    memoize-one "^4.0.0"
+    prop-types "^15.6.1"
+    raf-schd "^4.0.0"
+    react-motion "^0.5.2"
+    react-redux "^5.0.7"
+    redux "^4.0.0"
+    tiny-invariant "^0.0.3"
+
 react-deprecate@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-deprecate/-/react-deprecate-0.1.0.tgz#817bdf22b8275fb767e9f49a8053f642600435c3"
@@ -7403,6 +7444,14 @@ react-markdown@^3.3.2:
     unist-util-visit "^1.3.0"
     xtend "^4.0.1"
 
+react-motion@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/react-motion/-/react-motion-0.5.2.tgz#0dd3a69e411316567927917c6626551ba0607316"
+  dependencies:
+    performance-now "^0.2.0"
+    prop-types "^15.5.8"
+    raf "^3.1.0"
+
 react-popper@^0.10.0:
   version "0.10.4"
   resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.10.4.tgz#af2a415ea22291edd504678d7afda8a6ee3295aa"
@@ -7417,6 +7466,17 @@ react-reconciler@^0.7.0:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
+react-redux@^5.0.7:
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.7.tgz#0dc1076d9afb4670f993ffaef44b8f8c1155a4c8"
+  dependencies:
+    hoist-non-react-statics "^2.5.0"
+    invariant "^2.0.0"
+    lodash "^4.17.5"
+    lodash-es "^4.17.5"
+    loose-envify "^1.1.0"
     prop-types "^15.6.0"
 
 react-test-renderer@^16.0.0-0:
@@ -7621,6 +7681,13 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
+redux@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.0.tgz#aa698a92b729315d22b34a0553d7e6533555cc03"
+  dependencies:
+    loose-envify "^1.1.0"
+    symbol-observable "^1.2.0"
+
 regenerate@^1.2.1:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.3.3.tgz#0c336d3980553d755c39b586ae3b20aa49c82b7f"
@@ -7632,6 +7699,10 @@ regenerator-runtime@^0.10.5:
 regenerator-runtime@^0.11.0, regenerator-runtime@^0.11.1:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
+
+regenerator-runtime@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.0.tgz#8052ac952d85b10f3425192cd0c53f45cf65c6cb"
 
 regenerator-transform@^0.10.0:
   version "0.10.1"
@@ -8556,7 +8627,7 @@ symbol-observable@^0.2.2:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-0.2.4.tgz#95a83db26186d6af7e7a18dbd9760a2f86d08f40"
 
-symbol-observable@^1.0.4, symbol-observable@^1.1.0:
+symbol-observable@^1.0.4, symbol-observable@^1.1.0, symbol-observable@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
 
@@ -8672,6 +8743,10 @@ timers-browserify@^2.0.4:
   resolved "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-2.0.10.tgz#1d28e3d2aadf1d5a5996c4e9f95601cd053480ae"
   dependencies:
     setimmediate "^1.0.4"
+
+tiny-invariant@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-0.0.3.tgz#4c7283c950e290889e9e94f64d3586ec9156cf44"
 
 tmp@^0.0.33:
   version "0.0.33"
