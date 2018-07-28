@@ -6,8 +6,7 @@ import { FormBuilder } from "react-forms-processor-formbuilder";
 import {
   FieldText,
   FormButton,
-  renderer as atlaskitRenderer,
-  Repeats
+  renderer as atlaskitRenderer
 } from "react-forms-processor-atlaskit";
 import { renderer as materialUiRenderer } from "react-forms-processor-material-ui";
 import LiveEditor from "./LiveEditor";
@@ -190,23 +189,6 @@ const getTabs = (renderer: FieldRenderer) => {
             dynamically build forms
           </p>
           <FormBuilder renderer={renderer} />
-        </div>
-      )
-    },
-    {
-      label: "Experiments",
-      content: (
-        <div>
-          <p>Testing ground</p>
-          <Form defaultFields={[]} renderer={renderer}>
-            <Repeats
-              defaultValue={[
-                { id: "test", value: "bob" },
-                { id: "moomin", value: "ted" }
-              ]}
-              fields={repeatingFields}
-            />
-          </Form>
         </div>
       )
     }
