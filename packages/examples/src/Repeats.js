@@ -107,8 +107,20 @@ export default class Repeats extends Component<Props, State> {
       value: defaultValue,
       items
     };
+  }
 
-    // For each item, render a form
+  addItem() {
+    const { items } = this.state;
+    this.setState({
+      items: [...items, { id: uniqueId(), data: {} }]
+    });
+  }
+
+  removeItem(id: string) {
+    const { items } = this.state;
+    this.setState({
+      items: items.filter(item => item.id !== id)
+    });
   }
 
   createFormChangeHandler(targetIndex: number): OnFormChange {
@@ -180,7 +192,12 @@ export default class Repeats extends Component<Props, State> {
                           provided.draggableProps.style
                         )}
                       >
-                        {form}
+                        <div>
+                          <button onClick={() => this.removeItem(item.id)}>
+                            Remove
+                          </button>
+                          {form}
+                        </div>
                       </div>
                     )}
                   </Draggable>
@@ -196,6 +213,11 @@ export default class Repeats extends Component<Props, State> {
 
   render() {
     // Render the items in the state
-    return <div>{this.getForms()}</div>;
+    return (
+      <div>
+        {this.getForms()}
+        <button onClick={() => this.addItem()}>Add</button>
+      </div>
+    );
   }
 }
