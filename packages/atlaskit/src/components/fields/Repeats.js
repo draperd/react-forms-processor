@@ -1,9 +1,12 @@
 // @flow
 import React, { Component, type Node } from "react";
-import uniqueId from "lodash/uniqueId";
-import { Form, FormContext } from "react-forms-processor";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import type { FieldDef, OnFormChange } from "../../../types";
+import uniqueId from "lodash/uniqueId";
+import get from "lodash/get";
+import Button from "@atlaskit/button";
+import { Form, FormContext } from "react-forms-processor";
+import Expander from "../Expander";
+import type { FieldDef, OnFormChange } from "../../../../../types";
 
 type Item = {
   id: string,
@@ -11,14 +14,18 @@ type Item = {
 };
 
 type Props = {
-  defaultValue: Object[], // TODO: Could be anything - not just fields
+  label?: string,
+  idAttribute?: string,
+  addButtonLabel?: string,
+  unidentifiedLabel?: string,
+  noItemsMessage?: string,
+  defaultValue: any,
   fields: FieldDef[],
   onChange?: any => void
 };
 
 type State = {
-  value: Object[], // TODO: Could be anything - not just fields
-  //   forms: Node[],
+  value: Object[],
   items: Item[]
 };
 
@@ -50,22 +57,6 @@ const createFormForItem = (
   );
 };
 
-// const addFormForItem = (
-//   item: Object,
-//   forms: Node[],
-//   fieldsForForm: FieldDef[],
-//   createFormChangeHandler: CreateFormChangeHandler
-// ): Node[] => {
-//   const targetIndex = forms.length;
-//   const newForm = createFormForItem(
-//     item,
-//     targetIndex,
-//     fieldsForForm,
-//     createFormChangeHandler
-//   );
-//   return [...forms, newForm];
-// };
-
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -79,7 +70,7 @@ const grid = 8;
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? "lightblue" : "lightgrey",
   padding: grid,
-  width: 250
+  width: 400
 });
 
 const getItemStyle = (isDragging, draggableStyle) => ({
@@ -123,10 +114,10 @@ export default class Repeats extends Component<Props, State> {
     });
   }
 
-  createFormChangeHandler(targetIndex: number): OnFormChange {
+  createFormChangeHandler(index: number): OnFormChange {
     return (value, isValid) => {
       const { items } = this.state;
-      items[targetIndex] = value;
+      items[index].data = value;
       this.setState(
         {
           items
@@ -134,15 +125,12 @@ export default class Repeats extends Component<Props, State> {
         () => {
           const { onChange } = this.props;
           const { items } = this.state;
-          onChange && onChange(items);
+          const value = items.map(item => item.data);
+          onChange && onChange(value);
         }
       );
     };
   }
-
-  // TODO: Remove an item from state
-  // TODO: Add an item to state
-  // TODO: Re-order items in state
 
   onDragEnd(result: any) {
     // dropped outside the list
@@ -156,14 +144,29 @@ export default class Repeats extends Component<Props, State> {
       result.destination.index
     );
 
-    this.setState({
-      items
-    });
+    this.setState(
+      {
+        items
+      },
+      () => {
+        const { onChange } = this.props;
+        const { items } = this.state;
+        const value = items.map(item => item.data);
+        onChange && onChange(value);
+      }
+    );
   }
 
   getForms() {
     const { items } = this.state;
-    const { fields, onChange } = this.props;
+    const {
+      fields,
+      idAttribute = "id",
+      label = "Item",
+      onChange,
+      unidentifiedLabel = "Unidentified item"
+    } = this.props;
+
     return (
       <DragDropContext onDragEnd={this.onDragEnd.bind(this)}>
         <Droppable droppableId="droppable">
@@ -180,6 +183,7 @@ export default class Repeats extends Component<Props, State> {
                   fields,
                   formChangeHandler
                 );
+                const label = get(item.data, idAttribute, unidentifiedLabel);
                 return (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided, snapshot) => (
@@ -192,12 +196,15 @@ export default class Repeats extends Component<Props, State> {
                           provided.draggableProps.style
                         )}
                       >
-                        <div>
-                          <button onClick={() => this.removeItem(item.id)}>
-                            Remove
-                          </button>
+                        <Expander
+                          key={`exp_${item.id}`}
+                          label={label}
+                          remove={() => {
+                            this.removeItem(item.id);
+                          }}
+                        >
                           {form}
-                        </div>
+                        </Expander>
                       </div>
                     )}
                   </Draggable>
@@ -212,11 +219,17 @@ export default class Repeats extends Component<Props, State> {
   }
 
   render() {
-    // Render the items in the state
+    const {
+      addButtonLabel = "Add item",
+      noItemsMessage = "No items yet"
+    } = this.props;
+    const { items } = this.state;
+    const noItems = <span className="no-items">{noItemsMessage}</span>;
+
     return (
       <div>
-        {this.getForms()}
-        <button onClick={() => this.addItem()}>Add</button>
+        <div>{items.length > 0 ? this.getForms() : noItems}</div>
+        <Button onClick={() => this.addItem()}>{addButtonLabel}</Button>
       </div>
     );
   }

@@ -6,14 +6,13 @@ import { FormBuilder } from "react-forms-processor-formbuilder";
 import {
   FieldText,
   FormButton,
-  renderer as atlaskitRenderer
+  renderer as atlaskitRenderer,
+  Repeats
 } from "react-forms-processor-atlaskit";
 import { renderer as materialUiRenderer } from "react-forms-processor-material-ui";
 import LiveEditor from "./LiveEditor";
 import Tutorial from "./tutorial/Tutorial";
 import "./App.css";
-
-import Repeats from "./Repeats";
 
 import type {
   FieldRenderer,

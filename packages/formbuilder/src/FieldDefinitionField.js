@@ -80,7 +80,7 @@ type State = {
   selectedTab: any
 };
 
-export default class RepeatingFormField extends Component<FieldDef, State> {
+export default class FieldDefinitionField extends Component<FieldDef, State> {
   constructor(props: FieldDef) {
     super(props);
     this.state = {

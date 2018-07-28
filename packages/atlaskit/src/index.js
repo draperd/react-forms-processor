@@ -9,3 +9,4 @@ export {
 } from "./components/fields/RepeatingFormField";
 export { default as Select } from "./components/fields/Select";
 export { default as renderer } from "./renderer";
+export { default as Repeats } from "./components/fields/Repeats";

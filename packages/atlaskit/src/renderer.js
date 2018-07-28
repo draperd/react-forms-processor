@@ -6,11 +6,12 @@ import Checkbox from "./components/fields/Checkbox";
 import RadioGroup from "./components/fields/RadioGroup";
 import SingleSelect from "./components/fields/Select";
 import MultiSelect from "./components/fields/MultiSelect";
-import RepeatingFormField from "./components/fields/RepeatingFormField";
+// import RepeatingFormField from "./components/fields/RepeatingFormField";
+import RepeatingFormField from "./components/fields/Repeats";
 import type { FieldRenderer, FieldDef, OnFieldChange } from "../../../types";
 
 const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
-  const { id, type, label, misc = {} } = field;
+  const { defaultValue = [], id, type, label, misc = {} } = field;
   switch (type) {
     case "text":
       return <FieldText key={id} {...field} />;
@@ -40,6 +41,7 @@ const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
         <RepeatingFormField
           key={id}
           addButtonLabel={addButtonLabel}
+          defaultValue={defaultValue}
           label={label}
           onChange={value => onChange(id, value)}
           fields={fields}

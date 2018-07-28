@@ -1,0 +1,22 @@
+.expander {
+  margin: 10px;
+  border: 1px solid #eee;
+  padding: 5px 0;
+}
+
+.expander > span > button {
+  background: none;
+  border: none;
+}
+
+.expander > span.label {
+  display: inline-block;
+  line-height: 28px;
+  vertical-align: text-bottom;
+  margin-right: 10px;
+}
+
+.expander > div.content {
+  padding-left: 40px;
+  padding-bottom: 20px;
+}
