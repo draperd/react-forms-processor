@@ -18,7 +18,7 @@ class FormFragment extends Component<InnerFormFragmentProps, void> {
     const { defaultFields = [], registerField, fields = [] } = props;
     defaultFields.forEach(field => {
       if (fields.find(existingField => existingField.id === field.id)) {
-        // console.warn("Fragment tried to re-register field", field.id);
+        console.warn("Fragment tried to re-register field", field.id);
       } else {
         registerField(field);
       }
@@ -47,7 +47,10 @@ class FormFragment extends Component<InnerFormFragmentProps, void> {
         ) {
           fieldToRender.value = field.value;
         } else {
-          getFirstDefinedValue(value[field.name], field.value);
+          fieldToRender.value = getFirstDefinedValue(
+            value[field.name],
+            field.value
+          );
         }
         return renderer(fieldToRender, onFieldChange);
       }

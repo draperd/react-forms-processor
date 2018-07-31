@@ -98,7 +98,7 @@ const basicInfo = [
     name: "id",
     type: "text",
     required: true,
-    value: "",
+    defaultValue: "",
     label: "ID",
     placeholder: "Enter a unique ID..."
   },
@@ -107,7 +107,7 @@ const basicInfo = [
     name: "name",
     type: "text",
     required: true,
-    value: "",
+    defaultValue: "",
     label: "Name",
     placeholder: "Enter the name for the field"
   },
@@ -115,7 +115,7 @@ const basicInfo = [
     id: "TYPE",
     name: "type",
     type: "select",
-    value: "text",
+    defaultValue: "text",
     label: "Type",
     placeholder: "Choose a field type",
     options: [
@@ -136,7 +136,7 @@ const basicInfo = [
     name: "label",
     type: "text",
     required: false,
-    value: "",
+    defaultValue: "",
     label: "Label",
     placeholder: "Enter the label for the field"
   },
@@ -145,7 +145,7 @@ const basicInfo = [
     name: "description",
     type: "textarea",
     required: false,
-    value: "",
+    defaultValue: "",
     label: "Description",
     placeholder: "Enter a description for the field"
   },
@@ -154,7 +154,7 @@ const basicInfo = [
     name: "placeholder",
     type: "text",
     required: false,
-    value: "",
+    defaultValue: "",
     label: "Placeholder Text",
     placeholder: "Placeholder..."
   },
@@ -162,7 +162,7 @@ const basicInfo = [
     id: "VALUE",
     name: "defaultValue",
     type: "text",
-    value: "",
+    defaultValue: "",
     label: "Initial value",
     placeholder: "Enter initial value for the field..."
   }
@@ -173,7 +173,7 @@ const optionsInfo = [
     id: "OPTIONS",
     name: "options",
     type: "repeating",
-    value: [],
+    defaultValue: [],
     misc: {
       fields: optionGroups,
       idAttribute: "heading",
@@ -211,7 +211,7 @@ const rulesInfo = [
     name: "visibleWhen",
     type: "repeating",
     label: "This field is VISIBLE when...",
-    value: [],
+    defaultValue: [],
     misc: {
       fields: fieldRules,
       addButtonLabel: "Add Rule",
@@ -223,7 +223,7 @@ const rulesInfo = [
     name: "requiredWhen",
     type: "repeating",
     label: "This field is REQUIRED when...",
-    value: [],
+    defaultValue: [],
     misc: {
       fields: fieldRules,
       addButtonLabel: "Add Rule",
@@ -235,7 +235,7 @@ const rulesInfo = [
     name: "disabledWhen",
     type: "repeating",
     label: "This field is DISABLED when...",
-    value: [],
+    defaultValue: [],
     misc: {
       fields: fieldRules,
       addButtonLabel: "Add Rule",
@@ -504,7 +504,7 @@ const formBuilder = [
     name: "fields",
     type: "repeating",
     label: "Form Definition",
-    value: [],
+    defaultValue: [],
     misc: {
       idAttribute: "field.id",
       addButtonLabel: "Add Field",

@@ -93,7 +93,7 @@ export default class FormBuilder extends Component<Props, State> {
               this.onBuilderFormChange(value, isValid);
             }}
             optionsHandler={optionsHandler}
-            value={{ fields: [{ id: "bob" }] }}
+            // value={{ fields: [{ field: { id: "bob" } }] }}
           />
         </section>
         <section>

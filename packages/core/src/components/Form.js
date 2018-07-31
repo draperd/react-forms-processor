@@ -29,7 +29,7 @@ export default class Form extends Component<
     super(props);
     this.state = {
       fields: [],
-      value: {},
+      value: props.value || {},
       isValid: false,
       defaultFields: []
     };
@@ -47,6 +47,8 @@ export default class Form extends Component<
 
       let { defaultFields, value: valueFromProps } = nextProps;
       const { optionsHandler, parentContext } = nextProps;
+
+      // TODO: Are fields getting re-registered too much? Is new prop value being used?
       const fields = registerFields(
         defaultFields,
         valueFromProps || valueFromState || {}

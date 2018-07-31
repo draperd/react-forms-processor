@@ -1,6 +1,11 @@
 // @flow
 import React, { Component, PureComponent } from "react";
-import { Form, FormContext, FormFragment } from "react-forms-processor";
+import {
+  Form,
+  FormContext,
+  FormFragment,
+  getFirstDefinedValue
+} from "react-forms-processor";
 import Tabs from "@atlaskit/tabs";
 import {
   basicInfo,
@@ -92,12 +97,19 @@ export default class FieldDefinitionField extends Component<FieldDef, State> {
   }
 
   render() {
-    const { value, id } = this.props;
+    const { defaultValue, value, name, id } = this.props;
     const { selectedTab } = this.state;
     return (
       <FormContext.Consumer>
         {context => {
-          const { renderer, optionsHandler, onFieldChange } = context;
+          const {
+            renderer,
+            optionsHandler,
+            onFieldChange,
+            parentContext
+          } = context;
+
+          // TODO: I think the value prop passed to the form here does not override the state value
           return (
             <Form
               value={value}

@@ -37,23 +37,27 @@ const createFormForItem = (
   fieldsForForm: FieldDef[],
   formChangeHandler: OnFormChange
 ): Node => {
+  const mappedFields = fieldsForForm.map(field => ({
+    ...field,
+    id: `${field.id}_${targetIndex}_fields`
+  }));
   return (
     <FormContext.Consumer>
       {context => {
         const { renderer, optionsHandler } = context;
         // TODO: Figure out why value isn't being set...
         //       Fields rather then default fields?
-        console.log(
-          "Creating form with fields",
-          fieldsForForm,
-          " and value ",
-          item
-        );
+        // console.log(
+        //   "Creating form with fields",
+        //   fieldsForForm,
+        //   " and value ",
+        //   item
+        // );
         return (
           <Form
             parentContext={context}
             key={`FIELD_${targetIndex}`}
-            defaultFields={fieldsForForm}
+            defaultFields={mappedFields}
             renderer={renderer}
             value={item}
             optionsHandler={optionsHandler}
