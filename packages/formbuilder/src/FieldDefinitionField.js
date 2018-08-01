@@ -109,7 +109,6 @@ export default class FieldDefinitionField extends Component<FieldDef, State> {
             parentContext
           } = context;
 
-          // TODO: I think the value prop passed to the form here does not override the state value
           return (
             <Form
               value={value}

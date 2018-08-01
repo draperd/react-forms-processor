@@ -40,13 +40,19 @@ export default class Form extends Component<
     prevState: FormComponentState
   ) {
     if (
-      nextProps.defaultFields &&
-      nextProps.defaultFields !== prevState.defaultFields
+      (nextProps.defaultFields &&
+        nextProps.defaultFields !== prevState.defaultFields) ||
+      (nextProps.value && nextProps.value !== prevState.value)
     ) {
-      const { value: valueFromState } = prevState;
+      const { fields: fieldsFromState, value: valueFromState } = prevState;
 
-      let { defaultFields, value: valueFromProps } = nextProps;
+      let {
+        defaultFields: defaultFieldFromProps,
+        value: valueFromProps
+      } = nextProps;
       const { optionsHandler, parentContext } = nextProps;
+
+      const defaultFields = defaultFieldFromProps || fieldsFromState;
 
       // TODO: Are fields getting re-registered too much? Is new prop value being used?
       const fields = registerFields(
@@ -58,7 +64,6 @@ export default class Form extends Component<
         optionsHandler,
         parentContext
       );
-
       return {
         ...nextState,
         defaultFields

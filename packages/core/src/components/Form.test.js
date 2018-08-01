@@ -37,9 +37,6 @@ describe("Context", () => {
       </Form>
     );
     expect(form.state().value).toEqual(propValue);
-    // expect(value).toEqual(propValue);
-
-    console.log(form.html());
   });
 
   test("FormFragment has the correct value", () => {
@@ -51,8 +48,19 @@ describe("Context", () => {
       </Form>
     );
     expect(form.state().value).toEqual(propValue);
-    // expect(value).toEqual(propValue);
+  });
 
-    console.log(form.html());
+  test("FormFragment has the correct value after props update", () => {
+    const propValue = { prop1: "value1" };
+    let value;
+    const form = mount(
+      <Form onChange={onFormChange} value={propValue}>
+        <FormFragment defaultFields={singleField} />
+      </Form>
+    );
+    expect(form.state().value.prop1).toEqual("value1");
+
+    form.setProps({ value: { prop1: "value2" } });
+    expect(form.state().value.prop1).toEqual("value2");
   });
 });
