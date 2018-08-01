@@ -45,14 +45,6 @@ const createFormForItem = (
     <FormContext.Consumer>
       {context => {
         const { renderer, optionsHandler } = context;
-        // TODO: Figure out why value isn't being set...
-        //       Fields rather then default fields?
-        // console.log(
-        //   "Creating form with fields",
-        //   fieldsForForm,
-        //   " and value ",
-        //   item
-        // );
         return (
           <Form
             parentContext={context}
