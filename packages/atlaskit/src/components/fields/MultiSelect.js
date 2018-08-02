@@ -2,14 +2,16 @@
 import React from "react";
 import MultiSelect from "@atlaskit/multi-select";
 import { FieldWrapper } from "react-forms-processor";
-import Description from "./Description";
 import type { Field, FieldDef } from "../../../../../types";
+import { Field as AkField } from "@atlaskit/form";
 
 class AtlaskitMultiSelect extends React.Component<Field> {
   render() {
     const {
+      description,
       disabled,
       id,
+      errorMessages,
       isValid,
       name,
       options = [],
@@ -57,23 +59,25 @@ class AtlaskitMultiSelect extends React.Component<Field> {
     }));
 
     return (
-      <div key={id}>
+      <AkField
+        label={label}
+        helperText={description}
+        required={required}
+        isInvalid={!isValid}
+        invalidMessage={errorMessages}
+      >
         <MultiSelect
-          key={id}
           name={name}
-          label={label}
           defaultSelected={defaultSelectItems}
           placeholder={placeholder}
           disabled={disabled}
-          required={required}
-          isInvalid={!isValid}
           value={stringValue}
           items={items}
           onSelectedChange={evt => {
             onFieldChange(id, evt.items.map(item => item.value));
           }}
         />
-      </div>
+      </AkField>
     );
   }
 }
@@ -82,6 +86,5 @@ export default (props: FieldDef) => (
   <FieldWrapper {...props}>
     {/* $FlowFixMe */}
     <AtlaskitMultiSelect />
-    <Description {...props} />
   </FieldWrapper>
 );

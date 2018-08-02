@@ -2,13 +2,15 @@
 import React from "react";
 import SingleSelect from "@atlaskit/single-select";
 import { FieldWrapper } from "react-forms-processor";
-import Description from "./Description";
 import type { Field, FieldDef } from "../../../../../types";
+import { Field as AkField } from "@atlaskit/form";
 
 class AtlaskitSelect extends React.Component<Field> {
   render() {
     const {
+      description,
       disabled,
+      errorMessages,
       id,
       isValid,
       name,
@@ -52,21 +54,25 @@ class AtlaskitSelect extends React.Component<Field> {
     });
 
     return (
-      <SingleSelect
-        key={id}
-        name={name}
+      <AkField
         label={label}
-        defaultSelected={defaultSelected}
-        placeholder={placeholder}
-        disabled={disabled}
+        helperText={description}
         required={required}
         isInvalid={!isValid}
-        value={stringValue}
-        items={items}
-        onSelected={evt => {
-          onFieldChange(id, evt.item.value);
-        }}
-      />
+        invalidMessage={errorMessages}
+      >
+        <SingleSelect
+          name={name}
+          defaultSelected={defaultSelected}
+          placeholder={placeholder}
+          disabled={disabled}
+          value={stringValue}
+          items={items}
+          onSelected={evt => {
+            onFieldChange(id, evt.item.value);
+          }}
+        />
+      </AkField>
     );
   }
 }
@@ -75,6 +81,5 @@ export default (props: FieldDef) => (
   <FieldWrapper {...props}>
     {/* $FlowFixMe */}
     <AtlaskitSelect />
-    <Description {...props} />
   </FieldWrapper>
 );

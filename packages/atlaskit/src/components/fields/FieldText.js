@@ -1,13 +1,14 @@
 // @flow
 import React from "react";
 import FieldText from "@atlaskit/field-text";
-import Description from "./Description";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "../../../../../types";
+import { Field as AkField } from "@atlaskit/form";
 
 class AtlaskitFieldText extends React.Component<Field> {
   render() {
     const {
+      description,
       disabled,
       errorMessages,
       id,
@@ -20,19 +21,22 @@ class AtlaskitFieldText extends React.Component<Field> {
       label
     } = this.props;
     return (
-      <FieldText
-        autoComplete="off"
-        key={id}
-        name={name}
+      <AkField
         label={label}
-        placeholder={placeholder}
-        disabled={disabled}
+        helperText={description}
         required={required}
         isInvalid={!isValid}
         invalidMessage={errorMessages}
-        value={value}
-        onChange={(evt: any) => onFieldChange(id, evt.target.value)}
-      />
+      >
+        <FieldText
+          autoComplete="off"
+          name={name}
+          placeholder={placeholder}
+          onChange={(evt: any) => onFieldChange(id, evt.target.value)}
+          value={value}
+          disabled={disabled}
+        />
+      </AkField>
     );
   }
 }
@@ -41,6 +45,5 @@ export default (props: FieldDef) => (
   <FieldWrapper {...props}>
     {/* $FlowFixMe */}
     <AtlaskitFieldText />
-    <Description {...props} />
   </FieldWrapper>
 );
