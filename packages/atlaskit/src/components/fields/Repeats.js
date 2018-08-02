@@ -7,6 +7,7 @@ import Button from "@atlaskit/button";
 import { Form, FormContext } from "react-forms-processor";
 import Expander from "../Expander";
 import type { FieldDef, OnFormChange } from "../../../../../types";
+import { Field as AkField } from "@atlaskit/form";
 
 type Item = {
   id: string,
@@ -216,6 +217,8 @@ export default class Repeats extends Component<Props, State> {
 
   render() {
     const {
+      label = "Item",
+      // description,
       addButtonLabel = "Add item",
       noItemsMessage = "No items yet"
     } = this.props;
@@ -224,7 +227,9 @@ export default class Repeats extends Component<Props, State> {
 
     return (
       <div>
-        <div>{items.length > 0 ? this.getForms() : noItems}</div>
+        <AkField label={label}>
+          <div>{items.length > 0 ? this.getForms() : noItems}</div>
+        </AkField>
         <Button onClick={() => this.addItem()}>{addButtonLabel}</Button>
       </div>
     );
