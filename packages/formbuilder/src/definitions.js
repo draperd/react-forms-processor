@@ -247,7 +247,7 @@ const rulesInfo = [
 const validationInfo = [
   {
     id: "SHOULD_MATCH_REGEX",
-    name: "field",
+    name: "shouldMatchRegex",
     type: "checkbox",
     label: "Value should match a regular expression?",
     defaultValue: false
@@ -282,7 +282,7 @@ const validationInfo = [
   },
   {
     id: "HAS_MIN_LENGTH",
-    name: "field",
+    name: "hasMinLength",
     type: "checkbox",
     label: "Value should have a minimum length?",
     defaultValue: false
@@ -323,7 +323,7 @@ const validationInfo = [
   },
   {
     id: "HAS_MAX_LENGTH",
-    name: "field",
+    name: "hasMaxLength",
     type: "checkbox",
     label: "Value should have a maximum length?",
     defaultValue: false
@@ -364,7 +364,7 @@ const validationInfo = [
   },
   {
     id: "FALLS_WITHIN_NUMERICAL_RANGE",
-    name: "field",
+    name: "hasNumericalRange",
     type: "checkbox",
     label: "Value should fall within numerical range?",
     defaultValue: false
