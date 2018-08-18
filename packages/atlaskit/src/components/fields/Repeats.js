@@ -40,7 +40,7 @@ const createFormForItem = (
 ): Node => {
   const mappedFields = fieldsForForm.map(field => ({
     ...field,
-    id: `${field.id}_${targetIndex}_fields`
+    id: `${field.id}_${targetIndex}_FIELDS`
   }));
   return (
     <FormContext.Consumer>

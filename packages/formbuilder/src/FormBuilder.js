@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { Form, FormContext } from "react-forms-processor";
 import { FormButton } from "react-forms-processor-atlaskit";
+import get from "lodash/get";
 import type {
   FieldRenderer,
   FieldDef,
@@ -27,14 +28,9 @@ type State = {
 type GetDefinedFields = (?FormContextData) => Options;
 
 const getDefinedFields: GetDefinedFields = parentContext => {
-  if (
-    parentContext &&
-    parentContext.parentContext &&
-    parentContext.parentContext.parentContext &&
-    parentContext.parentContext.parentContext.value &&
-    parentContext.parentContext.parentContext.value.fields.length
-  ) {
-    const value = parentContext.parentContext.parentContext.value.fields;
+  const fields = get(parentContext, "parentContext.parentContext.value.fields");
+  if (fields && fields.length) {
+    const value = fields;
     if (Array.isArray(value)) {
       const fields = [];
       value.forEach(field => {
@@ -55,7 +51,7 @@ const getDefinedFields: GetDefinedFields = parentContext => {
 };
 
 const optionsHandler: OptionsHandler = (id, fields, parentContext) => {
-  if (id === "FIELD") {
+  if (id.endsWith("_FIELDS")) {
     const definedFields = getDefinedFields(parentContext);
     return definedFields;
   }
