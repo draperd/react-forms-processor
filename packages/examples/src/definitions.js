@@ -166,6 +166,10 @@ const form1: FieldDef[] = [
         length: 3,
         message: "Name is too short!"
       }
+      // comparedToField: {
+      //   id: 'ADDRESS',
+      //   is: 'SMALLER'
+      // }
     }
   },
   {

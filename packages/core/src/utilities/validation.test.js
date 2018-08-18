@@ -1,5 +1,6 @@
 // @flow
 import {
+  comparedTo,
   fallsWithinNumericalRange,
   getDefaultNumericalRangeErrorMessages,
   lengthIsGreaterThan,
@@ -8,7 +9,11 @@ import {
   validateField
 } from "./validation";
 import { createField } from "./utils.js";
-import type { ValidateField, ValidateAllFields } from "../../../../types";
+import type {
+  FieldDef,
+  ValidateField,
+  ValidateAllFields
+} from "../../../../types";
 
 const field1 = createField({
   id: "one",
@@ -23,7 +28,7 @@ describe("validateField", () => {
       visible: true,
       required: false
     };
-    expect(validateField(testField).isValid).toBe(true);
+    expect(validateField(testField, [testField]).isValid).toBe(true);
   });
 
   test("visible, required field with empty string value is valid", () => {
@@ -33,7 +38,7 @@ describe("validateField", () => {
       required: true,
       value: ""
     };
-    expect(validateField(testField).isValid).toBe(false);
+    expect(validateField(testField, [testField]).isValid).toBe(false);
   });
 
   test("visible, required field with numberical value 0 is valid", () => {
@@ -43,7 +48,7 @@ describe("validateField", () => {
       required: true,
       value: 0
     };
-    expect(validateField(testField).isValid).toBe(true);
+    expect(validateField(testField, [testField]).isValid).toBe(true);
   });
 
   test("visible, required field with false value is valid", () => {
@@ -53,7 +58,7 @@ describe("validateField", () => {
       required: true,
       value: false
     };
-    expect(validateField(testField).isValid).toBe(true);
+    expect(validateField(testField, [testField]).isValid).toBe(true);
   });
 
   test("visible, required field with string value is valid", () => {
@@ -63,7 +68,7 @@ describe("validateField", () => {
       required: true,
       value: "test"
     };
-    expect(validateField(testField).isValid).toBe(true);
+    expect(validateField(testField, [testField]).isValid).toBe(true);
   });
 
   test("visible, required field with empty array value is valid", () => {
@@ -73,7 +78,7 @@ describe("validateField", () => {
       required: true,
       value: []
     };
-    expect(validateField(testField).isValid).toBe(false);
+    expect(validateField(testField, [testField]).isValid).toBe(false);
   });
 
   test("visible, required field with populated array value is valid", () => {
@@ -83,7 +88,7 @@ describe("validateField", () => {
       required: true,
       value: [1]
     };
-    expect(validateField(testField).isValid).toBe(true);
+    expect(validateField(testField, [testField]).isValid).toBe(true);
   });
 });
 
@@ -208,5 +213,126 @@ describe("fallsWithinNumericalRange", () => {
         message: "Fail"
       })
     ).toBe("Fail");
+  });
+});
+
+describe("comparedTo", () => {
+  const bigField = createField({
+    id: "BIGGEST",
+    name: "big",
+    value: 500
+  });
+  const smallField = createField({
+    id: "SMALLEST",
+    name: "small",
+    value: 10
+  });
+  const longField = createField({
+    id: "LONGEST",
+    name: "long",
+    value: "Really, really long"
+  });
+  const shortField = createField({
+    id: "SHORTEST",
+    name: "short",
+    value: "short"
+  });
+
+  const fields: FieldDef[] = [bigField, smallField, longField, shortField];
+
+  test("150 is not bigger than BIGGEST field", () => {
+    expect(
+      comparedTo({
+        value: 150,
+        field: "BIGGEST",
+        fields,
+        is: "BIGGER",
+        message: "Fail"
+      })
+    ).toBe("Fail");
+  });
+
+  test("600 is bigger than BIGGEST field", () => {
+    expect(
+      comparedTo({
+        value: 600,
+        field: "BIGGEST",
+        fields,
+        is: "BIGGER",
+        message: "Fail"
+      })
+    ).toBeUndefined();
+  });
+
+  test("150 is not smaller than SMALLEST field", () => {
+    expect(
+      comparedTo({
+        value: 150,
+        field: "SMALLEST",
+        fields,
+        is: "SMALLER",
+        message: "Fail"
+      })
+    ).toBe("Fail");
+  });
+
+  test("5 is smaller than SMALLEST field", () => {
+    expect(
+      comparedTo({
+        value: 5,
+        field: "SMALLEST",
+        fields,
+        is: "SMALLER",
+        message: "Fail"
+      })
+    ).toBeUndefined();
+  });
+
+  test("'bob' is not longer than LONGEST field", () => {
+    expect(
+      comparedTo({
+        value: "bob",
+        field: "LONGEST",
+        fields,
+        is: "LONGER",
+        message: "Fail"
+      })
+    ).toBe("Fail");
+  });
+
+  test("'sizeable' is longer than SHORTEST field", () => {
+    expect(
+      comparedTo({
+        value: "sizeable",
+        field: "SHORTEST",
+        fields,
+        is: "LONGER",
+        message: "Fail"
+      })
+    ).toBeUndefined();
+  });
+
+  test("'medium' is not shorter than SHORTEST field", () => {
+    expect(
+      comparedTo({
+        value: "medium",
+        field: "SHORTEST",
+        fields,
+        is: "SHORTER",
+        message: "Fail"
+      })
+    ).toBe("Fail");
+  });
+
+  test("'bob' is shorter than SHORTEST field", () => {
+    expect(
+      comparedTo({
+        value: "bob",
+        field: "SHORTEST",
+        fields,
+        is: "SHORTER",
+        message: "Fail"
+      })
+    ).toBeUndefined();
   });
 });

@@ -1,5 +1,6 @@
 // @flow
 import type {
+  FieldDef,
   Value,
   ValidateField,
   ValidateAllFields
@@ -30,6 +31,60 @@ export type FallsWithinNumericalRange = ({
   required?: boolean,
   message: string
 }) => void | string;
+
+export type ComparedTo = ({
+  value: Value,
+  field: string,
+  fields: FieldDef[],
+  is: "SMALLER" | "BIGGER" | "LONGER" | "SHORTER",
+  message: string
+}) => void | string;
+
+export const comparedTo: ComparedTo = ({
+  value,
+  field = "",
+  fields = [],
+  is = "BIGGER",
+  message
+}) => {
+  const target = fields.find(currField => currField.id === field);
+  if (!target) {
+    console.warn(`Could not find field ${field} to compare to`);
+    return;
+  }
+
+  const targetValue = target.value;
+  const targetLabel = target.label || "";
+
+  switch (is) {
+    case "BIGGER": {
+      return targetValue < value
+        ? undefined
+        : message || `Not bigger than ${targetLabel}`;
+    }
+
+    case "SMALLER": {
+      return targetValue > value
+        ? undefined
+        : message || `Not smaller than ${targetLabel}`;
+    }
+
+    case "LONGER": {
+      return targetValue.length < value.length
+        ? undefined
+        : message || `Not longer than ${targetLabel}`;
+    }
+
+    case "SHORTER": {
+      return targetValue.length > value.length
+        ? undefined
+        : message || `Not longer than ${targetLabel}`;
+    }
+
+    default:
+      return;
+  }
+};
 
 export const lengthIsGreaterThan: LengthIsGreaterThan = ({
   value,
@@ -106,7 +161,7 @@ export const validators = {
   fallsWithinNumericalRange
 };
 
-export const validateField: ValidateField = field => {
+export const validateField: ValidateField = (field, fields) => {
   const { required, visible, value, validWhen = {} } = field;
   let isValid = true;
   let errorMessages = [];
@@ -119,9 +174,13 @@ export const validateField: ValidateField = field => {
     isValid =
       Object.keys(validWhen).reduce((allValidatorsPass, validator) => {
         if (typeof validators[validator] === "function") {
-          // $FlowFixMe
-          let validationConfig = validWhen[validator];
-          validationConfig.value = value;
+          let validationConfig = {
+            // $FlowFixMe
+            ...validWhen[validator],
+            value,
+            fields
+          };
+
           let message = validators[validator](validationConfig);
           if (message) {
             allValidatorsPass = false;
@@ -140,6 +199,6 @@ export const validateField: ValidateField = field => {
 };
 
 export const validateAllFields: ValidateAllFields = fields => {
-  const validatedFields = fields.map(field => validateField(field));
+  const validatedFields = fields.map(field => validateField(field, fields));
   return validatedFields;
 };

@@ -138,7 +138,7 @@ export type ValidationResult = {
   errorMessages: string
 };
 
-export type ValidateField = FieldDef => FieldDef;
+export type ValidateField = (FieldDef, FieldDef[]) => FieldDef;
 
 export type ValidateAllFields = (FieldDef[]) => FieldDef[];
 
