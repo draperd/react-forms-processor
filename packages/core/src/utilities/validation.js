@@ -34,51 +34,107 @@ export type FallsWithinNumericalRange = ({
 
 export type ComparedTo = ({
   value: Value,
-  field: string,
-  fields: FieldDef[],
+  fields: string[],
+  allFields: FieldDef[],
   is: "SMALLER" | "BIGGER" | "LONGER" | "SHORTER",
   message: string
 }) => void | string;
 
+export const findFieldsToCompareTo = (
+  fieldsToFind: string[],
+  allFields: FieldDef[]
+): FieldDef[] => {
+  const targetFields = [];
+
+  fieldsToFind.forEach(targetField => {
+    const target = allFields.find(currField => targetField === currField.id);
+    if (!target) {
+      console.warn(`Could not find field ${targetField} to compare against`);
+    } else {
+      targetFields.push(target);
+    }
+  });
+
+  return targetFields;
+};
+
+export const isBigger = (value: Value, comparedTo: FieldDef) =>
+  compareSize(value, comparedTo, "BIGGER");
+
+export const isSmaller = (value: Value, comparedTo: FieldDef) =>
+  compareSize(value, comparedTo, "SMALLER");
+
+export const compareSize = (
+  value: Value,
+  comparedTo: FieldDef,
+  type: "BIGGER" | "SMALLER"
+): boolean => {
+  const targetValue = parseFloat(value);
+  const compareValue = parseFloat(comparedTo.value);
+  if (targetValue === NaN || compareValue === NaN) {
+    return false;
+  } else if (type === "BIGGER") {
+    return targetValue > compareValue;
+  } else {
+    return targetValue < compareValue;
+  }
+};
+
+export const isLonger = (value: Value, comparedTo: FieldDef) =>
+  compareLength(value, comparedTo, "LONGER");
+export const isShorter = (value: Value, comparedTo: FieldDef) =>
+  compareLength(value, comparedTo, "SHORTER");
+
+export const compareLength = (
+  value: Value,
+  comparedTo: FieldDef,
+  type: "LONGER" | "SHORTER"
+): boolean => {
+  const valueLength = value ? value.toString().length : undefined;
+  const compareLength = comparedTo.value
+    ? comparedTo.value.toString().length
+    : undefined;
+  if (valueLength === undefined || compareLength === undefined) {
+    return false;
+  } else if (type === "LONGER") {
+    return valueLength > compareLength;
+  } else {
+    return valueLength < compareLength;
+  }
+};
+
 export const comparedTo: ComparedTo = ({
   value,
-  field = "",
   fields = [],
+  allFields = [],
   is = "BIGGER",
   message
 }) => {
-  const target = fields.find(currField => currField.id === field);
-  if (!target) {
-    console.warn(`Could not find field ${field} to compare to`);
-    return;
-  }
-
-  const targetValue = target.value;
-  const targetLabel = target.label || "";
+  const targetFields = findFieldsToCompareTo(fields, allFields);
 
   switch (is) {
     case "BIGGER": {
-      return targetValue < value
+      return targetFields.every(targetField => isBigger(value, targetField))
         ? undefined
-        : message || `Not bigger than ${targetLabel}`;
+        : message || `Not the biggest field`;
     }
 
     case "SMALLER": {
-      return targetValue > value
+      return targetFields.every(targetField => isSmaller(value, targetField))
         ? undefined
-        : message || `Not smaller than ${targetLabel}`;
+        : message || `Not the smallest field`;
     }
 
     case "LONGER": {
-      return targetValue.length < value.length
+      return targetFields.every(targetField => isLonger(value, targetField))
         ? undefined
-        : message || `Not longer than ${targetLabel}`;
+        : message || `Not the longer field`;
     }
 
     case "SHORTER": {
-      return targetValue.length > value.length
+      return targetFields.every(targetField => isShorter(value, targetField))
         ? undefined
-        : message || `Not longer than ${targetLabel}`;
+        : message || `Not the shortest field`;
     }
 
     default:
@@ -178,7 +234,7 @@ export const validateField: ValidateField = (field, fields) => {
             // $FlowFixMe
             ...validWhen[validator],
             value,
-            fields
+            allFields: fields
           };
 
           let message = validators[validator](validationConfig);

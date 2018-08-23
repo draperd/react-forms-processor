@@ -2,7 +2,11 @@
 import {
   comparedTo,
   fallsWithinNumericalRange,
+  findFieldsToCompareTo,
   getDefaultNumericalRangeErrorMessages,
+  isBigger,
+  isLonger,
+  isShorter,
   lengthIsGreaterThan,
   lengthIsLessThan,
   matchesRegEx,
@@ -216,6 +220,62 @@ describe("fallsWithinNumericalRange", () => {
   });
 });
 
+describe("isBigger", () => {
+  const fieldOne = createField({
+    id: "ONE",
+    name: "one",
+    value: "5"
+  });
+  test("number strings are parsed to numbers", () => {
+    expect(isBigger("6", fieldOne)).toBe(true);
+  });
+
+  test("returns false if one field has a non-numeric string value", () => {
+    fieldOne.value = "bob";
+    expect(isBigger(2, fieldOne)).toBe(false);
+  });
+
+  test("numbers are correctly handled - 6 is bigger than 5", () => {
+    fieldOne.value = 5;
+    expect(isBigger(6, fieldOne)).toBe(true);
+  });
+
+  test("numbers are correctly handled - 2 is not bigger than 5", () => {
+    fieldOne.value = 5;
+    expect(isBigger(2, fieldOne)).toBe(false);
+  });
+});
+
+describe("isLonger", () => {
+  const field = createField({
+    id: "ONE",
+    name: "one",
+    value: "a value"
+  });
+
+  test("null value is never longer", () => {
+    expect(isLonger(null, field)).toBe(false);
+  });
+
+  test("undefined field values are never shorter", () => {
+    field.value = undefined;
+    expect(isLonger("bob", field)).toBe(false);
+  });
+
+  test("numbers are converted to strings", () => {
+    field.value = "bob";
+    expect(isLonger(1234, field)).toBe(true);
+  });
+
+  test("string values are compared correctly - 1234 is longer than bob", () => {
+    expect(isLonger("1234", field)).toBe(true);
+  });
+
+  test("string values are compared correctly - 12 is not longer than bob", () => {
+    expect(isLonger("12", field)).toBe(false);
+  });
+});
+
 describe("comparedTo", () => {
   const bigField = createField({
     id: "BIGGEST",
@@ -238,14 +298,20 @@ describe("comparedTo", () => {
     value: "short"
   });
 
-  const fields: FieldDef[] = [bigField, smallField, longField, shortField];
+  const allFields: FieldDef[] = [bigField, smallField, longField, shortField];
+
+  test("finds available fields", () => {
+    expect(
+      findFieldsToCompareTo(["BIGGEST", "NOPE", "SHORTEST", "NAH"], allFields)
+    ).toMatchSnapshot();
+  });
 
   test("150 is not bigger than BIGGEST field", () => {
     expect(
       comparedTo({
         value: 150,
-        field: "BIGGEST",
-        fields,
+        fields: ["BIGGEST"],
+        allFields,
         is: "BIGGER",
         message: "Fail"
       })
@@ -256,8 +322,8 @@ describe("comparedTo", () => {
     expect(
       comparedTo({
         value: 600,
-        field: "BIGGEST",
-        fields,
+        fields: ["BIGGEST"],
+        allFields,
         is: "BIGGER",
         message: "Fail"
       })
@@ -268,8 +334,8 @@ describe("comparedTo", () => {
     expect(
       comparedTo({
         value: 150,
-        field: "SMALLEST",
-        fields,
+        fields: ["SMALLEST"],
+        allFields,
         is: "SMALLER",
         message: "Fail"
       })
@@ -280,8 +346,8 @@ describe("comparedTo", () => {
     expect(
       comparedTo({
         value: 5,
-        field: "SMALLEST",
-        fields,
+        fields: ["SMALLEST"],
+        allFields,
         is: "SMALLER",
         message: "Fail"
       })
@@ -292,8 +358,8 @@ describe("comparedTo", () => {
     expect(
       comparedTo({
         value: "bob",
-        field: "LONGEST",
-        fields,
+        fields: ["LONGEST"],
+        allFields,
         is: "LONGER",
         message: "Fail"
       })
@@ -304,8 +370,8 @@ describe("comparedTo", () => {
     expect(
       comparedTo({
         value: "sizeable",
-        field: "SHORTEST",
-        fields,
+        fields: ["SHORTEST"],
+        allFields,
         is: "LONGER",
         message: "Fail"
       })
@@ -316,8 +382,8 @@ describe("comparedTo", () => {
     expect(
       comparedTo({
         value: "medium",
-        field: "SHORTEST",
-        fields,
+        fields: ["SHORTEST"],
+        allFields,
         is: "SHORTER",
         message: "Fail"
       })
@@ -328,8 +394,8 @@ describe("comparedTo", () => {
     expect(
       comparedTo({
         value: "bob",
-        field: "SHORTEST",
-        fields,
+        fields: ["SHORTEST"],
+        allFields,
         is: "SHORTER",
         message: "Fail"
       })

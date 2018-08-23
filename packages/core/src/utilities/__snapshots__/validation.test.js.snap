@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`comparedTo finds available fields 1`] = `
+Array [
+  Object {
+    "disabled": false,
+    "disabledWhen": Array [],
+    "errorMessages": "",
+    "id": "BIGGEST",
+    "isValid": true,
+    "name": "big",
+    "placeholder": "",
+    "required": false,
+    "requiredWhen": Array [],
+    "type": "",
+    "validWhen": Object {},
+    "value": 500,
+    "visible": true,
+    "visibleWhen": Array [],
+  },
+  Object {
+    "disabled": false,
+    "disabledWhen": Array [],
+    "errorMessages": "",
+    "id": "SHORTEST",
+    "isValid": true,
+    "name": "short",
+    "placeholder": "",
+    "required": false,
+    "requiredWhen": Array [],
+    "type": "",
+    "validWhen": Object {},
+    "value": "short",
+    "visible": true,
+    "visibleWhen": Array [],
+  },
+]
+`;
