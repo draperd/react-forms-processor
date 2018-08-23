@@ -1,6 +1,6 @@
 // @flow
 import React from "react";
-import SingleSelect from "@atlaskit/single-select";
+import Select from "@atlaskit/select";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "../../../../../types";
 import { Field as AkField } from "@atlaskit/form";
@@ -26,25 +26,23 @@ class AtlaskitSelect extends React.Component<Field> {
     const items = options.map(option => {
       const { heading, items = [] } = option;
       return {
-        heading,
-        items: items.map(item => {
+        label: heading,
+        options: items.map(item => {
           if (typeof item === "string") {
             const _item = {
-              content: item,
-              value: item,
-              isSelected: item === value
+              label: item,
+              value: item
             };
-            if (_item.isSelected) {
+            if (item === value) {
               defaultSelected = _item;
             }
             return _item;
           } else {
             const _item = {
-              content: item.label || item.value,
-              value: item.value,
-              isSelected: item.value === value
+              label: item.label || item.value,
+              value: item.value
             };
-            if (_item.isSelected) {
+            if (item.value === value) {
               defaultSelected = _item;
             }
             return _item;
@@ -61,15 +59,18 @@ class AtlaskitSelect extends React.Component<Field> {
         isInvalid={!isValid}
         invalidMessage={errorMessages}
       >
-        <SingleSelect
+        <Select
           name={name}
-          defaultSelected={defaultSelected}
+          defaultValue={defaultSelected}
           placeholder={placeholder}
           disabled={disabled}
-          value={stringValue}
-          items={items}
-          onSelected={evt => {
-            onFieldChange(id, evt.item.value);
+          options={items}
+          onChange={value => {
+            if (value.hasOwnProperty("value")) {
+              onFieldChange(id, value.value);
+            } else {
+              onFieldChange(id, value);
+            }
           }}
         />
       </AkField>

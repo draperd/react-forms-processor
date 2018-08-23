@@ -4,9 +4,8 @@ import FieldText from "./components/fields/FieldText";
 import FieldTextArea from "./components/fields/FieldTextArea";
 import Checkbox from "./components/fields/Checkbox";
 import RadioGroup from "./components/fields/RadioGroup";
-import SingleSelect from "./components/fields/Select";
+import Select from "./components/fields/Select";
 import MultiSelect from "./components/fields/MultiSelect";
-// import RepeatingFormField from "./components/fields/RepeatingFormField";
 import RepeatingFormField from "./components/fields/Repeats";
 import type { FieldRenderer, FieldDef, OnFieldChange } from "../../../types";
 
@@ -23,7 +22,7 @@ const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
       return <Checkbox key={id} {...field} />;
 
     case "select":
-      return <SingleSelect key={id} {...field} />;
+      return <Select key={id} {...field} />;
 
     case "multiselect":
       return <MultiSelect key={id} {...field} />;

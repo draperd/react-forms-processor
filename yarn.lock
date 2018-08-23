@@ -8,6 +8,12 @@
   dependencies:
     prop-types "^15.5.10"
 
+"@atlaskit/analytics-next@^3.0.4":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@atlaskit/analytics-next/-/analytics-next-3.0.5.tgz#cd5c12776e89a55517599abf5c5a257c03d60779"
+  dependencies:
+    prop-types "^15.5.10"
+
 "@atlaskit/button@9.0.4":
   version "9.0.4"
   resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-9.0.4.tgz#5935ccb7d203f48c29671fa4488a41564b243d68"
@@ -16,6 +22,27 @@
     "@atlaskit/spinner" "9.0.4"
     "@atlaskit/theme" "^5.1.2"
     babel-runtime "^6.26.0"
+
+"@atlaskit/button@^9.0.6":
+  version "9.0.6"
+  resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-9.0.6.tgz#e511f07eb4999293139aaabdfa0b0fc868b60a17"
+  dependencies:
+    "@atlaskit/analytics-next" "^3.0.4"
+    "@atlaskit/spinner" "9.0.6"
+    "@atlaskit/theme" "^6.0.0"
+    babel-runtime "^6.26.0"
+
+"@atlaskit/calendar@^7.0.5":
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/@atlaskit/calendar/-/calendar-7.0.5.tgz#0d0cc673868f8bf6c47b5e0ef374066a1faafc48"
+  dependencies:
+    "@atlaskit/analytics-next" "^3.0.4"
+    "@atlaskit/button" "^9.0.6"
+    "@atlaskit/icon" "^13.2.5"
+    "@atlaskit/theme" "^6.0.0"
+    calendar-base "^0.3.0"
+    lodash.pick "^4.4.0"
+    uuid "^3.1.0"
 
 "@atlaskit/checkbox@4.0.2":
   version "4.0.2"
@@ -27,21 +54,21 @@
     babel-runtime "^6.26.0"
     prop-types "^15.5.10"
 
-"@atlaskit/droplist@^7.0.4":
-  version "7.0.4"
-  resolved "https://registry.yarnpkg.com/@atlaskit/droplist/-/droplist-7.0.4.tgz#4d1bd673ced8a797055eb27d182f81f07f51238b"
+"@atlaskit/datetime-picker@^6.3.3":
+  version "6.3.3"
+  resolved "https://registry.yarnpkg.com/@atlaskit/datetime-picker/-/datetime-picker-6.3.3.tgz#8130116a73b951df558f4aa1f38c4ee4b8513d74"
   dependencies:
-    "@atlaskit/analytics-next" "^3.0.3"
-    "@atlaskit/icon" "^13.2.2"
-    "@atlaskit/item" "^8.0.3"
-    "@atlaskit/layer" "^5.0.3"
-    "@atlaskit/spinner" "^9.0.4"
-    "@atlaskit/theme" "^5.1.2"
-    "@atlaskit/tooltip" "^12.0.4"
+    "@atlaskit/analytics-next" "^3.0.4"
+    "@atlaskit/calendar" "^7.0.5"
+    "@atlaskit/field-base" "^11.0.5"
+    "@atlaskit/icon" "^13.2.5"
+    "@atlaskit/popper" "^0.2.1"
+    "@atlaskit/select" "^5.0.11"
+    "@atlaskit/theme" "^6.0.0"
     babel-runtime "^6.26.0"
-    classnames "^2.2.5"
-    keycode "^2.1.7"
-    prop-types "^15.5.10"
+    date-fns "^1.29.0"
+    lodash.pick "^4.4.0"
+    react-scrolllock "^3.0.1"
 
 "@atlaskit/field-base@^11.0.2":
   version "11.0.2"
@@ -51,6 +78,16 @@
     "@atlaskit/inline-dialog" "^8.0.3"
     "@atlaskit/spinner" "^9.0.4"
     "@atlaskit/theme" "^5.1.2"
+    babel-runtime "^6.26.0"
+
+"@atlaskit/field-base@^11.0.5":
+  version "11.0.5"
+  resolved "https://registry.yarnpkg.com/@atlaskit/field-base/-/field-base-11.0.5.tgz#463b5b81b734c3bcde264b63f944a8a45d5a151d"
+  dependencies:
+    "@atlaskit/icon" "^13.2.5"
+    "@atlaskit/inline-dialog" "^9.0.2"
+    "@atlaskit/spinner" "^9.0.6"
+    "@atlaskit/theme" "^6.0.0"
     babel-runtime "^6.26.0"
 
 "@atlaskit/field-radio-group@4.0.3":
@@ -104,6 +141,14 @@
     babel-runtime "^6.26.0"
     uuid "^3.1.0"
 
+"@atlaskit/icon@^13.2.5":
+  version "13.3.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-13.3.0.tgz#0037f45f40ae657ed3a98e09bedbbe7700ade059"
+  dependencies:
+    "@atlaskit/theme" "^6.0.0"
+    babel-runtime "^6.26.0"
+    uuid "^3.1.0"
+
 "@atlaskit/inline-dialog@^8.0.3":
   version "8.0.3"
   resolved "https://registry.yarnpkg.com/@atlaskit/inline-dialog/-/inline-dialog-8.0.3.tgz#236c6a658008703096aa6174332eab818e4be5c0"
@@ -112,14 +157,14 @@
     "@atlaskit/layer" "^5.0.3"
     "@atlaskit/theme" "^5.1.2"
 
-"@atlaskit/item@^8.0.3":
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/@atlaskit/item/-/item-8.0.3.tgz#5870d3ea23a2c06e29ca4599179eaa34f5b86c2b"
+"@atlaskit/inline-dialog@^9.0.2":
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/inline-dialog/-/inline-dialog-9.0.2.tgz#e4aca4f6fedfe6da871af69f7d1884e52a108231"
   dependencies:
-    "@atlaskit/theme" "^5.1.2"
-    prop-types "^15.5.10"
-    react-addons-text-content "^0.0.4"
-    uuid "^3.1.0"
+    "@atlaskit/analytics-next" "^3.0.4"
+    "@atlaskit/popper" "^0.2.1"
+    "@atlaskit/theme" "^6.0.0"
+    react-node-resolver "^1.0.1"
 
 "@atlaskit/layer@^5.0.3":
   version "5.0.3"
@@ -128,19 +173,12 @@
     raf-schd "^2.1.0"
     react-scrolllock "^3.0.1"
 
-"@atlaskit/multi-select@11.0.3":
-  version "11.0.3"
-  resolved "https://registry.yarnpkg.com/@atlaskit/multi-select/-/multi-select-11.0.3.tgz#2415e5a41f7c7cd1ac2dc6341013fa44b810150f"
+"@atlaskit/popper@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@atlaskit/popper/-/popper-0.2.1.tgz#9e2e56e9dfb56941ea1f503c2e178ca1822a3914"
   dependencies:
-    "@atlaskit/droplist" "^7.0.4"
-    "@atlaskit/field-base" "^11.0.2"
-    "@atlaskit/icon" "^13.2.2"
-    "@atlaskit/spinner" "^9.0.4"
-    "@atlaskit/tag" "^6.0.3"
-    "@atlaskit/tag-group" "^6.0.3"
-    "@atlaskit/theme" "^5.1.2"
-    classnames "^2.2.5"
-    uuid "^3.1.0"
+    memoize-one "^3.0.1"
+    react-popper "^1.0.0"
 
 "@atlaskit/portal@^0.0.3":
   version "0.0.3"
@@ -164,22 +202,35 @@
     react-select "^2.0.0-beta.7"
     react-transition-group "^2.2.1"
 
-"@atlaskit/single-select@6.0.3":
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/@atlaskit/single-select/-/single-select-6.0.3.tgz#6dde5994792c595896a3409898044a4b36605729"
+"@atlaskit/select@^5.0.11":
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/@atlaskit/select/-/select-5.0.11.tgz#2d1c1502bc8ae3781fb25d4563a4bfe4e7b30409"
   dependencies:
-    "@atlaskit/droplist" "^7.0.4"
-    "@atlaskit/field-base" "^11.0.2"
-    "@atlaskit/icon" "^13.2.2"
-    "@atlaskit/spinner" "^9.0.4"
-    "@atlaskit/theme" "^5.1.2"
-    classnames "^2.2.5"
+    "@atlaskit/analytics-next" "^3.0.4"
+    "@atlaskit/icon" "^13.2.5"
+    "@atlaskit/spinner" "^9.0.6"
+    "@atlaskit/theme" "^6.0.0"
+    focus-trap "^2.4.5"
+    memoize-one "^3.0.1"
+    react-fast-compare "^2.0.1"
+    react-node-resolver "^1.0.1"
+    react-popper "^1.0.0"
+    react-select "^2.0.0-beta.7"
+    react-transition-group "^2.2.1"
 
 "@atlaskit/spinner@9.0.4", "@atlaskit/spinner@^9.0.4":
   version "9.0.4"
   resolved "https://registry.yarnpkg.com/@atlaskit/spinner/-/spinner-9.0.4.tgz#05f768c23737660a74bb6f6c4ac95181e6118742"
   dependencies:
     "@atlaskit/theme" "^5.1.2"
+    babel-runtime "^6.26.0"
+    react-transition-group "^2.2.1"
+
+"@atlaskit/spinner@9.0.6", "@atlaskit/spinner@^9.0.6":
+  version "9.0.6"
+  resolved "https://registry.yarnpkg.com/@atlaskit/spinner/-/spinner-9.0.6.tgz#318522a2150d3a67b508fce821177336461cac0a"
+  dependencies:
+    "@atlaskit/theme" "^6.0.0"
     babel-runtime "^6.26.0"
     react-transition-group "^2.2.1"
 
@@ -204,23 +255,6 @@
     debounce "^1.0.0"
     keycode "^2.1.7"
 
-"@atlaskit/tag-group@^6.0.3":
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/@atlaskit/tag-group/-/tag-group-6.0.3.tgz#30b8a3864b50139ee97ac1dbd4312668a031680b"
-  dependencies:
-    babel-runtime "^6.26.0"
-
-"@atlaskit/tag@^6.0.3":
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/@atlaskit/tag/-/tag-6.0.3.tgz#816e86d380c62b73bf9303f4f8e0a5700dd878e6"
-  dependencies:
-    "@atlaskit/analytics-next" "^3.0.3"
-    "@atlaskit/icon" "^13.2.2"
-    "@atlaskit/theme" "^5.1.2"
-    babel-runtime "^6.26.0"
-    create-error "^0.3.1"
-    debug "^2.2.0"
-
 "@atlaskit/theme@^3.1.1":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-3.2.0.tgz#5eb4f2c02a929d427db60e52fcb65f929e849d4e"
@@ -240,7 +274,13 @@
   dependencies:
     prop-types "^15.5.10"
 
-"@atlaskit/tooltip@12.0.4", "@atlaskit/tooltip@^12.0.4":
+"@atlaskit/theme@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-6.0.0.tgz#a638bf42d1042caf44e5c810121e3d83e7cd587c"
+  dependencies:
+    prop-types "^15.5.10"
+
+"@atlaskit/tooltip@12.0.4":
   version "12.0.4"
   resolved "https://registry.yarnpkg.com/@atlaskit/tooltip/-/tooltip-12.0.4.tgz#7e1e86296dcbb7d0222b96010ce8ded1145ade18"
   dependencies:
@@ -1915,6 +1955,10 @@ cacheable-request@^2.1.1:
     normalize-url "2.0.1"
     responselike "1.0.2"
 
+calendar-base@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/calendar-base/-/calendar-base-0.3.0.tgz#483d3d07c5befedf9969a9a81a6a845794a6e251"
+
 call-me-maybe@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/call-me-maybe/-/call-me-maybe-1.0.1.tgz#26d208ea89e37b5cbde60250a15f031c16a4d66b"
@@ -2632,10 +2676,6 @@ create-error-class@^3.0.0:
   dependencies:
     capture-stack-trace "^1.0.0"
 
-create-error@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/create-error/-/create-error-0.3.1.tgz#69810245a629e654432bf04377360003a5351a23"
-
 create-hash@^1.1.0, create-hash@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/create-hash/-/create-hash-1.2.0.tgz#889078af11a63756bcfb59bd221996be3a9ef196"
@@ -2880,7 +2920,7 @@ data-urls@^1.0.0:
     whatwg-mimetype "^2.0.0"
     whatwg-url "^6.4.0"
 
-date-fns@^1.27.2:
+date-fns@^1.27.2, date-fns@^1.29.0:
   version "1.29.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.29.0.tgz#12e609cdcb935127311d04d33334e2960a2a54e6"
 
@@ -5848,6 +5888,10 @@ lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
 
+lodash.pick@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
+
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -7516,10 +7560,6 @@ react-ace@^6.1.1:
     lodash.get "^4.4.2"
     lodash.isequal "^4.1.1"
     prop-types "^15.5.8"
-
-react-addons-text-content@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/react-addons-text-content/-/react-addons-text-content-0.0.4.tgz#d2e259fdc951d1d8906c08902002108dce8792e5"
 
 react-beautiful-dnd@^8.0.5:
   version "8.0.5"

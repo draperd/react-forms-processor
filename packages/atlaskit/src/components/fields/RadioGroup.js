@@ -2,8 +2,16 @@
 import React from "react";
 import RadioGroup from "@atlaskit/field-radio-group";
 import { FieldWrapper } from "react-forms-processor";
+import styled from "styled-components";
 import type { Field, FieldDef } from "../../../../../types";
 import { Field as AkField } from "@atlaskit/form";
+
+// NOTE: Temporary hack to workaround the problem of duplicate label appearing - this can stop being used as soon as Atlaskit forms support Radio Groups properly
+const Layout = styled.div`
+  label {
+    height: 0;
+  }
+`;
 
 class AtlaskitRadioGroup extends React.Component<Field> {
   render() {
@@ -52,14 +60,16 @@ class AtlaskitRadioGroup extends React.Component<Field> {
         isInvalid={!isValid}
         invalidMessage={errorMessages}
       >
-        <RadioGroup
-          name={name}
-          placeholder={placeholder}
-          disabled={disabled}
-          value={stringValue}
-          items={items}
-          onRadioChange={(evt: any) => onFieldChange(id, evt.target.value)}
-        />
+        <Layout>
+          <RadioGroup
+            name={name}
+            placeholder={placeholder}
+            disabled={disabled}
+            value={stringValue}
+            items={items}
+            onRadioChange={(evt: any) => onFieldChange(id, evt.target.value)}
+          />
+        </Layout>
       </AkField>
     );
   }
