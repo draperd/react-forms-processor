@@ -2,6 +2,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "../../../../../types";
 
@@ -40,16 +41,16 @@ class MaterialUiTextField extends React.Component<Field> {
     } = this.props;
     return (
       <TextField
+        autoComplete="off"
         key={id}
         name={name}
         label={label}
         className={classes.textField}
         placeholder={placeholder}
-        helperText={description}
+        helperText={isValid ? description : errorMessages}
         disabled={disabled}
         required={required}
-        isInvalid={!isValid}
-        invalidMessage={errorMessages}
+        error={!isValid}
         value={value}
         onChange={(evt: any) => onFieldChange(id, evt.target.value)}
       />
