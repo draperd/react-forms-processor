@@ -121,12 +121,34 @@ const basicInfo = [
     options: [
       {
         items: [
-          "text",
-          "textarea",
-          "select",
-          "multiselect",
-          "radiogroup",
-          "checkbox"
+          {
+            value: "text",
+            label: "Text field"
+          },
+          {
+            value: "textarea",
+            label: "Text area"
+          },
+          {
+            value: "select",
+            label: "Select field"
+          },
+          {
+            value: "multiselect",
+            label: "Multi-Select field"
+          },
+          {
+            value: "radiogroup",
+            label: "Radio-button group"
+          },
+          {
+            value: "checkbox",
+            label: "Checkbox"
+          },
+          {
+            value: "date",
+            label: "Date picker"
+          }
         ]
       }
     ]

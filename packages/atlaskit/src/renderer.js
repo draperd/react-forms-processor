@@ -1,5 +1,6 @@
 // @flow
 import React from "react";
+import Date from "./components/fields/Date";
 import FieldText from "./components/fields/FieldText";
 import FieldTextArea from "./components/fields/FieldTextArea";
 import Checkbox from "./components/fields/Checkbox";
@@ -20,6 +21,9 @@ const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
 
     case "checkbox":
       return <Checkbox key={id} {...field} />;
+
+    case "date":
+      return <Date key={id} {...field} />;
 
     case "select":
       return <Select key={id} {...field} />;
