@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 120px;
+}
+
+.header > #RENDERER {
+  width: 200px;
+}
+
+.header a {
+  font-size: smaller;
+}
