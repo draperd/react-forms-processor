@@ -31,6 +31,9 @@ class AtlaskitRadioGroup extends React.Component<Field> {
     } = this.props;
     const stringValue: string | void = value ? value.toString() : undefined;
     const items = options.reduce((itemsSoFar, option) => {
+      if (!option.items) {
+        return [];
+      }
       return itemsSoFar.concat(
         option.items.map(item => {
           if (typeof item === "string") {

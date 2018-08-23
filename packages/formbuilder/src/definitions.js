@@ -124,7 +124,7 @@ const basicInfo = [
           "text",
           "textarea",
           "select",
-          "mulitselect",
+          "multiselect",
           "radiogroup",
           "checkbox"
         ]
