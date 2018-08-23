@@ -46,14 +46,15 @@ export const findFieldsToCompareTo = (
 ): FieldDef[] => {
   const targetFields = [];
 
-  fieldsToFind.forEach(targetField => {
-    const target = allFields.find(currField => targetField === currField.id);
-    if (!target) {
-      console.warn(`Could not find field ${targetField} to compare against`);
-    } else {
-      targetFields.push(target);
-    }
-  });
+  typeof fieldsToFind.forEach === "function" &&
+    fieldsToFind.forEach(targetField => {
+      const target = allFields.find(currField => targetField === currField.id);
+      if (!target) {
+        console.warn(`Could not find field ${targetField} to compare against`);
+      } else {
+        targetFields.push(target);
+      }
+    });
 
   return targetFields;
 };

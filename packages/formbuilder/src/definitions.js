@@ -1,4 +1,7 @@
-const simpleValue = [
+// @flow
+import type { FieldDef } from "../../../types";
+
+const simpleValue: FieldDef[] = [
   {
     id: "VALUE",
     name: "value",
@@ -9,7 +12,7 @@ const simpleValue = [
   }
 ];
 
-const fieldRules = [
+const fieldRules: FieldDef[] = [
   {
     id: "ID",
     name: "id",
@@ -53,7 +56,7 @@ const fieldRules = [
   }
 ];
 
-const options = [
+const options: FieldDef[] = [
   {
     id: "LABEL",
     name: "label",
@@ -69,7 +72,7 @@ const options = [
   }
 ];
 
-const optionGroups = [
+const optionGroups: FieldDef[] = [
   {
     id: "HEADING",
     name: "heading",
@@ -92,7 +95,7 @@ const optionGroups = [
   }
 ];
 
-const basicInfo = [
+const basicInfo: FieldDef[] = [
   {
     id: "ID",
     name: "id",
@@ -190,7 +193,7 @@ const basicInfo = [
   }
 ];
 
-const optionsInfo = [
+const optionsInfo: FieldDef[] = [
   {
     id: "OPTIONS",
     name: "options",
@@ -206,7 +209,7 @@ const optionsInfo = [
   }
 ];
 
-const rulesInfo = [
+const rulesInfo: FieldDef[] = [
   {
     id: "VISIBLE",
     name: "visible",
@@ -266,7 +269,7 @@ const rulesInfo = [
   }
 ];
 
-const validationInfo = [
+const validationInfo: FieldDef[] = [
   {
     id: "SHOULD_MATCH_REGEX",
     name: "shouldMatchRegex",
@@ -444,10 +447,104 @@ const validationInfo = [
         is: [true]
       }
     ]
+  },
+  {
+    id: "COMPARE_TO",
+    name: "shouldCompareTo",
+    type: "checkbox",
+    label: "Compare value with other field values?",
+    description:
+      "Check to validate the current field against other fields in the form",
+    defaultValue: false
+  },
+  {
+    id: "COMPARED_TO_FIELDS",
+    name: "validWhen.comparedTo.fields",
+    type: "multiselect",
+    label: "These fields...",
+    description: "Select the fields to compare the value with",
+    placeholder: "Select some fields...",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        id: "Hides until checked",
+        field: "COMPARE_TO",
+        is: [
+          {
+            value: "true"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "COMPARED_TO_IS",
+    name: "validWhen.comparedTo.is",
+    type: "radiogroup",
+    label: "Are all...",
+    description: "...than the current field",
+    placeholder: "",
+    defaultValue: "BIGGER",
+    omitWhenHidden: true,
+    options: [
+      {
+        heading: "Comparators",
+        items: [
+          {
+            label: "Bigger (numerically)",
+            value: "SMALLER"
+          },
+          {
+            label: "Smaller (numerically)",
+            value: "BIGGER"
+          },
+          {
+            label: "Longer (in characters)",
+            value: "SHORTER"
+          },
+          {
+            label: "Shorter (in characters)",
+            value: "LONGER"
+          }
+        ]
+      }
+    ],
+    visibleWhen: [
+      {
+        id: "Hides field",
+        field: "COMPARE_TO",
+        is: [
+          {
+            value: "true"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "COMPARED_TO_MESSAGE",
+    name: "validWhen.comparedTo.message",
+    type: "text",
+    label: "Error message",
+    description: "The message to display when the validation rule fails",
+    placeholder: "Error message...",
+    defaultValue: "",
+    omitWhenHidden: true,
+    visibleWhen: [
+      {
+        id: "Hides",
+        field: "COMPARE_TO",
+        is: [
+          {
+            value: "true"
+          }
+        ]
+      }
+    ]
   }
 ];
 
-const advancedInfo = [
+const advancedInfo: FieldDef[] = [
   {
     id: "OMIT_WHEN_HIDDEN",
     name: "omitWhenHidden",
@@ -520,7 +617,7 @@ const advancedInfo = [
   }
 ];
 
-const formBuilder = [
+const formBuilder: FieldDef[] = [
   {
     id: "FORM",
     name: "fields",

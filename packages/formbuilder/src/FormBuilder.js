@@ -25,16 +25,25 @@ type State = {
   previewFormButtonDisabled: boolean
 };
 
-type GetDefinedFields = (?FormContextData) => Options;
+type GetDefinedFields = (
+  ?FormContextData,
+  fieldsProp: string,
+  idProp: string
+) => Options;
 
-const getDefinedFields: GetDefinedFields = parentContext => {
-  const fields = get(parentContext, "parentContext.parentContext.value.fields");
+const getDefinedFields: GetDefinedFields = (
+  parentContext,
+  fieldsProp,
+  idProp
+) => {
+  const fields = get(parentContext, fieldsProp);
+  const id = get(parentContext, idProp);
   if (fields && fields.length) {
     const value = fields;
     if (Array.isArray(value)) {
       const fields = [];
       value.forEach(field => {
-        if (field.field && field.field.id) {
+        if (field.field && field.field.id && field.field.id !== id) {
           fields.push({
             value: field.field.id
           });
@@ -51,8 +60,19 @@ const getDefinedFields: GetDefinedFields = parentContext => {
 };
 
 const optionsHandler: OptionsHandler = (id, fields, parentContext) => {
-  if (id.endsWith("_FIELDS")) {
-    const definedFields = getDefinedFields(parentContext);
+  if (id === "COMPARED_TO_FIELDS") {
+    const definedFields = getDefinedFields(
+      parentContext,
+      "parentContext.value.fields",
+      "value.field.id"
+    );
+    return definedFields;
+  } else if (id.endsWith("_FIELDS")) {
+    const definedFields = getDefinedFields(
+      parentContext,
+      "parentContext.parentContext.value.fields",
+      "parentContext.value.field.id"
+    );
     return definedFields;
   }
   return null;
@@ -89,7 +109,6 @@ export default class FormBuilder extends Component<Props, State> {
               this.onBuilderFormChange(value, isValid);
             }}
             optionsHandler={optionsHandler}
-            // value={{ fields: [{ field: { id: "bob" } }] }}
           />
         </section>
         <section>
