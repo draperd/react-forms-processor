@@ -22,7 +22,8 @@ export type ValidatorId =
   | "lengthIsGreaterThan"
   | "lengthIsLessThan"
   | "matchesRegEx"
-  | "fallsWithinNumericalRange";
+  | "fallsWithinNumericalRange"
+  | "comparedTo";
 
 export type ValidationConfig = any;
 

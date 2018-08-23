@@ -1,7 +1,7 @@
 // @flow
 import type { FieldDef } from "../../../../types";
 
-export const singleField = [
+export const singleField: FieldDef[] = [
   {
     id: "FIELD1",
     name: "key",
@@ -16,7 +16,7 @@ export const singleField = [
   }
 ];
 
-export const visibility = [
+export const visibility: FieldDef[] = [
   {
     id: "TEXT",
     name: "key",
@@ -38,7 +38,7 @@ export const visibility = [
   }
 ];
 
-export const requiredAndDisabledRules = [
+export const requiredAndDisabledRules: FieldDef[] = [
   {
     id: "TEXT",
     name: "key",
@@ -73,7 +73,7 @@ export const requiredAndDisabledRules = [
   }
 ];
 
-export const fieldsWithOptions = [
+export const fieldsWithOptions: FieldDef[] = [
   {
     id: "OPTIONS1",
     name: "fruit",
@@ -112,7 +112,7 @@ export const fieldsWithOptions = [
   }
 ];
 
-export const manipulateOptions = [
+export const manipulateOptions: FieldDef[] = [
   {
     id: "FRUITS",
     name: "fruit",
@@ -155,7 +155,7 @@ export const duplicateNames = [
   }
 ];
 
-export const validation = [
+export const validation: FieldDef[] = [
   {
     id: "VALIDATED",
     name: "name",
@@ -180,6 +180,51 @@ export const validation = [
         value: "1234",
         pattern: "^[\\d]+$",
         message: "Only numbers allowed"
+      }
+    }
+  }
+];
+
+export const comparisonValidation: FieldDef[] = [
+  {
+    id: "ONE",
+    name: "one",
+    type: "text",
+    label: "Field one",
+    description: "Must be the biggest field",
+    trimValue: true,
+    validWhen: {
+      comparedTo: {
+        fields: ["TWO", "THREE"],
+        is: "BIGGER"
+      }
+    }
+  },
+  {
+    id: "TWO",
+    name: "two",
+    type: "text",
+    label: "Field two",
+    description: "Must be the shortest field",
+    trimValue: true,
+    validWhen: {
+      comparedTo: {
+        fields: ["ONE", "THREE"],
+        is: "SHORTER"
+      }
+    }
+  },
+  {
+    id: "THREE",
+    name: "three",
+    type: "text",
+    label: "Field three",
+    description: "Must be the smallest field",
+    trimValue: true,
+    validWhen: {
+      comparedTo: {
+        fields: ["ONE", "TWO"],
+        is: "SMALLER"
       }
     }
   }

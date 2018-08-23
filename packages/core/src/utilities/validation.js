@@ -214,7 +214,8 @@ export const validators = {
   lengthIsGreaterThan,
   lengthIsLessThan,
   matchesRegEx,
-  fallsWithinNumericalRange
+  fallsWithinNumericalRange,
+  comparedTo
 };
 
 export const validateField: ValidateField = (field, fields) => {
