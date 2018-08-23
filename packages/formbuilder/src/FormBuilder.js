@@ -60,6 +60,7 @@ const getDefinedFields: GetDefinedFields = (
 };
 
 const optionsHandler: OptionsHandler = (id, fields, parentContext) => {
+  const attributeOptionRegex = /FIELD_[\d]+_FIELDS/gm;
   if (id === "COMPARED_TO_FIELDS") {
     const definedFields = getDefinedFields(
       parentContext,
@@ -67,7 +68,7 @@ const optionsHandler: OptionsHandler = (id, fields, parentContext) => {
       "value.field.id"
     );
     return definedFields;
-  } else if (id.endsWith("_FIELDS")) {
+  } else if (attributeOptionRegex.test(id)) {
     const definedFields = getDefinedFields(
       parentContext,
       "parentContext.parentContext.value.fields",
