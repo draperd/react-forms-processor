@@ -27,6 +27,7 @@ class AtlaskitFieldTextArea extends React.Component<Field> {
         required={required}
         isInvalid={!isValid}
         invalidMessage={errorMessages}
+        validateOnBlur={false}
       >
         <FieldTextArea
           name={name}

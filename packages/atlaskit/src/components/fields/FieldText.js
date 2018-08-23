@@ -27,6 +27,7 @@ class AtlaskitFieldText extends React.Component<Field> {
         required={required}
         isInvalid={!isValid}
         invalidMessage={errorMessages}
+        validateOnBlur={false}
       >
         <FieldText
           autoComplete="off"

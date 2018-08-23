@@ -58,6 +58,7 @@ class AtlaskitSelect extends React.Component<Field> {
         required={required}
         isInvalid={!isValid}
         invalidMessage={errorMessages}
+        validateOnBlur={false}
       >
         <Select
           name={name}
