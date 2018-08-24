@@ -52,6 +52,12 @@ export type OptionsHandler = (
   ?FormContextData
 ) => Options | null | Promise<Options>;
 
+export type ValidationHandler = (
+  FieldDef,
+  FieldDef[],
+  ?FormContextData
+) => string | null; // TODO: Add this return type!!!  | Promise<string>;
+
 export type FieldDef = {
   id: string,
   name: string,
@@ -104,6 +110,7 @@ export type FormComponentProps = {
   onChange?: OnFormChange,
   renderer?: FieldRenderer,
   optionsHandler?: OptionsHandler,
+  validationHandler?: ValidationHandler,
   children?: Node,
   parentContext?: FormContextData
 };
@@ -139,9 +146,18 @@ export type ValidationResult = {
   errorMessages: string
 };
 
-export type ValidateField = (FieldDef, FieldDef[]) => FieldDef;
+export type ValidateField = (
+  FieldDef,
+  FieldDef[],
+  ?ValidationHandler,
+  ?FormContextData
+) => FieldDef;
 
-export type ValidateAllFields = (FieldDef[]) => FieldDef[];
+export type ValidateAllFields = (
+  FieldDef[],
+  ?ValidationHandler,
+  ?FormContextData
+) => FieldDef[];
 
 export type CreateFieldDef = ($Shape<FieldDef>) => FieldDef;
 
@@ -163,6 +179,7 @@ export type DetermineChangedValues = FieldDef => Array<{
 export type GetNextStateFromProps = (
   FieldDef[],
   ?OptionsHandler,
+  ?ValidationHandler,
   ?FormContextData
 ) => $Shape<FormComponentState>;
 
@@ -178,6 +195,7 @@ export type FormContextData = {
     [string]: Options
   },
   optionsHandler?: OptionsHandler,
+  validationHandler?: ValidationHandler,
   registerField: any,
   renderer: FieldRenderer,
   onFieldChange: OnFieldChange,

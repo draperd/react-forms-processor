@@ -50,7 +50,7 @@ export default class Form extends Component<
         defaultFields: defaultFieldFromProps,
         value: valueFromProps
       } = nextProps;
-      const { optionsHandler, parentContext } = nextProps;
+      const { optionsHandler, validationHandler, parentContext } = nextProps;
 
       const defaultFields = defaultFieldFromProps || fieldsFromState;
 
@@ -62,6 +62,7 @@ export default class Form extends Component<
       const nextState = getNextStateFromFields(
         fields,
         optionsHandler,
+        validationHandler,
         parentContext
       );
       return {
@@ -74,12 +75,13 @@ export default class Form extends Component<
   }
 
   onFieldChange(id: string, value: Value) {
-    const { optionsHandler, parentContext } = this.props;
+    const { optionsHandler, validationHandler, parentContext } = this.props;
     let { fields } = this.state;
     fields = updateFieldValue(id, value, fields);
     const nextState = getNextStateFromFields(
       fields,
       optionsHandler,
+      validationHandler,
       parentContext
     );
 
@@ -115,6 +117,7 @@ export default class Form extends Component<
         const nextState = getNextStateFromFields(
           updatedFields,
           props.optionsHandler,
+          props.validationHandler,
           props.parentContext
         );
         return {
@@ -129,6 +132,7 @@ export default class Form extends Component<
     const {
       renderer = defaultRenderer,
       optionsHandler,
+      validationHandler,
       parentContext
     } = this.props;
     const onFieldChange = this.onFieldChange.bind(this);
@@ -142,7 +146,8 @@ export default class Form extends Component<
       optionsHandler,
       options: {},
       onFieldChange,
-      parentContext
+      parentContext,
+      validationHandler
     };
 
     return context;

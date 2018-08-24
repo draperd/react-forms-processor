@@ -9,7 +9,8 @@ import type {
   FormContextData,
   FormValue,
   Options,
-  OptionsHandler
+  OptionsHandler,
+  ValidationHandler
 } from "../../../types";
 import renderer from "./renderer";
 import { formBuilder } from "./definitions";
@@ -79,6 +80,28 @@ const optionsHandler: OptionsHandler = (id, fields, parentContext) => {
   return null;
 };
 
+const validationHandler: ValidationHandler = (field, fields, parentContext) => {
+  if (field.id === "ID") {
+    let matchingIdCount = 0;
+    const requestedFieldId = field.value;
+
+    const allFields = get(parentContext, "parentContext.value.fields", []);
+    allFields.forEach(currField => {
+      const currFieldId = get(currField, "field.id");
+      if (currFieldId === requestedFieldId) {
+        matchingIdCount++;
+      }
+    });
+
+    if (matchingIdCount > 1) {
+      // There will always be one id that matches - e.g. the current one
+      return "That id has already been used";
+    }
+  }
+
+  return null;
+};
+
 export default class FormBuilder extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -110,6 +133,7 @@ export default class FormBuilder extends Component<Props, State> {
               this.onBuilderFormChange(value, isValid);
             }}
             optionsHandler={optionsHandler}
+            validationHandler={validationHandler}
           />
         </section>
         <section>

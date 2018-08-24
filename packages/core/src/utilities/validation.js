@@ -219,7 +219,12 @@ export const validators = {
   comparedTo
 };
 
-export const validateField: ValidateField = (field, fields) => {
+export const validateField: ValidateField = (
+  field,
+  fields,
+  validationHandler,
+  parentContext
+) => {
   const { required, visible, value, validWhen = {} } = field;
   let isValid = true;
   let errorMessages = [];
@@ -247,8 +252,16 @@ export const validateField: ValidateField = (field, fields) => {
         } else {
           console.warn("The requested validator does not exist", validator);
         }
+
         return allValidatorsPass;
       }, isValid) && isValid;
+  }
+  if (validationHandler) {
+    let message = validationHandler(field, fields, parentContext);
+    if (message) {
+      isValid = false;
+      errorMessages.push(message);
+    }
   }
   return Object.assign({}, field, {
     isValid,
@@ -256,7 +269,13 @@ export const validateField: ValidateField = (field, fields) => {
   });
 };
 
-export const validateAllFields: ValidateAllFields = fields => {
-  const validatedFields = fields.map(field => validateField(field, fields));
+export const validateAllFields: ValidateAllFields = (
+  fields,
+  validationHandler,
+  parentContext
+) => {
+  const validatedFields = fields.map(field =>
+    validateField(field, fields, validationHandler, parentContext)
+  );
   return validatedFields;
 };

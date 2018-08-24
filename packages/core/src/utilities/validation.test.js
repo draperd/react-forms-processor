@@ -16,7 +16,8 @@ import { createField } from "./utils.js";
 import type {
   FieldDef,
   ValidateField,
-  ValidateAllFields
+  ValidateAllFields,
+  ValidationHandler
 } from "../../../../types";
 
 const field1 = createField({
@@ -93,6 +94,28 @@ describe("validateField", () => {
       value: [1]
     };
     expect(validateField(testField, [testField]).isValid).toBe(true);
+  });
+
+  test("using validation handler reporting invalid", () => {
+    const testField = {
+      ...field1,
+      visible: true
+    };
+    const validationHandler: ValidationHandler = (field, fields) => "Fail";
+    expect(
+      validateField(testField, [testField], validationHandler).isValid
+    ).toBe(false);
+  });
+
+  test("using validation handler reporting valid", () => {
+    const testField = {
+      ...field1,
+      visible: true
+    };
+    const validationHandler: ValidationHandler = (field, fields) => null;
+    expect(
+      validateField(testField, [testField], validationHandler).isValid
+    ).toBe(true);
   });
 });
 

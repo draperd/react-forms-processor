@@ -27,13 +27,14 @@ import type {
 export const getNextStateFromFields: GetNextStateFromProps = (
   fields,
   optionsHandler,
+  validationHandler,
   parentContext
 ) => {
   fields = processFields(fields);
   if (optionsHandler) {
     fields = processOptions(fields, optionsHandler, parentContext);
   }
-  fields = validateAllFields(fields);
+  fields = validateAllFields(fields, validationHandler, parentContext);
   const value = calculateFormValue(fields);
   const isValid = fields.every(field => field.isValid);
   const nextState = {

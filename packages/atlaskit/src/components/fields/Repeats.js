@@ -45,7 +45,7 @@ const createFormForItem = (
   return (
     <FormContext.Consumer>
       {context => {
-        const { renderer, optionsHandler } = context;
+        const { renderer, optionsHandler, validationHandler } = context;
         return (
           <Form
             parentContext={context}
@@ -54,6 +54,7 @@ const createFormForItem = (
             renderer={renderer}
             value={item}
             optionsHandler={optionsHandler}
+            validationHandler={validationHandler}
             onChange={formChangeHandler}
           />
         );

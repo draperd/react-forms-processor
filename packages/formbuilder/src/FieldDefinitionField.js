@@ -105,6 +105,7 @@ export default class FieldDefinitionField extends Component<FieldDef, State> {
           const {
             renderer,
             optionsHandler,
+            validationHandler,
             onFieldChange,
             parentContext
           } = context;
@@ -115,6 +116,7 @@ export default class FieldDefinitionField extends Component<FieldDef, State> {
               parentContext={context}
               renderer={renderer}
               optionsHandler={optionsHandler}
+              validationHandler={validationHandler}
               onChange={(value, isValid) => {
                 onFieldChange(id, value);
               }}
