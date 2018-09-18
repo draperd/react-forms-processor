@@ -43,6 +43,7 @@ export default class Form extends Component<
   ) {
     // TODO: This might need some further thought, but it definitely improves performance in the FormBuilder
     if (
+      nextProps.renderer === this.props.renderer &&
       isEqual(this.state.fields, nextState.fields) &&
       isEqual(this.state.value, nextState.value)
     ) {
