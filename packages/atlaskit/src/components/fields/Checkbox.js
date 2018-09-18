@@ -25,7 +25,7 @@ class AtlaskitCheckbox extends React.Component<Field> {
       //$FlowFixMe
       <AkField
         helperText={description}
-        required={required}
+        isRequired={required}
         isInvalid={!isValid}
         invalidMessage={errorMessages}
         validateOnBlur={false}

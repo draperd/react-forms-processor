@@ -60,7 +60,7 @@ class AtlaskitRadioGroup extends React.Component<Field> {
       <AkField
         label={label}
         helperText={description}
-        required={required}
+        isRequired={required}
         isInvalid={!isValid}
         invalidMessage={errorMessages}
         validateOnBlur={false}
