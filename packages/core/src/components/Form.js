@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from "react";
+import isEqual from "lodash/isEqual";
 import FormContext from "./FormContext";
 import FormFragment from "./FormFragment";
 import DefaultField from "./DefaultField";
@@ -33,6 +34,20 @@ export default class Form extends Component<
       isValid: false,
       defaultFields: []
     };
+  }
+
+  shouldComponentUpdate(
+    nextProps: FormComponentProps,
+    nextState: FormComponentState
+  ) {
+    // TODO: This might need some further thought, but it definitely improves performance in the FormBuilder
+    if (
+      isEqual(this.state.fields, nextState.fields) &&
+      isEqual(this.state.value, nextState.value)
+    ) {
+      return false;
+    }
+    return true;
   }
 
   static getDerivedStateFromProps(

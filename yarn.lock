@@ -317,6 +317,13 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@babel/runtime-corejs2@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs2/-/runtime-corejs2-7.0.0.tgz#786711ee099c2c2af7875638866c1259eff30a8c"
+  dependencies:
+    core-js "^2.5.7"
+    regenerator-runtime "^0.12.0"
+
 "@babel/runtime@7.0.0-beta.52":
   version "7.0.0-beta.52"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.52.tgz#3f3b42b82b92b4e1a283fc78df1bb2fd4ba8d0c7"
@@ -7575,6 +7582,20 @@ react-beautiful-dnd@^8.0.5:
     redux "^4.0.0"
     tiny-invariant "^0.0.3"
 
+react-beautiful-dnd@^9.0.2:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/react-beautiful-dnd/-/react-beautiful-dnd-9.0.2.tgz#9785a96c1f1385620aed840f0bc774c7455b3fd4"
+  dependencies:
+    "@babel/runtime-corejs2" "^7.0.0"
+    css-box-model "^1.0.0"
+    memoize-one "^4.0.0"
+    prop-types "^15.6.1"
+    raf-schd "^4.0.0"
+    react-motion "^0.5.2"
+    react-redux "^5.0.7"
+    redux "^4.0.0"
+    tiny-invariant "^1.0.0"
+
 react-dom@^16.4:
   version "16.4.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.4.0.tgz#099f067dd5827ce36a29eaf9a6cdc7cbf6216b1e"
@@ -8979,6 +9000,10 @@ timers-browserify@^2.0.4:
 tiny-invariant@^0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-0.0.3.tgz#4c7283c950e290889e9e94f64d3586ec9156cf44"
+
+tiny-invariant@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.0.0.tgz#03f96fef4d3ba911f97ed467e1b88bca3d4d9d9f"
 
 tmp@^0.0.33:
   version "0.0.33"

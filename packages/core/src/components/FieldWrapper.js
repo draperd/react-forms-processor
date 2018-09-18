@@ -1,17 +1,9 @@
 // @flow
 import React, { type Node } from "react";
-import styled from "styled-components";
+import isEqual from "lodash/isEqual";
 import FormContext from "./FormContext";
 import type { Field, FieldDef } from "../../../../types";
-
-const Layout = styled.div`
-  > div {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    margin-bottom: 20px;
-  }
-`;
+import "./FieldWrapper.css";
 
 export type FieldWrapperProps = Field & {
   children: Node
@@ -30,6 +22,43 @@ class FieldWrapper extends React.Component<FieldWrapperProps> {
       );
     }
   }
+
+  shouldComponentUpdate(nextProps: FieldWrapperProps, nextState) {
+    // TODO: Ideally options, onFieldChange, registerField and fields should NOT be changing - need to investigate this
+    const {
+      children: c1,
+      // $FlowFixMe - not sure why parentContext is not apprearing in type
+      parentContext: pc1,
+      onFieldChange: ofc1,
+      options: o1,
+      registerField: rf1,
+      fields: f1,
+      ...next
+    } = nextProps;
+    const {
+      children: c2,
+      // $FlowFixMe
+      parentContext: pc2,
+      onFieldChange: ofc2,
+      options: o2,
+      registerField: rf2,
+      fields: f2,
+      ...current
+    } = this.props;
+
+    if (isEqual(next, current)) {
+      return false;
+    }
+
+    // Commented out - left the code in case I want to dig further into this issue
+    // Object.keys(next).forEach(key => {
+    //   if (next[key] !== current[key]) {
+    //     console.debug("The value of this key does not match", key);
+    //   }
+    // });
+    return true;
+  }
+
   render() {
     const { id, fields = [], onFieldChange, children } = this.props;
     const fieldToRender = fields.find(field => field.id === id);
@@ -41,7 +70,11 @@ class FieldWrapper extends React.Component<FieldWrapperProps> {
         })
       );
       const { description, id } = fieldToRender;
-      return <Layout id={id}>{processedChildren}</Layout>;
+      return (
+        <div className="layout" id={id}>
+          {processedChildren}
+        </div>
+      );
     }
 
     return null;

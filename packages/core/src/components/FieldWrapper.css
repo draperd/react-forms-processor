@@ -1,0 +1,6 @@
+.layout > div {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
