@@ -15,6 +15,7 @@ class AtlaskitFieldText extends React.Component<Field> {
       isValid,
       name,
       onFieldChange,
+      onFieldFocus,
       placeholder,
       required,
       value,
@@ -34,6 +35,7 @@ class AtlaskitFieldText extends React.Component<Field> {
           name={name}
           placeholder={placeholder}
           onChange={(evt: any) => onFieldChange(id, evt.target.value)}
+          onFocus={() => onFieldFocus(id)}
           value={value}
           disabled={disabled}
         />

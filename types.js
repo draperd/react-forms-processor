@@ -16,6 +16,8 @@ export type Rule = {
   isNot?: Value[]
 };
 
+export type OnFieldFocus = (id: string) => void;
+
 export type OnFieldChange = (id: string, value: any) => void;
 
 export type ValidatorId =
@@ -75,6 +77,7 @@ export type FieldDef = {
   requiredWhen?: Rule[],
   validWhen?: ValidationRules,
   isValid?: boolean,
+  isDiscretelyInvalid?: boolean,
   errorMessages?: string,
   omitWhenHidden?: boolean,
   omitWhenValueIs?: Value[],
@@ -87,16 +90,18 @@ export type FieldDef = {
   misc?: {
     [string]: any
   },
-  trimValue?: boolean
+  trimValue?: boolean,
+  touched?: boolean // TODO: Should this actually be on field?
 };
 
 export type Field = FieldDef & {
   fields: FieldDef[],
   onFieldChange: OnFieldChange,
+  onFieldFocus: OnFieldFocus,
   registerField?: FieldDef => void
 };
 
-export type FieldRenderer = (FieldDef, OnFieldChange) => any;
+export type FieldRenderer = (FieldDef, OnFieldChange, OnFieldFocus) => any;
 
 export type FormValue = {
   [string]: Value
@@ -112,7 +117,8 @@ export type FormComponentProps = {
   optionsHandler?: OptionsHandler,
   validationHandler?: ValidationHandler,
   children?: Node,
-  parentContext?: FormContextData
+  parentContext?: FormContextData,
+  showValidationBeforeTouched?: boolean
 };
 
 export type FormComponentState = {
@@ -149,12 +155,14 @@ export type ValidationResult = {
 export type ValidateField = (
   FieldDef,
   FieldDef[],
+  boolean,
   ?ValidationHandler,
   ?FormContextData
 ) => FieldDef;
 
 export type ValidateAllFields = (
   FieldDef[],
+  boolean,
   ?ValidationHandler,
   ?FormContextData
 ) => FieldDef[];
@@ -167,6 +175,11 @@ export type RegisterField = (FieldDef, FieldDef[], FormValue) => FieldDef[];
 export type RegisterFields = (FieldDef[], FormValue) => FieldDef[];
 
 export type UpdateFieldValue = (string, Value, FieldDef[]) => FieldDef[];
+export type UpdateFieldTouchedState = (
+  string,
+  boolean,
+  FieldDef[]
+) => FieldDef[];
 
 export type SplitDelimitedValue = (Value, ?string) => string[] | string;
 export type JoinDelimitedValue = (Value, ?string) => string | Value[];
@@ -178,6 +191,7 @@ export type DetermineChangedValues = FieldDef => Array<{
 
 export type GetNextStateFromProps = (
   FieldDef[],
+  boolean,
   ?OptionsHandler,
   ?ValidationHandler,
   ?FormContextData
@@ -199,5 +213,7 @@ export type FormContextData = {
   registerField: any,
   renderer: FieldRenderer,
   onFieldChange: OnFieldChange,
-  parentContext?: FormContextData
+  onFieldFocus: OnFieldFocus,
+  parentContext?: FormContextData,
+  showValidationBeforeTouched: boolean
 };

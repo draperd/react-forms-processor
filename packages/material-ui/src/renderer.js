@@ -8,7 +8,7 @@ import Checkbox from "./components/fields/Checkbox";
 
 import type { FieldRenderer, FieldDef, OnFieldChange } from "../../../types";
 
-const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
+const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
   const { id, type, label, misc = {} } = field;
   switch (type) {
     case "text":

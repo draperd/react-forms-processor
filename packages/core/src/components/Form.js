@@ -9,7 +9,8 @@ import {
   setOptionsInFieldInState,
   registerField,
   registerFields,
-  updateFieldValue
+  updateFieldValue,
+  updateFieldTouchedState
 } from "../utilities/utils";
 import type {
   FieldDef,
@@ -65,7 +66,12 @@ export default class Form extends Component<
         defaultFields: defaultFieldFromProps,
         value: valueFromProps
       } = nextProps;
-      const { optionsHandler, validationHandler, parentContext } = nextProps;
+      const {
+        optionsHandler,
+        validationHandler,
+        parentContext,
+        showValidationBeforeTouched = false
+      } = nextProps;
 
       const defaultFields = defaultFieldFromProps || fieldsFromState;
 
@@ -76,6 +82,7 @@ export default class Form extends Component<
       );
       const nextState = getNextStateFromFields(
         fields,
+        showValidationBeforeTouched,
         optionsHandler,
         validationHandler,
         parentContext
@@ -90,11 +97,17 @@ export default class Form extends Component<
   }
 
   onFieldChange(id: string, value: Value) {
-    const { optionsHandler, validationHandler, parentContext } = this.props;
+    const {
+      optionsHandler,
+      validationHandler,
+      parentContext,
+      showValidationBeforeTouched = false
+    } = this.props;
     let { fields } = this.state;
     fields = updateFieldValue(id, value, fields);
     const nextState = getNextStateFromFields(
       fields,
+      showValidationBeforeTouched,
       optionsHandler,
       validationHandler,
       parentContext
@@ -114,9 +127,32 @@ export default class Form extends Component<
     );
   }
 
+  onFieldFocus(id: string) {
+    const {
+      optionsHandler,
+      validationHandler,
+      parentContext,
+      showValidationBeforeTouched = false
+    } = this.props;
+    let { fields } = this.state;
+    fields = updateFieldTouchedState(id, true, fields);
+    const nextState = getNextStateFromFields(
+      fields,
+      showValidationBeforeTouched,
+      optionsHandler,
+      validationHandler,
+      parentContext
+    );
+
+    this.setState((state, props) => {
+      return nextState;
+    });
+  }
+
   // Register field is provided in the context to allow children to register with this form...
   registerField(field: FieldDef) {
     let { fields = [], value = {} } = this.state;
+    const { showValidationBeforeTouched = false } = this.props;
 
     if (fields.find(existingField => field.id === existingField.id)) {
       // Don't register fields twice...
@@ -131,6 +167,7 @@ export default class Form extends Component<
         let updatedFields = filteredFields.concat(field);
         const nextState = getNextStateFromFields(
           updatedFields,
+          showValidationBeforeTouched,
           props.optionsHandler,
           props.validationHandler,
           props.parentContext
@@ -148,9 +185,11 @@ export default class Form extends Component<
       renderer = defaultRenderer,
       optionsHandler,
       validationHandler,
-      parentContext
+      parentContext,
+      showValidationBeforeTouched = false
     } = this.props;
-    const onFieldChange = this.onFieldChange.bind(this);
+    const onFieldChange = this.onFieldChange.bind(this); // TODO: Is this creating a new function each time? Does this result in too many listeners?
+    const onFieldFocus = this.onFieldFocus.bind(this); // TODO: See above comment
 
     const context: FormContextData = {
       fields,
@@ -161,7 +200,9 @@ export default class Form extends Component<
       optionsHandler,
       options: {},
       onFieldChange,
+      onFieldFocus,
       parentContext,
+      showValidationBeforeTouched,
       validationHandler
     };
 

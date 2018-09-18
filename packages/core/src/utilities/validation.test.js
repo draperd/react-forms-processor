@@ -33,7 +33,7 @@ describe("validateField", () => {
       visible: true,
       required: false
     };
-    expect(validateField(testField, [testField]).isValid).toBe(true);
+    expect(validateField(testField, [testField], true).isValid).toBe(true);
   });
 
   test("visible, required field with empty string value is valid", () => {
@@ -43,7 +43,7 @@ describe("validateField", () => {
       required: true,
       value: ""
     };
-    expect(validateField(testField, [testField]).isValid).toBe(false);
+    expect(validateField(testField, [testField], true).isValid).toBe(false);
   });
 
   test("visible, required field with numberical value 0 is valid", () => {
@@ -53,7 +53,7 @@ describe("validateField", () => {
       required: true,
       value: 0
     };
-    expect(validateField(testField, [testField]).isValid).toBe(true);
+    expect(validateField(testField, [testField], true).isValid).toBe(true);
   });
 
   test("visible, required field with false value is valid", () => {
@@ -63,7 +63,7 @@ describe("validateField", () => {
       required: true,
       value: false
     };
-    expect(validateField(testField, [testField]).isValid).toBe(true);
+    expect(validateField(testField, [testField], true).isValid).toBe(true);
   });
 
   test("visible, required field with string value is valid", () => {
@@ -73,7 +73,7 @@ describe("validateField", () => {
       required: true,
       value: "test"
     };
-    expect(validateField(testField, [testField]).isValid).toBe(true);
+    expect(validateField(testField, [testField], true).isValid).toBe(true);
   });
 
   test("visible, required field with empty array value is valid", () => {
@@ -83,7 +83,7 @@ describe("validateField", () => {
       required: true,
       value: []
     };
-    expect(validateField(testField, [testField]).isValid).toBe(false);
+    expect(validateField(testField, [testField], true).isValid).toBe(false);
   });
 
   test("visible, required field with populated array value is valid", () => {
@@ -93,7 +93,7 @@ describe("validateField", () => {
       required: true,
       value: [1]
     };
-    expect(validateField(testField, [testField]).isValid).toBe(true);
+    expect(validateField(testField, [testField], true).isValid).toBe(true);
   });
 
   test("using validation handler reporting invalid", () => {
@@ -103,7 +103,7 @@ describe("validateField", () => {
     };
     const validationHandler: ValidationHandler = (field, fields) => "Fail";
     expect(
-      validateField(testField, [testField], validationHandler).isValid
+      validateField(testField, [testField], true, validationHandler).isValid
     ).toBe(false);
   });
 
@@ -114,7 +114,7 @@ describe("validateField", () => {
     };
     const validationHandler: ValidationHandler = (field, fields) => null;
     expect(
-      validateField(testField, [testField], validationHandler).isValid
+      validateField(testField, [testField], true, validationHandler).isValid
     ).toBe(true);
   });
 });

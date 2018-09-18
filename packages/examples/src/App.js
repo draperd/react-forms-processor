@@ -111,6 +111,7 @@ const getTabs = (renderer: FieldRenderer) => {
             defaultFields={createTeamForm}
             optionsHandler={teamFormOptionsHandler}
             renderer={renderer}
+            showValidationBeforeTouched={false}
           >
             <FormButton
               onClick={(value: FormValue) =>

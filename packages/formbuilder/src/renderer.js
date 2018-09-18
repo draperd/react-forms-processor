@@ -4,14 +4,14 @@ import akRenderer from "../../atlaskit/src/renderer";
 import FieldDefinitionField from "./FieldDefinitionField";
 import type { FieldRenderer, FieldDef, OnFieldChange } from "../../../types";
 
-const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
+const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
   const { id, type } = field;
   switch (type) {
     case "field":
       return <FieldDefinitionField key={id} {...field} />;
 
     default:
-      return akRenderer(field, onChange);
+      return akRenderer(field, onChange, onFieldFocus);
   }
 };
 

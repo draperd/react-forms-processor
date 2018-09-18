@@ -30,6 +30,7 @@ class FieldWrapper extends React.Component<FieldWrapperProps> {
       // $FlowFixMe - not sure why parentContext is not apprearing in type
       parentContext: pc1,
       onFieldChange: ofc1,
+      onFieldFocus: off1,
       options: o1,
       registerField: rf1,
       fields: f1,
@@ -40,6 +41,7 @@ class FieldWrapper extends React.Component<FieldWrapperProps> {
       // $FlowFixMe
       parentContext: pc2,
       onFieldChange: ofc2,
+      onFieldFocus: off2,
       options: o2,
       registerField: rf2,
       fields: f2,
@@ -60,12 +62,19 @@ class FieldWrapper extends React.Component<FieldWrapperProps> {
   }
 
   render() {
-    const { id, fields = [], onFieldChange, children } = this.props;
+    const {
+      id,
+      fields = [],
+      onFieldChange,
+      onFieldFocus,
+      children
+    } = this.props;
     const fieldToRender = fields.find(field => field.id === id);
     if (fieldToRender && fieldToRender.visible) {
       const processedChildren = React.Children.map(children, child =>
         React.cloneElement(child, {
           onFieldChange,
+          onFieldFocus,
           ...fieldToRender
         })
       );

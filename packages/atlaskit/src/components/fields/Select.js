@@ -19,7 +19,8 @@ class AtlaskitSelect extends React.Component<Field> {
       required,
       value,
       label,
-      onFieldChange
+      onFieldChange,
+      onFieldFocus
     } = this.props;
     let defaultSelected;
     const stringValue: string | void = value ? value.toString() : undefined;
@@ -73,6 +74,7 @@ class AtlaskitSelect extends React.Component<Field> {
               onFieldChange(id, value);
             }
           }}
+          onFocus={() => onFieldFocus(id)}
         />
       </AkField>
     );

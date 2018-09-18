@@ -222,16 +222,18 @@ export const validators = {
 export const validateField: ValidateField = (
   field,
   fields,
+  showValidationBeforeTouched,
   validationHandler,
   parentContext
 ) => {
-  const { required, visible, value, validWhen = {} } = field;
+  const { required, visible, value, validWhen = {}, touched = false } = field;
   let isValid = true;
   let errorMessages = [];
   if (visible) {
     if (required) {
       const valueIsEmptyArray = Array.isArray(value) && value.length === 0;
       isValid = (value || value === 0 || value === false) && !valueIsEmptyArray;
+      errorMessages.push("A value must be provided");
     }
 
     isValid =
@@ -263,19 +265,36 @@ export const validateField: ValidateField = (
       errorMessages.push(message);
     }
   }
+
+  if (!showValidationBeforeTouched && !touched) {
+    return Object.assign({}, field, {
+      isValid: true,
+      isDiscretelyInvalid: !isValid,
+      errorMessages: ""
+    });
+  }
+
   return Object.assign({}, field, {
     isValid,
+    isDiscretelyInvalid: !isValid,
     errorMessages: errorMessages.join(", ")
   });
 };
 
 export const validateAllFields: ValidateAllFields = (
   fields,
+  showValidationBeforeTouched,
   validationHandler,
   parentContext
 ) => {
   const validatedFields = fields.map(field =>
-    validateField(field, fields, validationHandler, parentContext)
+    validateField(
+      field,
+      fields,
+      showValidationBeforeTouched,
+      validationHandler,
+      parentContext
+    )
   );
   return validatedFields;
 };

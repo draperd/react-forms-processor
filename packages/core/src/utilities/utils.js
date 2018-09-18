@@ -20,12 +20,14 @@ import type {
   RegisterField,
   RegisterFields,
   SplitDelimitedValue,
+  UpdateFieldTouchedState,
   UpdateFieldValue,
   Value
 } from "../../../../types";
 
 export const getNextStateFromFields: GetNextStateFromProps = (
   fields,
+  showValidationBeforeTouched,
   optionsHandler,
   validationHandler,
   parentContext
@@ -34,13 +36,20 @@ export const getNextStateFromFields: GetNextStateFromProps = (
   if (optionsHandler) {
     fields = processOptions(fields, optionsHandler, parentContext);
   }
-  fields = validateAllFields(fields, validationHandler, parentContext);
+
+  fields = validateAllFields(
+    fields,
+    showValidationBeforeTouched,
+    validationHandler,
+    parentContext
+  );
   const value = calculateFormValue(fields);
   const isValid = fields.every(field => field.isValid);
+  const isDiscretelyInvalid = fields.some(field => field.isDiscretelyInvalid);
   const nextState = {
     fields,
     value,
-    isValid
+    isValid: isValid && !isDiscretelyInvalid
   };
   return nextState;
 };
@@ -207,7 +216,8 @@ export const createField: CreateFieldDef = field => {
     disabledWhen = [],
     validWhen = {},
     isValid = true,
-    errorMessages = ""
+    errorMessages = "",
+    touched = false
   } = field;
   return {
     id,
@@ -223,7 +233,8 @@ export const createField: CreateFieldDef = field => {
     disabledWhen,
     isValid,
     validWhen,
-    errorMessages
+    errorMessages,
+    touched
   };
 };
 
@@ -272,6 +283,17 @@ export const registerFields: RegisterFields = (fieldsToValidate, formValue) => {
       fields.push(field);
     }
   });
+  return fields;
+};
+
+export const updateFieldTouchedState: UpdateFieldTouchedState = (
+  id,
+  touched,
+  fields
+) => {
+  const fieldsById = mapFieldsById(fields);
+  const field = fieldsById[id];
+  field.touched = touched;
   return fields;
 };
 

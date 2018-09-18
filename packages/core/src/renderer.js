@@ -92,7 +92,7 @@ const renderSelect = (
   );
 };
 
-const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
+const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
   const {
     disabled,
     id,
@@ -121,6 +121,7 @@ const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
             required={required}
             checked={value}
             onChange={evt => onChange(id, evt.target.checked)}
+            onFocus={() => onFieldFocus(id)}
           />
         </div>
       );
@@ -145,6 +146,7 @@ const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
                     value={item}
                     checked={item === value}
                     onChange={evt => onChange(id, evt.target.value)}
+                    onFocus={() => onFieldFocus(id)}
                   />
                   <label htmlFor={inputId}>{item}</label>
                 </div>
@@ -159,6 +161,7 @@ const renderer: FieldRenderer = (field: FieldDef, onChange: OnFieldChange) => {
                     value={item.value}
                     checked={item.value === value}
                     onChange={evt => onChange(id, evt.target.value)}
+                    onFocus={() => onFieldFocus(id)}
                   />
                   <label htmlFor={inputId}>{item.label || item.value}</label>
                 </div>
