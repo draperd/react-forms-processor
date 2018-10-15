@@ -233,7 +233,9 @@ export const validateField: ValidateField = (
     if (required) {
       const valueIsEmptyArray = Array.isArray(value) && value.length === 0;
       isValid = (value || value === 0 || value === false) && !valueIsEmptyArray;
-      errorMessages.push("A value must be provided");
+      if (!isValid) {
+        errorMessages.push("A value must be provided");
+      }
     }
 
     isValid =

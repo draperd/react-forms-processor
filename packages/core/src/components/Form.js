@@ -41,8 +41,10 @@ export default class Form extends Component<
     nextProps: FormComponentProps,
     nextState: FormComponentState
   ) {
+    const { conditionalUpdate = false } = this.props;
     // TODO: This might need some further thought, but it definitely improves performance in the FormBuilder
     if (
+      conditionalUpdate &&
       nextProps.renderer === this.props.renderer &&
       isEqual(this.state.fields, nextState.fields) &&
       isEqual(this.state.value, nextState.value)
@@ -187,7 +189,8 @@ export default class Form extends Component<
       optionsHandler,
       validationHandler,
       parentContext,
-      showValidationBeforeTouched = false
+      showValidationBeforeTouched = false,
+      conditionalUpdate = false
     } = this.props;
     const onFieldChange = this.onFieldChange.bind(this); // TODO: Is this creating a new function each time? Does this result in too many listeners?
     const onFieldFocus = this.onFieldFocus.bind(this); // TODO: See above comment
@@ -204,7 +207,8 @@ export default class Form extends Component<
       onFieldFocus,
       parentContext,
       showValidationBeforeTouched,
-      validationHandler
+      validationHandler,
+      conditionalUpdate
     };
 
     return context;

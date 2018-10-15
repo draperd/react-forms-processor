@@ -134,6 +134,7 @@ export default class FormBuilder extends Component<Props, State> {
             }}
             optionsHandler={optionsHandler}
             validationHandler={validationHandler}
+            conditionalUpdate={true}
           />
         </section>
         <section>
@@ -141,6 +142,7 @@ export default class FormBuilder extends Component<Props, State> {
           <Form
             defaultFields={previewFields.slice()}
             renderer={previewRenderer}
+            conditionalUpdate={true}
           >
             <FormButton
               label="Test"

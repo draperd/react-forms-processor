@@ -118,7 +118,8 @@ export type FormComponentProps = {
   validationHandler?: ValidationHandler,
   children?: Node,
   parentContext?: FormContextData,
-  showValidationBeforeTouched?: boolean
+  showValidationBeforeTouched?: boolean,
+  conditionalUpdate?: boolean
 };
 
 export type FormComponentState = {
@@ -215,5 +216,6 @@ export type FormContextData = {
   onFieldChange: OnFieldChange,
   onFieldFocus: OnFieldFocus,
   parentContext?: FormContextData,
-  showValidationBeforeTouched: boolean
+  showValidationBeforeTouched: boolean,
+  conditionalUpdate: boolean
 };
