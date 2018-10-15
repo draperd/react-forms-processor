@@ -20,7 +20,10 @@ class AtlaskitSelect extends React.Component<Field> {
       value,
       label,
       onFieldChange,
-      onFieldFocus
+      onFieldFocus,
+      touched,
+      validWhen,
+      requiredWhen
     } = this.props;
     const defaultValue = [];
     const stringValue: string | void = value ? value.toString() : undefined;
@@ -60,12 +63,18 @@ class AtlaskitSelect extends React.Component<Field> {
       };
     });
 
+    // We only want to show validation state if there are validation rules for the select field
+    const needsValidation =
+      (validWhen && Object.keys(validWhen).length) ||
+      (requiredWhen && requiredWhen.length) ||
+      required;
+
     return (
       <AkField
         label={label}
         helperText={description}
         isRequired={required}
-        isInvalid={!isValid}
+        isInvalid={touched && needsValidation ? !isValid : undefined}
         invalidMessage={errorMessages}
         validateOnBlur={false}
       >
