@@ -100,6 +100,7 @@ var createTeamForm = [{
   name: "iterationLength",
   label: "Iteration length (weeks)",
   omitWhenHidden: true,
+  required: true,
   visibleWhen: [{
     field: "TEAM_TYPE",
     is: ["SCRUM"]

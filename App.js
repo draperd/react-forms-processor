@@ -113,7 +113,8 @@ var getTabs = function getTabs(renderer) {
         {
           defaultFields: _definitions.createTeamForm,
           optionsHandler: teamFormOptionsHandler,
-          renderer: renderer
+          renderer: renderer,
+          showValidationBeforeTouched: false
         },
         _react2.default.createElement(_reactFormsProcessorAtlaskit.FormButton, {
           onClick: function onClick(value) {
