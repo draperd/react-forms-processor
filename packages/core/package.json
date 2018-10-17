@@ -1,6 +1,6 @@
 {
   "name": "react-forms-processor",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "A forms processor for statically declaring forms with dynamic behaviour",
   "main": "dist/index.js",
   "scripts": {
@@ -8,7 +8,9 @@
     "start": "webpack-dev-server --mode development",
     "transpile": "babel src -d dist --copy-files",
     "prepublishOnly": "npm run transpile",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "postbuild": "yarn build:flow",
+    "build:flow": "../../node_modules/flow-copy-source/bin/flow-copy-source.js --verbose --ignore '**/*{story,test}.js' src dist"
   },
   "license": "MIT",
   "peerDependencies": {
@@ -43,6 +45,7 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
+    "flow-copy-source": "^2.0.2",
     "lodash": "^4.17.10"
   }
 }
