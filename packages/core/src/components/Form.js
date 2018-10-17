@@ -20,7 +20,7 @@ import type {
   OnFieldChange,
   Options,
   Value
-} from "../../../../types";
+} from "../types";
 import defaultRenderer from "../renderer";
 
 export default class Form extends Component<

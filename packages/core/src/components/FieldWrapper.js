@@ -2,7 +2,7 @@
 import React, { type Node } from "react";
 import isEqual from "lodash/isEqual";
 import FormContext from "./FormContext";
-import type { Field, FieldDef } from "../../../../types";
+import type { Field, FieldDef } from "../types";
 import "./FieldWrapper.css";
 
 export type FieldWrapperProps = Field & {

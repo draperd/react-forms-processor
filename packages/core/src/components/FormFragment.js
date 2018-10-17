@@ -2,7 +2,7 @@
 import React, { Component, Fragment } from "react";
 import FormContext from "./FormContext";
 import { getFirstDefinedValue } from "../utilities/utils";
-import type { FieldDef, FormContextData } from "../../../../types";
+import type { FieldDef, FormContextData } from "../types";
 
 export type InnerFormFragmentProps = FormContextData & {
   defaultFields: FieldDef[]

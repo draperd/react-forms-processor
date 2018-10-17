@@ -1,5 +1,5 @@
 // @flow
-import type { FieldDef } from "../../../types";
+import type { FieldDef } from "react-forms-processor";
 
 const simpleValue: FieldDef[] = [
   {

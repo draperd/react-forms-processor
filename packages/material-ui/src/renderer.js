@@ -6,7 +6,11 @@ import Select from "./components/fields/Select";
 import TextField from "./components/fields/TextField";
 import Checkbox from "./components/fields/Checkbox";
 
-import type { FieldRenderer, FieldDef, OnFieldChange } from "../../../types";
+import type {
+  FieldRenderer,
+  FieldDef,
+  OnFieldChange
+} from "react-forms-processor";
 
 const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
   const { id, type, label, misc = {} } = field;

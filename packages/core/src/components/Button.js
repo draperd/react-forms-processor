@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 import { FormContext } from "react-forms-processor";
-import type { FormValue, FormButtonProps } from "../../../../types";
+import type { FormValue, FormButtonProps } from "../types";
 
 class FormButton extends React.Component<FormButtonProps> {
   render() {

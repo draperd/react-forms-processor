@@ -3,7 +3,7 @@ import React from "react";
 import { DatePicker } from "@atlaskit/datetime-picker";
 import { Field as AkField } from "@atlaskit/form";
 import { FieldWrapper } from "react-forms-processor";
-import type { Field, FieldDef } from "../../../../../types";
+import type { Field, FieldDef } from "react-forms-processor";
 
 class AtlaskitDate extends React.Component<Field> {
   render() {

@@ -2,7 +2,7 @@
 import React from "react";
 import FieldTextArea from "@atlaskit/field-text-area";
 import { FieldWrapper } from "react-forms-processor";
-import type { Field, FieldDef } from "../../../../../types";
+import type { Field, FieldDef } from "react-forms-processor";
 import { Field as AkField } from "@atlaskit/form";
 
 class AtlaskitFieldTextArea extends React.Component<Field> {

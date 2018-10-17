@@ -2,7 +2,7 @@
 import React from "react";
 import Checkbox from "@atlaskit/checkbox";
 import { FieldWrapper } from "react-forms-processor";
-import type { Field, FieldDef } from "../../../../../types";
+import type { Field, FieldDef } from "react-forms-processor";
 import { Field as AkField } from "@atlaskit/form";
 
 class AtlaskitCheckbox extends React.Component<Field> {

@@ -18,7 +18,7 @@ import type {
   FormValue,
   OptionsHandler,
   Options
-} from "../../../types";
+} from "react-forms-processor";
 import {
   createTeamForm,
   frag1,

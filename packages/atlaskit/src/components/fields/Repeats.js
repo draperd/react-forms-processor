@@ -6,7 +6,7 @@ import get from "lodash/get";
 import Button from "@atlaskit/button";
 import { Form, FormContext } from "react-forms-processor";
 import Expander from "../Expander";
-import type { FieldDef, OnFormChange } from "../../../../../types";
+import type { FieldDef, OnFormChange } from "react-forms-processor";
 import { Field as AkField } from "@atlaskit/form";
 
 type Item = {

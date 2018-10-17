@@ -14,7 +14,7 @@ import {
   validationInfo,
   advancedInfo
 } from "./definitions";
-import type { FieldDef, FieldRenderer } from "../../../types";
+import type { FieldDef, FieldRenderer } from "react-forms-processor";
 
 const getTabs = (renderer: FieldRenderer) => {
   return [

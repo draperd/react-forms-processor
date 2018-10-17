@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { FieldWrapper } from "react-forms-processor";
-import type { Field, FieldDef } from "../../../../../types";
+import type { Field, FieldDef } from "react-forms-processor";
 
 const styles = theme => ({
   container: {

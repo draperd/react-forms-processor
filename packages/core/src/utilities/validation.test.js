@@ -18,7 +18,7 @@ import type {
   ValidateField,
   ValidateAllFields,
   ValidationHandler
-} from "../../../../types";
+} from "../types";
 
 const field1 = createField({
   id: "one",

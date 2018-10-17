@@ -3,7 +3,7 @@ import React from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { FieldWrapper } from "react-forms-processor";
-import type { Field, FieldDef } from "../../../../../types";
+import type { Field, FieldDef } from "react-forms-processor";
 
 class MaterialCheckbox extends React.Component<Field> {
   render() {

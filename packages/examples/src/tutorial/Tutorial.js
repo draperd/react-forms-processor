@@ -11,16 +11,24 @@ import {
   validation,
   comparisonValidation
 } from "./definitions";
-import type { FieldRenderer, OptionsHandler } from "../../../../types";
+import type { FieldRenderer, OptionsHandler } from "react-forms-processor";
 import { getOptions } from "../SwapiOptionsHandler";
 
+// $FlowFixMe
 import singleFieldDescription from "./tutorial1.md";
+// $FlowFixMe
 import visibilityDescription from "./tutorial2.md";
+// $FlowFixMe
 import requirementDescription from "./tutorial3.md";
+// $FlowFixMe
 import optionsDescription from "./tutorial4.md";
+// $FlowFixMe
 import manipulateOptionsDescription from "./tutorial5.md";
+// $FlowFixMe
 import duplicateNamesDescription from "./tutorial6.md";
+// $FlowFixMe
 import validationDescription from "./tutorial7.md";
+// $FlowFixMe
 import comparisonValidationDescription from "./tutorial8.md";
 
 const swapiOptions: OptionsHandler = (fieldId, fields, parentContext) => {

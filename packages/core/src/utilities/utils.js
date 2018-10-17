@@ -23,7 +23,7 @@ import type {
   UpdateFieldTouchedState,
   UpdateFieldValue,
   Value
-} from "../../../../types";
+} from "../types";
 
 export const getNextStateFromFields: GetNextStateFromProps = (
   fields,

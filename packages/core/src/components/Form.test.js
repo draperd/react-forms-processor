@@ -5,7 +5,7 @@ import Adapter from "enzyme-adapter-react-16";
 import Form from "./Form";
 import FormFragment from "./FormFragment";
 import FormContext from "./FormContext";
-import type { FieldDef } from "../../../../types";
+import type { FieldDef } from "../types";
 
 Enzyme.configure({ adapter: new Adapter() });
 

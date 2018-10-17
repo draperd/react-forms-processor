@@ -4,7 +4,7 @@ import type {
   Value,
   ValidateField,
   ValidateAllFields
-} from "../../../../types";
+} from "../types";
 
 export type LengthIsGreaterThan = ({
   value: Value,

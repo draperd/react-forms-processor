@@ -1,11 +1,6 @@
 // @flow
 import React from "react";
-import type {
-  FieldRenderer,
-  FieldDef,
-  OnFieldChange,
-  Option
-} from "../../../types";
+import type { FieldRenderer, FieldDef, OnFieldChange, Option } from "./types";
 
 const mapOptionItems = (optionGroupItems: Option[]) =>
   optionGroupItems.map(item => {

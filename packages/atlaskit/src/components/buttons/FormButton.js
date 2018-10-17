@@ -2,7 +2,7 @@
 import React from "react";
 import Button from "@atlaskit/button";
 import { FormContext } from "react-forms-processor";
-import type { FormValue, FormButtonProps } from "../../../../../types";
+import type { FormValue, FormButtonProps } from "react-forms-processor";
 
 class FormButton extends React.Component<FormButtonProps> {
   render() {

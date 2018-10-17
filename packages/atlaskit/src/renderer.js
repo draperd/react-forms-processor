@@ -8,7 +8,11 @@ import RadioGroup from "./components/fields/RadioGroup";
 import Select from "./components/fields/Select";
 import MultiSelect from "./components/fields/MultiSelect";
 import RepeatingFormField from "./components/fields/Repeats";
-import type { FieldRenderer, FieldDef, OnFieldChange } from "../../../types";
+import type {
+  FieldRenderer,
+  FieldDef,
+  OnFieldChange
+} from "react-forms-processor";
 
 const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
   const { defaultValue = [], id, type, label, misc = {} } = field;

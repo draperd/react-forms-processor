@@ -8,7 +8,7 @@ import type {
   FieldRenderer,
   FormValue,
   OptionsHandler
-} from "../../../types";
+} from "react-forms-processor";
 
 import brace from "brace";
 import AceEditor from "react-ace";

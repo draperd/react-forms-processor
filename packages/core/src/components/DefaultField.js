@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from "react";
-import type { FieldDef, OnFieldChange } from "../../../../types";
+import type { FieldDef, OnFieldChange } from "../types";
 
 type DefaultFieldProps = {
   field: FieldDef,

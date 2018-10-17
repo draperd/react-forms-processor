@@ -5,7 +5,7 @@ import Adapter from "enzyme-adapter-react-16";
 // import { expect } from "chai";
 import Form from "./components/Form";
 import FormButton from "./components/Button";
-import type { FieldDef } from "../../../types";
+import type { FieldDef } from "./types";
 // import FormButton from "../../atlaskit/src/components/buttons/FormButton";
 
 Enzyme.configure({ adapter: new Adapter() });

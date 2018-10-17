@@ -2,7 +2,11 @@
 import React from "react";
 import akRenderer from "../../atlaskit/src/renderer";
 import FieldDefinitionField from "./FieldDefinitionField";
-import type { FieldRenderer, FieldDef, OnFieldChange } from "../../../types";
+import type {
+  FieldRenderer,
+  FieldDef,
+  OnFieldChange
+} from "react-forms-processor";
 
 const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
   const { id, type } = field;

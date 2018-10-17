@@ -3,7 +3,7 @@ import React from "react";
 import RadioGroup from "@atlaskit/field-radio-group";
 import { FieldWrapper } from "react-forms-processor";
 import styled from "styled-components";
-import type { Field, FieldDef } from "../../../../../types";
+import type { Field, FieldDef } from "react-forms-processor";
 import { Field as AkField } from "@atlaskit/form";
 
 // NOTE: Temporary hack to workaround the problem of duplicate label appearing - this can stop being used as soon as Atlaskit forms support Radio Groups properly

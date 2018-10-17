@@ -11,7 +11,7 @@ import type {
   Options,
   OptionsHandler,
   ValidationHandler
-} from "../../../types";
+} from "react-forms-processor";
 import renderer from "./renderer";
 import { formBuilder } from "./definitions";
 

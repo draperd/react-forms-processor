@@ -1,5 +1,5 @@
 // @flow
-import type { Options } from "../../../types";
+import type { Options } from "react-forms-processor";
 
 export const getOptions: () => Promise<Options> = () => {
   return fetch("https://swapi.co/api/people/")
