@@ -48,6 +48,8 @@ class FieldWrapper extends React.Component<FieldWrapperProps> {
       ...current
     } = this.props;
 
+    // This is causing individually field definitions to fail to be rendered, but without this
+    // the form builder performance is poor :(
     if (isEqual(next, current)) {
       return false;
     }
@@ -85,7 +87,6 @@ class FieldWrapper extends React.Component<FieldWrapperProps> {
         </div>
       );
     }
-
     return null;
   }
 }
