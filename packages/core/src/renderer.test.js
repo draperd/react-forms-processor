@@ -12,73 +12,73 @@ import FormFragment from "./components/FormFragment";
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
 
-// describe("Default renderer", () => {
-//   test("single text field", () => {
-//     const singleField: FieldDef[] = [
-//       {
-//         id: "FIELD1",
-//         name: "prop1",
-//         defaultValue: "test",
-//         type: "text"
-//       }
-//     ];
-//     // NOTE: It's not possible to test components using the new React Context API yet in Enzyme,
-//     //       See https://github.com/airbnb/enzyme/pull/1513
-//     const wrapper = mount(<Form defaultFields={singleField} />);
-//     const inputFields = wrapper.find("input");
-//     expect(inputFields.length).toBe(1);
-//   });
-// });
+describe("Default renderer", () => {
+  test("single text field", () => {
+    const singleField: FieldDef[] = [
+      {
+        id: "FIELD1",
+        name: "prop1",
+        defaultValue: "test",
+        type: "text"
+      }
+    ];
+    // NOTE: It's not possible to test components using the new React Context API yet in Enzyme,
+    //       See https://github.com/airbnb/enzyme/pull/1513
+    const wrapper = mount(<Form defaultFields={singleField} />);
+    const inputFields = wrapper.find("input");
+    expect(inputFields.length).toBe(1);
+  });
+});
 
-// describe("Basic single field form capabilities", () => {
-//   const onFormChange = jest.fn();
-//   const onButtonClick = jest.fn();
-//   const singleField: FieldDef[] = [
-//     {
-//       id: "FIELD1",
-//       name: "prop1",
-//       defaultValue: "test",
-//       type: "text"
-//     }
-//   ];
+describe("Basic single field form capabilities", () => {
+  const onFormChange = jest.fn();
+  const onButtonClick = jest.fn();
+  const singleField: FieldDef[] = [
+    {
+      id: "FIELD1",
+      name: "prop1",
+      defaultValue: "test",
+      type: "text"
+    }
+  ];
 
-//   const wrapper = mount(
-//     <Form defaultFields={singleField} onChange={onFormChange}>
-//       <FormButton onClick={onButtonClick} />
-//     </Form>
-//   );
+  const wrapper = mount(
+    <Form defaultFields={singleField} onChange={onFormChange}>
+      <FormButton onClick={onButtonClick} />
+    </Form>
+  );
 
-//   test("has single input field", () => {
-//     expect(wrapper.find("input[type='text']").length).toBe(1);
-//   });
+  test("has single input field", () => {
+    expect(wrapper.find("input[type='text']").length).toBe(1);
+  });
 
-//   test("input field has a value", () => {
-//     const inputField = wrapper.find("input[type='text']").at(0);
-//     expect(inputField.prop("value")).toBe("test");
-//   });
+  test("input field has a value", () => {
+    const inputField = wrapper.find("input[type='text']").at(0);
+    expect(inputField.prop("value")).toBe("test");
+  });
 
-//   test("has a button", () => {
-//     expect(wrapper.find(FormButton).length).toBe(1);
-//   });
+  test("has a button", () => {
+    expect(wrapper.find(FormButton).length).toBe(1);
+  });
 
-//   const button = wrapper.find(FormButton);
-//   test("button initially has no value", () => {
-//     button.prop("onClick")();
-//     expect(onButtonClick).toHaveBeenCalledTimes(1);
-//     expect(onButtonClick).toHaveBeenLastCalledWith();
-//   });
+  const button = wrapper.find(FormButton);
+  test("button initially has no value", () => {
+    button.prop("onClick")();
+    expect(onButtonClick).toHaveBeenCalledTimes(1);
+    expect(onButtonClick).toHaveBeenLastCalledWith();
+  });
 
-//   const inputField = wrapper.find("input[type='text']");
-//   test("changing field value calls onChange", () => {
-//     inputField.simulate("change", { target: { value: "updated" } });
-//     expect(onFormChange).toHaveBeenLastCalledWith({ prop1: "updated" }, true);
-//   });
+  const inputField = wrapper.find("input[type='text']");
+  test("changing field value calls onChange", () => {
+    inputField.simulate("change", { target: { value: "updated" } });
+    expect(onFormChange).toHaveBeenLastCalledWith({ prop1: "updated" }, true);
+  });
 
-//   test("button initially has no value", () => {
-//     button.prop("onClick")();
-//     expect(onButtonClick).toHaveBeenCalledTimes(2);
-//   });
-// });
+  test("button initially has no value", () => {
+    button.prop("onClick")();
+    expect(onButtonClick).toHaveBeenCalledTimes(2);
+  });
+});
 
 describe("Disabled form", () => {
   const onFormChange = jest.fn();
