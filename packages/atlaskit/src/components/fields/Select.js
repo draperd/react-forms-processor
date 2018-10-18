@@ -74,7 +74,7 @@ class AtlaskitSelect extends React.Component<Field> {
           name={name}
           defaultValue={defaultSelected}
           placeholder={placeholder}
-          disabled={disabled}
+          isDisabled={disabled}
           options={items}
           onChange={value => {
             if (value.hasOwnProperty("value")) {

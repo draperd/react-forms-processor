@@ -84,7 +84,7 @@ class AtlaskitSelect extends React.Component<Field> {
           name={name}
           defaultValue={defaultValue}
           placeholder={placeholder}
-          disabled={disabled}
+          isDisabled={disabled}
           options={items}
           onChange={value => {
             onFieldChange(id, value.map(item => item.value));

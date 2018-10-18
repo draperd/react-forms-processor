@@ -28,11 +28,12 @@ import type {
 export const getNextStateFromFields: GetNextStateFromProps = (
   fields,
   showValidationBeforeTouched,
+  formIsDisabled,
   optionsHandler,
   validationHandler,
   parentContext
 ) => {
-  fields = processFields(fields);
+  fields = processFields(fields, !!formIsDisabled);
   if (optionsHandler) {
     fields = processOptions(fields, optionsHandler, parentContext);
   }
@@ -138,7 +139,7 @@ export const evaluateAllRules: EvaluateAllRules = (
   return rulesPass;
 };
 
-export const processFields: ProcessFields = fields => {
+export const processFields: ProcessFields = (fields, formIsDisabled) => {
   const fieldsById = mapFieldsById(fields);
   const updatedFields = fields.map(field => {
     const {
@@ -146,7 +147,7 @@ export const processFields: ProcessFields = fields => {
       value,
       visible,
       required,
-      disabled,
+      defaultDisabled,
       trimValue,
       visibleWhen = [],
       requiredWhen = [],
@@ -161,13 +162,14 @@ export const processFields: ProcessFields = fields => {
     ) {
       processedValue = processedValue.trim();
     }
-
     return {
       ...field,
       value: processedValue,
       visible: evaluateAllRules(visibleWhen, fieldsById, visible !== false),
       required: evaluateAllRules(requiredWhen, fieldsById, !!required),
-      disabled: evaluateAllRules(disabledWhen, fieldsById, !!disabled)
+      disabled:
+        formIsDisabled ||
+        evaluateAllRules(disabledWhen, fieldsById, !!defaultDisabled)
     };
   });
   return updatedFields;
