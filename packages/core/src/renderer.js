@@ -89,7 +89,7 @@ const renderSelect = (
 
 const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
   const {
-    disabled,
+    disabled = false,
     id,
     isValid,
     name,

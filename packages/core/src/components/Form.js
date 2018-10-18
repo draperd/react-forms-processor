@@ -33,7 +33,8 @@ export default class Form extends Component<
       fields: [],
       value: props.value || {},
       isValid: false,
-      defaultFields: []
+      defaultFields: [],
+      disabled: props.disabled || false
     };
   }
 
@@ -61,13 +62,15 @@ export default class Form extends Component<
     if (
       (nextProps.defaultFields &&
         nextProps.defaultFields !== prevState.defaultFields) ||
-      (nextProps.value && nextProps.value !== prevState.value)
+      (nextProps.value && nextProps.value !== prevState.value) ||
+      nextProps.disabled !== prevState.disabled
     ) {
       const { fields: fieldsFromState, value: valueFromState } = prevState;
 
       let {
         defaultFields: defaultFieldFromProps,
-        value: valueFromProps
+        value: valueFromProps,
+        disabled = false
       } = nextProps;
       const {
         optionsHandler,
@@ -86,13 +89,15 @@ export default class Form extends Component<
       const nextState = getNextStateFromFields(
         fields,
         showValidationBeforeTouched,
+        disabled,
         optionsHandler,
         validationHandler,
         parentContext
       );
       return {
         ...nextState,
-        defaultFields
+        defaultFields,
+        disabled
       };
     } else {
       return null;
@@ -104,13 +109,15 @@ export default class Form extends Component<
       optionsHandler,
       validationHandler,
       parentContext,
-      showValidationBeforeTouched = false
+      showValidationBeforeTouched = false,
+      disabled = false
     } = this.props;
     let { fields } = this.state;
     fields = updateFieldValue(id, value, fields);
     const nextState = getNextStateFromFields(
       fields,
       showValidationBeforeTouched,
+      disabled,
       optionsHandler,
       validationHandler,
       parentContext
@@ -135,13 +142,15 @@ export default class Form extends Component<
       optionsHandler,
       validationHandler,
       parentContext,
-      showValidationBeforeTouched = false
+      showValidationBeforeTouched = false,
+      disabled = false
     } = this.props;
     let { fields } = this.state;
     fields = updateFieldTouchedState(id, true, fields);
     const nextState = getNextStateFromFields(
       fields,
       showValidationBeforeTouched,
+      disabled,
       optionsHandler,
       validationHandler,
       parentContext
@@ -155,7 +164,10 @@ export default class Form extends Component<
   // Register field is provided in the context to allow children to register with this form...
   registerField(field: FieldDef) {
     let { fields = [], value = {} } = this.state;
-    const { showValidationBeforeTouched = false } = this.props;
+    const {
+      showValidationBeforeTouched = false,
+      disabled = false
+    } = this.props;
 
     if (fields.find(existingField => field.id === existingField.id)) {
       // Don't register fields twice...
@@ -171,6 +183,7 @@ export default class Form extends Component<
         const nextState = getNextStateFromFields(
           updatedFields,
           showValidationBeforeTouched,
+          disabled,
           props.optionsHandler,
           props.validationHandler,
           props.parentContext
@@ -190,7 +203,8 @@ export default class Form extends Component<
       validationHandler,
       parentContext,
       showValidationBeforeTouched = false,
-      conditionalUpdate = false
+      conditionalUpdate = false,
+      disabled = false
     } = this.props;
     const onFieldChange = this.onFieldChange.bind(this); // TODO: Is this creating a new function each time? Does this result in too many listeners?
     const onFieldFocus = this.onFieldFocus.bind(this); // TODO: See above comment
@@ -208,7 +222,8 @@ export default class Form extends Component<
       parentContext,
       showValidationBeforeTouched,
       validationHandler,
-      conditionalUpdate
+      conditionalUpdate,
+      disabled
     };
 
     return context;

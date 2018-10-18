@@ -41,14 +41,16 @@ class AtlaskitRadioGroup extends React.Component<Field> {
             const _item = {
               label: item,
               value: item,
-              isSelected: item === value
+              isSelected: item === value,
+              isDisabled: disabled
             };
             return _item;
           } else {
             const _item = {
               label: item.label || item.value,
               value: item.value,
-              isSelected: item.value === value
+              isSelected: item.value === value,
+              isDisabled: disabled
             };
             return _item;
           }
@@ -69,7 +71,6 @@ class AtlaskitRadioGroup extends React.Component<Field> {
           <RadioGroup
             name={name}
             placeholder={placeholder}
-            disabled={disabled}
             value={stringValue}
             items={items}
             onRadioChange={(evt: any) => onFieldChange(id, evt.target.value)}

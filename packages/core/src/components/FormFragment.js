@@ -24,6 +24,7 @@ class FormFragment extends Component<InnerFormFragmentProps, void> {
       }
     });
   }
+
   render() {
     const {
       defaultFields = [],
@@ -53,6 +54,7 @@ class FormFragment extends Component<InnerFormFragmentProps, void> {
             field.value
           );
         }
+
         return renderer(fieldToRender, onFieldChange, onFieldFocus);
       }
       return null;

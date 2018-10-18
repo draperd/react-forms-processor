@@ -71,6 +71,7 @@ export type FieldDef = {
   value?: void | string | number | boolean | Array<any>,
   visible?: boolean,
   required?: boolean,
+  defaultDisabled?: boolean,
   disabled?: boolean,
   disabledWhen?: Rule[],
   visibleWhen?: Rule[],
@@ -119,14 +120,16 @@ export type FormComponentProps = {
   children?: Node,
   parentContext?: FormContextData,
   showValidationBeforeTouched?: boolean,
-  conditionalUpdate?: boolean
+  conditionalUpdate?: boolean,
+  disabled?: boolean
 };
 
 export type FormComponentState = {
   fields: FieldDef[],
   value: FormValue,
   isValid: boolean,
-  defaultFields: []
+  defaultFields: [],
+  disabled: boolean
 };
 
 export type EvaluateRule = (rule?: Rule, targetValue: Value) => boolean;
@@ -141,7 +144,7 @@ export type EvaluateAllRules = (
   defaultResult: boolean
 ) => boolean;
 
-export type ProcessFields = (FieldDef[]) => FieldDef[];
+export type ProcessFields = (FieldDef[], boolean) => FieldDef[];
 export type ProcessOptions = (
   FieldDef[],
   OptionsHandler,
@@ -193,6 +196,7 @@ export type DetermineChangedValues = FieldDef => Array<{
 export type GetNextStateFromProps = (
   FieldDef[],
   boolean,
+  boolean,
   ?OptionsHandler,
   ?ValidationHandler,
   ?FormContextData
@@ -217,5 +221,6 @@ export type FormContextData = {
   onFieldFocus: OnFieldFocus,
   parentContext?: FormContextData,
   showValidationBeforeTouched: boolean,
-  conditionalUpdate: boolean
+  conditionalUpdate: boolean,
+  disabled: boolean
 };
