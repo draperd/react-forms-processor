@@ -39,6 +39,12 @@ const formDisabledStateHasChanged = (
 ) =>
   nextProps.disabled !== undefined && nextProps.disabled !== prevState.disabled;
 
+const formTouchedStateHasChanged = (
+  nextProps: FormComponentProps,
+  prevState: FormComponentState
+) =>
+  nextProps.touched !== prevState.touched;
+
 export default class Form extends Component<
   FormComponentProps,
   FormComponentState
@@ -50,7 +56,8 @@ export default class Form extends Component<
       value: props.value || {},
       isValid: false,
       defaultFields: [],
-      disabled: props.disabled || false
+      disabled: props.disabled || false,
+      touched: props.touched
     };
   }
 
@@ -78,14 +85,16 @@ export default class Form extends Component<
     if (
       defaultFieldsHaveChanged(nextProps, prevState) ||
       valueHasChanged(nextProps, prevState) ||
-      formDisabledStateHasChanged(nextProps, prevState)
+      formDisabledStateHasChanged(nextProps, prevState) ||
+      formTouchedStateHasChanged(nextProps, prevState)
     ) {
       const { fields: fieldsFromState, value: valueFromState } = prevState;
 
       let {
         defaultFields: defaultFieldsFromProps,
         value: valueFromProps,
-        disabled = false
+        disabled = false,
+        touched
       } = nextProps;
       const {
         optionsHandler,
@@ -111,6 +120,9 @@ export default class Form extends Component<
           valueFromProps || valueFromState || {}
         );
       }
+      if (prevState.touched !== nextProps.touched) {
+        fields.forEach(field => (field.touched = nextProps.touched));
+      }
 
       const nextState = getNextStateFromFields(
         fields,
@@ -123,7 +135,8 @@ export default class Form extends Component<
       return {
         ...nextState,
         defaultFields: defaultFieldsFromProps,
-        disabled
+        disabled,
+        touched
       };
     } else {
       return null;
