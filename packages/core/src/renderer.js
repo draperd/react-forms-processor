@@ -1,6 +1,12 @@
 // @flow
 import React from "react";
-import type { FieldRenderer, FieldDef, OnFieldChange, Option } from "./types";
+import type {
+  FieldRenderer,
+  FieldDef,
+  OnFieldChange,
+  OnFieldFocus,
+  Option
+} from "./types";
 
 const mapOptionItems = (optionGroupItems: Option[]) =>
   optionGroupItems.map(item => {
@@ -22,6 +28,7 @@ const mapOptionItems = (optionGroupItems: Option[]) =>
 const renderSelect = (
   field: FieldDef,
   onChange: OnFieldChange,
+  onFieldFocus: OnFieldFocus,
   multiple: boolean
 ) => {
   const {
@@ -69,6 +76,7 @@ const renderSelect = (
         value={processedValue}
         disabled={disabled}
         required={required}
+        onFocus={() => onFieldFocus(id)}
         onChange={evt => {
           if (multiple) {
             const options = evt.target.options;
@@ -90,6 +98,7 @@ const renderSelect = (
 const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
   const {
     disabled = false,
+    errorMessages,
     id,
     isValid,
     name,
@@ -121,10 +130,10 @@ const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
         </div>
       );
     case "select":
-      return renderSelect(field, onChange, false);
+      return renderSelect(field, onChange, onFieldFocus, false);
 
     case "multiselect":
-      return renderSelect(field, onChange, true);
+      return renderSelect(field, onChange, onFieldFocus, true);
 
     case "radiogroup":
       items = options.reduce((itemsSoFar, option) => {
@@ -181,9 +190,10 @@ const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
             required={required}
             checked={checked}
             onChange={evt => onChange(id, evt.target.value)}
+            onFocus={() => onFieldFocus(id)}
           />
-          {required ? "*" : ""}
-          {!isValid ? "Error!" : ""}
+          {required ? "*" : null}
+          {!isValid ? <span className="errors">{errorMessages}</span> : null}
         </div>
       );
   }

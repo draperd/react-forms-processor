@@ -164,6 +164,7 @@ export const processFields: ProcessFields = (fields, formIsDisabled) => {
     }
     return {
       ...field,
+      touched: !!field.touched,
       value: processedValue,
       visible: evaluateAllRules(visibleWhen, fieldsById, visible !== false),
       required: evaluateAllRules(requiredWhen, fieldsById, !!required),
