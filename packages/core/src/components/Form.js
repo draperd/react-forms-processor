@@ -23,6 +23,22 @@ import type {
 } from "../types";
 import defaultRenderer from "../renderer";
 
+const defaultFieldsHaveChanged = (
+  nextProps: FormComponentProps,
+  prevState: FormComponentState
+) => !isEqual(nextProps.defaultFields, prevState.defaultFields);
+
+const valueHasChanged = (
+  nextProps: FormComponentProps,
+  prevState: FormComponentState
+) => nextProps.value && nextProps.value !== prevState.value;
+
+const formDisabledStateHasChanged = (
+  nextProps: FormComponentProps,
+  prevState: FormComponentState
+) =>
+  nextProps.disabled !== undefined && nextProps.disabled !== prevState.disabled;
+
 export default class Form extends Component<
   FormComponentProps,
   FormComponentState
@@ -60,15 +76,14 @@ export default class Form extends Component<
     prevState: FormComponentState
   ) {
     if (
-      (nextProps.defaultFields &&
-        nextProps.defaultFields !== prevState.defaultFields) ||
-      (nextProps.value && nextProps.value !== prevState.value) ||
-      nextProps.disabled !== prevState.disabled
+      defaultFieldsHaveChanged(nextProps, prevState) ||
+      valueHasChanged(nextProps, prevState) ||
+      formDisabledStateHasChanged(nextProps, prevState)
     ) {
       const { fields: fieldsFromState, value: valueFromState } = prevState;
 
       let {
-        defaultFields: defaultFieldFromProps,
+        defaultFields: defaultFieldsFromProps,
         value: valueFromProps,
         disabled = false
       } = nextProps;
@@ -79,13 +94,24 @@ export default class Form extends Component<
         showValidationBeforeTouched = false
       } = nextProps;
 
-      const defaultFields = defaultFieldFromProps || fieldsFromState;
+      const defaultFields = defaultFieldsFromProps || fieldsFromState;
+      let fields;
+      if (
+        defaultFieldsFromProps &&
+        defaultFieldsHaveChanged(nextProps, prevState)
+      ) {
+        fields = registerFields(
+          defaultFieldsFromProps,
+          valueFromProps || valueFromState || {}
+        );
+      } else {
+        // TODO: Ideally we shouldn't need to register to update the value...
+        fields = registerFields(
+          fieldsFromState,
+          valueFromProps || valueFromState || {}
+        );
+      }
 
-      // TODO: Are fields getting re-registered too much? Is new prop value being used?
-      const fields = registerFields(
-        defaultFields,
-        valueFromProps || valueFromState || {}
-      );
       const nextState = getNextStateFromFields(
         fields,
         showValidationBeforeTouched,
@@ -96,7 +122,7 @@ export default class Form extends Component<
       );
       return {
         ...nextState,
-        defaultFields,
+        defaultFields: defaultFieldsFromProps,
         disabled
       };
     } else {
@@ -225,7 +251,6 @@ export default class Form extends Component<
       conditionalUpdate,
       disabled
     };
-
     return context;
   }
 

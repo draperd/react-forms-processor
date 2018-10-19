@@ -25,6 +25,45 @@ import type {
   Value
 } from "../types";
 
+// Because this function can be passed with the state of a component form
+// it is not mutating the supplied fields array but returning a new instance
+// each time, this is less efficient (when passing entire fieldDef arrays to the
+// form) but safer when children of forms are registering themselves
+export const registerField: RegisterField = (field, fields, formValue) => {
+  if (fieldDefIsValid(field, fields)) {
+    const { defaultValue, name, value, valueDelimiter } = field;
+    field.defaultValue = getFirstDefinedValue(
+      formValue[name],
+      value,
+      defaultValue
+    );
+    field.value = splitDelimitedValue(value, valueDelimiter);
+    return fields.concat(field);
+  }
+  return fields.slice();
+};
+
+export const registerFields: RegisterFields = (fieldsToValidate, formValue) => {
+  const fields = [];
+  fieldsToValidate.forEach(field => {
+    if (fieldDefIsValid(field, fields)) {
+      const { defaultValue, name, value, valueDelimiter } = field;
+      const initialValue = getFirstDefinedValue(
+        formValue[name],
+        value,
+        defaultValue
+      );
+
+      const fieldToRegister = {
+        ...field,
+        value: splitDelimitedValue(initialValue, valueDelimiter)
+      };
+      fields.push(fieldToRegister);
+    }
+  });
+  return fields;
+};
+
 export const getNextStateFromFields: GetNextStateFromProps = (
   fields,
   showValidationBeforeTouched,
@@ -44,6 +83,7 @@ export const getNextStateFromFields: GetNextStateFromProps = (
     validationHandler,
     parentContext
   );
+
   const value = calculateFormValue(fields);
   const isValid = fields.every(field => field.isValid);
   const isDiscretelyInvalid = fields.some(field => field.isDiscretelyInvalid);
@@ -149,6 +189,7 @@ export const processFields: ProcessFields = (fields, formIsDisabled) => {
       required,
       defaultDisabled,
       trimValue,
+      touched = false,
       visibleWhen = [],
       requiredWhen = [],
       disabledWhen = []
@@ -162,9 +203,10 @@ export const processFields: ProcessFields = (fields, formIsDisabled) => {
     ) {
       processedValue = processedValue.trim();
     }
+
     return {
       ...field,
-      touched: !!field.touched,
+      touched,
       value: processedValue,
       visible: evaluateAllRules(visibleWhen, fieldsById, visible !== false),
       required: evaluateAllRules(requiredWhen, fieldsById, !!required),
@@ -204,6 +246,8 @@ export const mapFieldsById: MapFieldsById = fields => {
   }, {});
 };
 
+// NOTE: Just used for test purposes...
+// TODO: Move to test file...
 export const createField: CreateFieldDef = field => {
   const {
     id = "",
@@ -251,42 +295,6 @@ export const getFirstDefinedValue = (...values: Value) => {
     return false;
   });
   return valueToReturn;
-};
-
-// Because this function can be passed with the state of a component form
-// it is not mutating the supplied fields array but returning a new instance
-// each time, this is less efficient (when passing entire fieldDef arrays to the
-// form) but safer when children of forms are registering themselves
-export const registerField: RegisterField = (field, fields, formValue) => {
-  if (fieldDefIsValid(field, fields)) {
-    const { defaultValue, name, value, valueDelimiter } = field;
-    field.defaultValue = getFirstDefinedValue(
-      formValue[name],
-      value,
-      defaultValue
-    );
-    field.value = splitDelimitedValue(value, valueDelimiter);
-    return fields.concat(field);
-  }
-  return fields.slice();
-};
-
-export const registerFields: RegisterFields = (fieldsToValidate, formValue) => {
-  const fields = [];
-  fieldsToValidate.forEach(field => {
-    if (fieldDefIsValid(field, fields)) {
-      const { defaultValue, name, value, valueDelimiter } = field;
-      const initialValue = getFirstDefinedValue(
-        formValue[name],
-        value,
-        defaultValue
-      );
-      field.defaultValue = initialValue;
-      field.value = splitDelimitedValue(initialValue, valueDelimiter);
-      fields.push(field);
-    }
-  });
-  return fields;
 };
 
 export const updateFieldTouchedState: UpdateFieldTouchedState = (
