@@ -31,6 +31,30 @@ const rendererChoice: FieldDef[] = [
 
 const createTeamForm: FieldDef[] = [
   {
+    id: "DATE1",
+    name: "date1",
+    type: "specialdate",
+    validWhen: {
+      comparedTo: {
+        fields: ["DATE2"],
+        is: "SMALLER",
+        message: "Must be before second date"
+      }
+    }
+  },
+  {
+    id: "DATE2",
+    name: "date2",
+    type: "specialdate",
+    validWhen: {
+      comparedTo: {
+        fields: ["DATE1"],
+        is: "BIGGER",
+        message: "Must be after first date"
+      }
+    }
+  },
+  {
     id: "TEAMNAME",
     type: "text",
     name: "name",
