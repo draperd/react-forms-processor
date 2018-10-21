@@ -175,32 +175,6 @@ const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
         );
       }, []);
       return <div key={id}>{items}</div>;
-
-    case "specialdate": {
-      // $FlowFixMe - this is OK, we know the value type...
-      const convertedValue = value ? new Date(value).toUTCString() : "";
-      return (
-        <div key={id}>
-          <label htmlFor={id}>{label} </label>
-          <input
-            type="text"
-            id={id}
-            name={name}
-            value={convertedValue}
-            placeholder={placeholder}
-            disabled={disabled}
-            required={required}
-            onChange={evt => onChange(id, new Date(evt.target.value).getTime())}
-            onFocus={() => onFieldFocus(id)}
-          />
-          {!isValid ? (
-            <span className="errors">{errorMessages}</span>
-          ) : (
-            <span />
-          )}
-        </div>
-      );
-    }
     default:
       const checked = type === "checkbox" ? value : undefined;
       return (
