@@ -6,6 +6,7 @@ import {
   getDefaultNumericalRangeErrorMessages,
   isBigger,
   isLonger,
+  isNotValue,
   isShorter,
   lengthIsGreaterThan,
   lengthIsLessThan,
@@ -198,12 +199,14 @@ describe("getDefaultNumericalRangeErrorMessages", () => {
 describe("fallsWithinNumericalRange", () => {
   test("fails when given a non-numerical number", () => {
     expect(
+      // $FlowFixMe - Typing should prevent this, but we're testing the output
       fallsWithinNumericalRange({ value: "abc", min: 5, message: "Fail" })
     ).toBe("Fail");
   });
 
   test("succeeds with just a min", () => {
     expect(
+      // $FlowFixMe - Typing should prevent this, but we're testing the output
       fallsWithinNumericalRange({
         value: "5",
         min: 1,
@@ -214,6 +217,7 @@ describe("fallsWithinNumericalRange", () => {
 
   test("succeeds with just a max", () => {
     expect(
+      // $FlowFixMe - Typing should prevent this, but we're testing the output
       fallsWithinNumericalRange({
         value: 6,
         max: 10,
@@ -224,6 +228,7 @@ describe("fallsWithinNumericalRange", () => {
 
   test("fails with just a min", () => {
     expect(
+      // $FlowFixMe - Typing should prevent this, but we're testing the output
       fallsWithinNumericalRange({
         value: "5",
         min: 10,
@@ -234,6 +239,7 @@ describe("fallsWithinNumericalRange", () => {
 
   test("fails with just a max", () => {
     expect(
+      // $FlowFixMe - Typing should prevent this, but we're testing the output
       fallsWithinNumericalRange({
         value: 6,
         max: 5,
@@ -420,6 +426,28 @@ describe("comparedTo", () => {
         fields: ["SHORTEST"],
         allFields,
         is: "SHORTER",
+        message: "Fail"
+      })
+    ).toBeUndefined();
+  });
+});
+
+describe("isNotValue", () => {
+  test("matching value causes error", () => {
+    expect(
+      isNotValue({
+        value: "bob",
+        values: ["bob", "ted", "geoff"],
+        message: "Fail"
+      })
+    ).toBe("Fail");
+  });
+
+  test("non-matching value returns undefined", () => {
+    expect(
+      isNotValue({
+        value: "sally",
+        values: ["bob", "ted", "geoff"],
         message: "Fail"
       })
     ).toBeUndefined();

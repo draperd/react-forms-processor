@@ -77,7 +77,6 @@ describe("validation warnings", () => {
       name: "field1",
       validWhen: {
         matchesRegEx: {
-          value: "1234",
           pattern: "^[\\d]+$",
           message: "Numbers only"
         }
