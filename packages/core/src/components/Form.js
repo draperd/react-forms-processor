@@ -39,11 +39,11 @@ const formDisabledStateHasChanged = (
 ) =>
   nextProps.disabled !== undefined && nextProps.disabled !== prevState.disabled;
 
-const formTouchedStateHasChanged = (
+const formTouchedBehaviourHasChanged = (
   nextProps: FormComponentProps,
   prevState: FormComponentState
 ) =>
-  nextProps.touched !== prevState.touched;
+  nextProps.showValidationBeforeTouched !== prevState.showValidationBeforeTouched;
 
 export default class Form extends Component<
   FormComponentProps,
@@ -57,7 +57,7 @@ export default class Form extends Component<
       isValid: false,
       defaultFields: [],
       disabled: props.disabled || false,
-      touched: props.touched
+      showValidationBeforeTouched: props.showValidationBeforeTouched
     };
   }
 
@@ -86,15 +86,14 @@ export default class Form extends Component<
       defaultFieldsHaveChanged(nextProps, prevState) ||
       valueHasChanged(nextProps, prevState) ||
       formDisabledStateHasChanged(nextProps, prevState) ||
-      formTouchedStateHasChanged(nextProps, prevState)
+      formTouchedBehaviourHasChanged(nextProps, prevState)
     ) {
       const { fields: fieldsFromState, value: valueFromState } = prevState;
 
       let {
         defaultFields: defaultFieldsFromProps,
         value: valueFromProps,
-        disabled = false,
-        touched
+        disabled = false
       } = nextProps;
       const {
         optionsHandler,
@@ -120,8 +119,8 @@ export default class Form extends Component<
           valueFromProps || valueFromState || {}
         );
       }
-      if (prevState.touched !== nextProps.touched) {
-        fields.forEach(field => (field.touched = nextProps.touched));
+      if (prevState.showValidationBeforeTouched !== nextProps.showValidationBeforeTouched) {
+        fields.forEach(field => (field.touched = nextProps.showValidationBeforeTouched));
       }
 
       const nextState = getNextStateFromFields(
@@ -136,7 +135,7 @@ export default class Form extends Component<
         ...nextState,
         defaultFields: defaultFieldsFromProps,
         disabled,
-        touched
+        showValidationBeforeTouched
       };
     } else {
       return null;

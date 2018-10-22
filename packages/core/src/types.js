@@ -121,8 +121,7 @@ export type FormComponentProps = {
   parentContext?: FormContextData,
   showValidationBeforeTouched?: boolean,
   conditionalUpdate?: boolean,
-  disabled?: boolean,
-  touched?: boolean
+  disabled?: boolean
 };
 
 export type FormComponentState = {
@@ -131,7 +130,7 @@ export type FormComponentState = {
   isValid: boolean,
   defaultFields: [],
   disabled: boolean,
-  touched: boolean
+  showValidationBeforeTouched
 };
 
 export type EvaluateRule = (rule?: Rule, targetValue: Value) => boolean;
