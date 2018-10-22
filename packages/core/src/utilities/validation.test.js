@@ -7,6 +7,7 @@ import {
   isBigger,
   isLonger,
   isNotValue,
+  isValue,
   isShorter,
   lengthIsGreaterThan,
   lengthIsLessThan,
@@ -429,6 +430,28 @@ describe("comparedTo", () => {
         message: "Fail"
       })
     ).toBeUndefined();
+  });
+});
+
+describe("isValue", () => {
+  test("matching value does not cause error", () => {
+    expect(
+      isValue({
+        value: "bob",
+        values: ["bob", "ted", "geoff"],
+        message: "Fail"
+      })
+    ).toBeUndefined();
+  });
+
+  test("non-matching value causes error", () => {
+    expect(
+      isValue({
+        value: "sally",
+        values: ["bob", "ted", "geoff"],
+        message: "Fail"
+      })
+    ).toBe("Fail");
   });
 });
 

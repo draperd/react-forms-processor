@@ -108,3 +108,38 @@ describe("allAreTrue", () => {
     ).toBe("fail");
   });
 });
+
+describe("someAreTrue", () => {
+  triggerField.value = "off";
+  targetField.value = "valid";
+  test("should pass when both conditions are true", () => {
+    expect(
+      someAreTrue({
+        value: "valid",
+        allFields,
+        ...allAreTrueExample
+      })
+    ).toBeUndefined();
+  });
+  test("should still pass when one condition is false", () => {
+    triggerField.value = "on";
+    expect(
+      someAreTrue({
+        value: "valid",
+        allFields,
+        ...allAreTrueExample
+      })
+    ).toBeUndefined();
+  });
+  test("should fail pass when both conditions are false", () => {
+    triggerField.value = "on";
+    targetField.value = "invalid";
+    expect(
+      someAreTrue({
+        value: "invalid",
+        allFields,
+        ...allAreTrueExample
+      })
+    ).toBe("fail");
+  });
+});

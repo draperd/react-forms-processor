@@ -2,9 +2,11 @@
 import type {
   AllAreTrue,
   ComparedTo,
+  Condition,
   FallsWithinNumericalRange,
   FieldDef,
   IsNotValue,
+  IsValue,
   LengthIsGreaterThan,
   LengthIsLessThan,
   MatchesRegEx,
@@ -187,10 +189,62 @@ export const fallsWithinNumericalRange: FallsWithinNumericalRange = ({
 };
 
 export const isNotValue: IsNotValue = ({ value, values, message }) => {
-  console.log("Comparing", value, values);
   if (values.some(currValue => currValue === value)) {
     return message || "Unacceptable value provided";
   }
+};
+
+export const isValue: IsValue = ({ value, values, message }) => {
+  if (!values.some(currValue => currValue === value)) {
+    return message || "Unacceptable value provided";
+  }
+};
+
+export const runValidator = (
+  validatorKey: string,
+  validWhen: Condition,
+  valueToTest: Value,
+  allFields: FieldDef[]
+): boolean => {
+  const validator = validators[validatorKey];
+  if (typeof validator === "function") {
+    const validatorConfig = {
+      ...validWhen[validatorKey],
+      value: valueToTest,
+      allFields
+    };
+    const message = validator(validatorConfig);
+    return message === undefined;
+  } else {
+    return false;
+  }
+};
+
+export const checkConditions = (
+  condition: Condition,
+  value: Value,
+  allFields: FieldDef[],
+  type: "some" | "all"
+) => {
+  let valueToTest; // Don't initialise to current field value in case field doesn't exist
+  if (condition.field) {
+    const targetField = allFields.find(field => condition.field === field.id);
+    if (targetField) {
+      valueToTest = targetField.value;
+    }
+  } else {
+    valueToTest = value;
+  }
+
+  const { field, ...validWhen } = condition;
+  if (type === "some") {
+    return Object.keys(validWhen).some(validatorKey =>
+      runValidator(validatorKey, condition, valueToTest, allFields)
+    );
+  }
+  return Object.keys(validWhen).every(validatorKey =>
+    runValidator(validatorKey, condition, valueToTest, allFields)
+  );
 };
 
 export const someAreTrue: SomeAreTrue = ({
@@ -199,8 +253,11 @@ export const someAreTrue: SomeAreTrue = ({
   message,
   conditions
 }) => {
-  // TODO: Implement
-  return undefined;
+  const allConditionsPass = conditions.some(condition =>
+    checkConditions(condition, value, allFields, "some")
+  );
+
+  return allConditionsPass ? undefined : message;
 };
 
 export const allAreTrue: AllAreTrue = ({
@@ -209,33 +266,9 @@ export const allAreTrue: AllAreTrue = ({
   message,
   conditions
 }): string | void => {
-  const allConditionsPass = conditions.every(condition => {
-    let valueToTest; // Don't initialise to current field value in case field doesn't exist
-    if (condition.field) {
-      const targetField = allFields.find(field => condition.field === field.id);
-      if (targetField) {
-        valueToTest = targetField.value;
-      }
-    } else {
-      valueToTest = value;
-    }
-
-    const { field, ...validWhen } = condition;
-    return Object.keys(validWhen).every(validatorKey => {
-      const validator = validators[validatorKey];
-      if (typeof validator === "function") {
-        const validatorConfig = {
-          ...validWhen[validatorKey],
-          value: valueToTest,
-          allFields
-        };
-        const message = validator(validatorConfig);
-        return message === undefined;
-      } else {
-        return false;
-      }
-    });
-  });
+  const allConditionsPass = conditions.every(condition =>
+    checkConditions(condition, value, allFields, "all")
+  );
 
   return allConditionsPass ? undefined : message;
 };
@@ -244,6 +277,7 @@ export const validators = {
   allAreTrue,
   comparedTo,
   fallsWithinNumericalRange,
+  is: isValue,
   isNot: isNotValue,
   lengthIsGreaterThan,
   lengthIsLessThan,

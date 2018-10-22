@@ -52,6 +52,12 @@ export type IsNotValue = ({
   message: string
 }) => void | string;
 
+export type IsValue = ({
+  value: Value,
+  values: Array<Value>,
+  message: string
+}) => void | string;
+
 export type ComparedTo = ({
   value: Value,
   fields: string[],
@@ -88,6 +94,11 @@ export type ComparedToConfig = {|
   message?: string
 |};
 
+export type IsValueConfig = {|
+  values: Array<any>,
+  message?: string
+|};
+
 export type IsNotValueConfig = {|
   values: Array<any>,
   message?: string
@@ -99,15 +110,18 @@ export type CoreValidationRules = {|
   matchesRegEx?: MatchesRegExConfig,
   fallsWithinNumericalRange?: FallsWithinNumericalRangeConfig,
   comparedTo?: ComparedToConfig,
-  isNot?: IsNotValueConfig
+  isNot?: IsNotValueConfig,
+  is?: IsValueConfig
+|};
+
+export type Condition = {|
+  field?: string,
+  ...CoreValidationRules
 |};
 
 export type ComplexValidationConfig = {|
   message?: string,
-  conditions: Array<{|
-    field?: string,
-    ...CoreValidationRules
-  |}>
+  conditions: Array<Condition>
 |};
 
 export type ComplexValidation = ({
