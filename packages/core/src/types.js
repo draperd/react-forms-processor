@@ -20,18 +20,125 @@ export type OnFieldFocus = (id: string) => void;
 
 export type OnFieldChange = (id: string, value: any) => void;
 
-export type ValidatorId =
-  | "lengthIsGreaterThan"
-  | "lengthIsLessThan"
-  | "matchesRegEx"
-  | "fallsWithinNumericalRange"
-  | "comparedTo";
+export type LengthIsGreaterThan = ({
+  value: Value,
+  length: number,
+  message: string
+}) => void | string;
 
-export type ValidationConfig = any;
+export type LengthIsLessThan = ({
+  value: Value,
+  length: number,
+  message: string
+}) => void | string;
 
-export type ValidationRules = {
-  [key: ValidatorId]: ValidationConfig
-};
+export type MatchesRegEx = ({
+  value: Value,
+  pattern: string,
+  message: string
+}) => void | string;
+
+export type FallsWithinNumericalRange = ({
+  value: Value,
+  min: number,
+  max: number,
+  required?: boolean,
+  message: string
+}) => void | string;
+
+export type IsNotValue = ({
+  value: Value,
+  values: Array<Value>,
+  message: string
+}) => void | string;
+
+export type IsValue = ({
+  value: Value,
+  values: Array<Value>,
+  message: string
+}) => void | string;
+
+export type ComparedTo = ({
+  value: Value,
+  fields: string[],
+  allFields: FieldDef[],
+  is: "SMALLER" | "BIGGER" | "LONGER" | "SHORTER",
+  message: string
+}) => void | string;
+
+export type LengthIsGreaterThanConfig = {|
+  length: number,
+  message?: string
+|};
+
+export type LengthIsLessThanConfig = {|
+  length: number,
+  message?: string
+|};
+
+export type MatchesRegExConfig = {|
+  pattern: string,
+  message?: string
+|};
+
+export type FallsWithinNumericalRangeConfig = {|
+  min: number,
+  max: number,
+  required?: boolean,
+  message?: string
+|};
+
+export type ComparedToConfig = {|
+  fields: string[],
+  is: "SMALLER" | "BIGGER" | "LONGER" | "SHORTER",
+  message?: string
+|};
+
+export type IsValueConfig = {|
+  values: Array<any>,
+  message?: string
+|};
+
+export type IsNotValueConfig = {|
+  values: Array<any>,
+  message?: string
+|};
+
+export type CoreValidationRules = {|
+  lengthIsGreaterThan?: LengthIsGreaterThanConfig,
+  lengthIsLessThan?: LengthIsLessThanConfig,
+  matchesRegEx?: MatchesRegExConfig,
+  fallsWithinNumericalRange?: FallsWithinNumericalRangeConfig,
+  comparedTo?: ComparedToConfig,
+  isNot?: IsNotValueConfig,
+  is?: IsValueConfig
+|};
+
+export type Condition = {|
+  field?: string,
+  ...CoreValidationRules
+|};
+
+export type ComplexValidationConfig = {|
+  message?: string,
+  conditions: Array<Condition>
+|};
+
+export type ComplexValidation = ({
+  value: Value,
+  allFields: FieldDef[],
+  message: string,
+  ...ComplexValidationConfig
+}) => string | void;
+
+export type AllAreTrue = ComplexValidation;
+export type SomeAreTrue = ComplexValidation;
+
+export type ValidationRules = {|
+  ...CoreValidationRules,
+  allAreTrue?: ComplexValidationConfig,
+  someAreTrue?: ComplexValidationConfig
+|};
 
 export type Option =
   | {

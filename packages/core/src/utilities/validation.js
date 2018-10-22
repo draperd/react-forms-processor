@@ -1,44 +1,21 @@
 // @flow
 import type {
+  AllAreTrue,
+  ComparedTo,
+  Condition,
+  FallsWithinNumericalRange,
   FieldDef,
+  IsNotValue,
+  IsValue,
+  LengthIsGreaterThan,
+  LengthIsLessThan,
+  MatchesRegEx,
+  SomeAreTrue,
   Value,
   ValidateField,
-  ValidateAllFields
+  ValidateAllFields,
+  ValidationRules
 } from "../types";
-
-export type LengthIsGreaterThan = ({
-  value: Value,
-  length: number,
-  message: string
-}) => void | string;
-
-export type LengthIsLessThan = ({
-  value: Value,
-  length: number,
-  message: string
-}) => void | string;
-
-export type MatchesRegEx = ({
-  value: Value,
-  pattern: string,
-  message: string
-}) => void | string;
-
-export type FallsWithinNumericalRange = ({
-  value: Value,
-  min?: number,
-  max?: number,
-  required?: boolean,
-  message: string
-}) => void | string;
-
-export type ComparedTo = ({
-  value: Value,
-  fields: string[],
-  allFields: FieldDef[],
-  is: "SMALLER" | "BIGGER" | "LONGER" | "SHORTER",
-  message: string
-}) => void | string;
 
 export const findFieldsToCompareTo = (
   fieldsToFind: string[],
@@ -211,12 +188,101 @@ export const fallsWithinNumericalRange: FallsWithinNumericalRange = ({
   }
 };
 
+export const isNotValue: IsNotValue = ({ value, values, message }) => {
+  if (values.some(currValue => currValue === value)) {
+    return message || "Unacceptable value provided";
+  }
+};
+
+export const isValue: IsValue = ({ value, values, message }) => {
+  if (!values.some(currValue => currValue === value)) {
+    return message || "Unacceptable value provided";
+  }
+};
+
+export const runValidator = (
+  validatorKey: string,
+  validWhen: Condition,
+  valueToTest: Value,
+  allFields: FieldDef[]
+): boolean => {
+  const validator = validators[validatorKey];
+  if (typeof validator === "function") {
+    const validatorConfig = {
+      ...validWhen[validatorKey],
+      value: valueToTest,
+      allFields
+    };
+    const message = validator(validatorConfig);
+    return message === undefined;
+  } else {
+    return false;
+  }
+};
+
+export const checkConditions = (
+  condition: Condition,
+  value: Value,
+  allFields: FieldDef[],
+  type: "some" | "all"
+) => {
+  let valueToTest; // Don't initialise to current field value in case field doesn't exist
+  if (condition.field) {
+    const targetField = allFields.find(field => condition.field === field.id);
+    if (targetField) {
+      valueToTest = targetField.value;
+    }
+  } else {
+    valueToTest = value;
+  }
+
+  const { field, ...validWhen } = condition;
+  if (type === "some") {
+    return Object.keys(validWhen).some(validatorKey =>
+      runValidator(validatorKey, condition, valueToTest, allFields)
+    );
+  }
+  return Object.keys(validWhen).every(validatorKey =>
+    runValidator(validatorKey, condition, valueToTest, allFields)
+  );
+};
+
+export const someAreTrue: SomeAreTrue = ({
+  value,
+  allFields,
+  message,
+  conditions
+}) => {
+  const allConditionsPass = conditions.some(condition =>
+    checkConditions(condition, value, allFields, "some")
+  );
+
+  return allConditionsPass ? undefined : message;
+};
+
+export const allAreTrue: AllAreTrue = ({
+  value,
+  allFields,
+  message,
+  conditions
+}): string | void => {
+  const allConditionsPass = conditions.every(condition =>
+    checkConditions(condition, value, allFields, "all")
+  );
+
+  return allConditionsPass ? undefined : message;
+};
+
 export const validators = {
+  allAreTrue,
+  comparedTo,
+  fallsWithinNumericalRange,
+  is: isValue,
+  isNot: isNotValue,
   lengthIsGreaterThan,
   lengthIsLessThan,
   matchesRegEx,
-  fallsWithinNumericalRange,
-  comparedTo
+  someAreTrue
 };
 
 export const validateField: ValidateField = (
@@ -242,12 +308,11 @@ export const validateField: ValidateField = (
       Object.keys(validWhen).reduce((allValidatorsPass, validator) => {
         if (typeof validators[validator] === "function") {
           let validationConfig = {
-            // $FlowFixMe
             ...validWhen[validator],
             value,
             allFields: fields
           };
-
+          // $FlowFixMe - covered by tests
           let message = validators[validator](validationConfig);
           if (message) {
             allValidatorsPass = false;
