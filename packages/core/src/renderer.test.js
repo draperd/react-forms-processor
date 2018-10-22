@@ -70,7 +70,8 @@ describe("Basic single field form capabilities", () => {
 
   const inputField = wrapper.find("input[type='text']");
   test("changing field value calls onChange", () => {
-    inputField.simulate("change", { target: { value: "updated" } });
+    inputField.prop("onChange")({ target: { value: "updated" } });
+    // inputField.simulate("change", { target: { value: "updated" } });
     expect(onFormChange).toHaveBeenLastCalledWith({ prop1: "updated" }, true);
   });
 

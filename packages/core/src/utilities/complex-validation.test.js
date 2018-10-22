@@ -17,13 +17,11 @@ const fields: FieldDef[] = [
     type: "text",
     defaultValue: "",
     validWhen: {
-      // matchesRegEx: {},
       allAreTrue: {
         message: "all have to be true",
         conditions: [
           {
             field: "TRIGGER",
-            //   isNot:
             matchesRegEx: {
               pattern: "on"
             }
@@ -59,19 +57,17 @@ const fields: FieldDef[] = [
 ];
 
 const allAreTrueExample: ComplexValidationConfig = {
-  message: "all have to be true",
+  message: "fail",
   conditions: [
     {
       field: "TRIGGER",
-      //   isNot:
-      matchesRegEx: {
-        pattern: "on"
+      isNot: {
+        values: ["on"]
       }
     },
     {
-      // NOTE: When there is no 'field' - the current field is used
-      matchesRegEx: {
-        pattern: "valid"
+      isNot: {
+        values: ["invalid"]
       }
     }
   ]
@@ -80,7 +76,7 @@ const allAreTrueExample: ComplexValidationConfig = {
 const triggerField = createField({
   id: "TRIGGER",
   name: "trigger",
-  value: "on"
+  value: "off"
 });
 
 const targetField = createField({
@@ -92,7 +88,7 @@ const targetField = createField({
 const allFields = [triggerField, targetField];
 
 describe("allAreTrue", () => {
-  test("needs a name", () => {
+  test("should pass when both conditions are true", () => {
     expect(
       allAreTrue({
         value: "valid",
@@ -100,5 +96,15 @@ describe("allAreTrue", () => {
         ...allAreTrueExample
       })
     ).toBeUndefined();
+  });
+  test("should fail when one conditions is false", () => {
+    triggerField.value = "on";
+    expect(
+      allAreTrue({
+        value: "valid",
+        allFields,
+        ...allAreTrueExample
+      })
+    ).toBe("fail");
   });
 });

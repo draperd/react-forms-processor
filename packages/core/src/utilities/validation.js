@@ -11,7 +11,8 @@ import type {
   SomeAreTrue,
   Value,
   ValidateField,
-  ValidateAllFields
+  ValidateAllFields,
+  ValidationRules
 } from "../types";
 
 export const findFieldsToCompareTo = (
@@ -186,6 +187,7 @@ export const fallsWithinNumericalRange: FallsWithinNumericalRange = ({
 };
 
 export const isNotValue: IsNotValue = ({ value, values, message }) => {
+  console.log("Comparing", value, values);
   if (values.some(currValue => currValue === value)) {
     return message || "Unacceptable value provided";
   }
@@ -206,9 +208,36 @@ export const allAreTrue: AllAreTrue = ({
   allFields,
   message,
   conditions
-}) => {
-  // TODO: Implement
-  return undefined;
+}): string | void => {
+  const allConditionsPass = conditions.every(condition => {
+    let valueToTest; // Don't initialise to current field value in case field doesn't exist
+    if (condition.field) {
+      const targetField = allFields.find(field => condition.field === field.id);
+      if (targetField) {
+        valueToTest = targetField.value;
+      }
+    } else {
+      valueToTest = value;
+    }
+
+    const { field, ...validWhen } = condition;
+    return Object.keys(validWhen).every(validatorKey => {
+      const validator = validators[validatorKey];
+      if (typeof validator === "function") {
+        const validatorConfig = {
+          ...validWhen[validatorKey],
+          value: valueToTest,
+          allFields
+        };
+        const message = validator(validatorConfig);
+        return message === undefined;
+      } else {
+        return false;
+      }
+    });
+  });
+
+  return allConditionsPass ? undefined : message;
 };
 
 export const validators = {
