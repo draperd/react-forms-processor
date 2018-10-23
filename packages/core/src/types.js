@@ -133,11 +133,13 @@ export type ComplexValidation = ({
 
 export type AllAreTrue = ComplexValidation;
 export type SomeAreTrue = ComplexValidation;
+export type NoneAreTrue = ComplexValidation;
 
 export type ValidationRules = {|
   ...CoreValidationRules,
   allAreTrue?: ComplexValidationConfig,
-  someAreTrue?: ComplexValidationConfig
+  someAreTrue?: ComplexValidationConfig,
+  noneAreTrue?: ComplexValidationConfig
 |};
 
 export type Option =

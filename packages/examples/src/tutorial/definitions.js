@@ -177,9 +177,12 @@ export const validation: FieldDef[] = [
         message: "The value must be more than 150 and less than 80000"
       },
       matchesRegEx: {
-        value: "1234",
         pattern: "^[\\d]+$",
         message: "Only numbers allowed"
+      },
+      isNot: {
+        values: ["2500", "4001"],
+        message: "The value cannot be 2500 nor 4001"
       }
     }
   }
@@ -225,6 +228,49 @@ export const comparisonValidation: FieldDef[] = [
       comparedTo: {
         fields: ["ONE", "TWO"],
         is: "SMALLER"
+      }
+    }
+  }
+];
+
+export const complexValidation: FieldDef[] = [
+  {
+    id: "LENGTH_REQUIREMENTS",
+    name: "length",
+    type: "radiogroup",
+    label: "How long should the name be?",
+    defaultValue: "Small",
+    description: "Choose the length requirements for the name field",
+    options: [
+      {
+        items: ["Small", "Medium", "Large"]
+      }
+    ]
+  },
+  {
+    id: "NAME",
+    name: "name",
+    type: "text",
+    label: "Name?",
+    defaultValue: "",
+    description:
+      "A name (the length required is determined by the field above)",
+    validWhen: {
+      someAreTrue: {
+        message: "Length must be less than 5 when size is small",
+        conditions: [
+          {
+            field: "LENGTH_REQUIREMENTS",
+            is: {
+              values: ["Medium", "Large"]
+            }
+          },
+          {
+            lengthIsLessThan: {
+              length: 5
+            }
+          }
+        ]
       }
     }
   }

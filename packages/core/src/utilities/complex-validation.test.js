@@ -1,5 +1,5 @@
 // @flow
-import { allAreTrue, someAreTrue } from "./validation";
+import { allAreTrue, noneAreTrue, someAreTrue } from "./validation";
 import { createField } from "./utils.js";
 import type { FieldDef, ComplexValidationConfig } from "../types";
 
@@ -78,7 +78,7 @@ describe("someAreTrue", () => {
       })
     ).toBeUndefined();
   });
-  test("should fail pass when both conditions are false", () => {
+  test("should fail when both conditions are false", () => {
     triggerField.value = "on";
     targetField.value = "invalid";
     expect(
@@ -88,5 +88,40 @@ describe("someAreTrue", () => {
         ...allAreTrueExample
       })
     ).toBe("fail");
+  });
+});
+
+describe("noneAreTrue", () => {
+  triggerField.value = "off";
+  targetField.value = "valid";
+  test("should fail when both conditions are true", () => {
+    expect(
+      noneAreTrue({
+        value: "valid",
+        allFields,
+        ...allAreTrueExample
+      })
+    ).toBe("fail");
+  });
+  test("should still fail when one condition is false", () => {
+    triggerField.value = "on";
+    expect(
+      noneAreTrue({
+        value: "valid",
+        allFields,
+        ...allAreTrueExample
+      })
+    ).toBe("fail");
+  });
+  test("should pass when both conditions are false", () => {
+    triggerField.value = "on";
+    targetField.value = "invalid";
+    expect(
+      noneAreTrue({
+        value: "invalid",
+        allFields,
+        ...allAreTrueExample
+      })
+    ).toBeUndefined();
   });
 });
