@@ -224,7 +224,7 @@ export const checkConditions = (
   condition: Condition,
   value: Value,
   allFields: FieldDef[],
-  type: "some" | "all"
+  type: "none" | "some" | "all"
 ) => {
   let valueToTest; // Don't initialise to current field value in case field doesn't exist
   if (condition.field) {
@@ -237,14 +237,32 @@ export const checkConditions = (
   }
 
   const { field, ...validWhen } = condition;
-  if (type === "some") {
-    return Object.keys(validWhen).some(validatorKey =>
-      runValidator(validatorKey, condition, valueToTest, allFields)
-    );
+  switch (type) {
+    case "some": {
+      return Object.keys(validWhen).some(validatorKey =>
+        runValidator(validatorKey, condition, valueToTest, allFields)
+      );
+    }
+
+    default: {
+      return Object.keys(validWhen).every(validatorKey =>
+        runValidator(validatorKey, condition, valueToTest, allFields)
+      );
+    }
   }
-  return Object.keys(validWhen).every(validatorKey =>
-    runValidator(validatorKey, condition, valueToTest, allFields)
+};
+
+export const noneAreTrue: AllAreTrue = ({
+  value,
+  allFields,
+  message,
+  conditions
+}): string | void => {
+  const allConditionsPass = conditions.some(condition =>
+    checkConditions(condition, value, allFields, "some")
   );
+
+  return allConditionsPass ? message : undefined;
 };
 
 export const someAreTrue: SomeAreTrue = ({
@@ -282,6 +300,7 @@ export const validators = {
   lengthIsGreaterThan,
   lengthIsLessThan,
   matchesRegEx,
+  noneAreTrue,
   someAreTrue
 };
 

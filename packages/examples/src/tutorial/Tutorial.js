@@ -9,7 +9,8 @@ import {
   manipulateOptions,
   duplicateNames,
   validation,
-  comparisonValidation
+  comparisonValidation,
+  complexValidation
 } from "./definitions";
 import type { FieldRenderer, OptionsHandler } from "react-forms-processor";
 import { getOptions } from "../SwapiOptionsHandler";
@@ -30,6 +31,8 @@ import duplicateNamesDescription from "./tutorial6.md";
 import validationDescription from "./tutorial7.md";
 // $FlowFixMe
 import comparisonValidationDescription from "./tutorial8.md";
+// $FlowFixMe
+import complexValidationDescription from "./tutorial9.md";
 
 const swapiOptions: OptionsHandler = (fieldId, fields, parentContext) => {
   return getOptions();
@@ -98,6 +101,12 @@ class Tutorial extends Component<TutorialProps, *> {
           defaultDefinition={JSON.stringify(comparisonValidation)}
           editorTitle="Validating against other fields"
           editorDescription={comparisonValidationDescription}
+          renderer={renderer}
+        />
+        <LiveEditor
+          defaultDefinition={JSON.stringify(complexValidation)}
+          editorTitle="Complex validation"
+          editorDescription={complexValidationDescription}
           renderer={renderer}
         />
       </article>
