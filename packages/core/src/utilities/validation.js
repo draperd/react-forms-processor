@@ -224,7 +224,7 @@ export const checkConditions = (
   condition: Condition,
   value: Value,
   allFields: FieldDef[],
-  type: "none" | "some" | "all"
+  type: "some" | "all"
 ) => {
   let valueToTest; // Don't initialise to current field value in case field doesn't exist
   if (condition.field) {
