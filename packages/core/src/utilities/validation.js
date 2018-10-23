@@ -10,6 +10,7 @@ import type {
   LengthIsGreaterThan,
   LengthIsLessThan,
   MatchesRegEx,
+  NoneAreTrue,
   SomeAreTrue,
   Value,
   ValidateField,
@@ -252,7 +253,7 @@ export const checkConditions = (
   }
 };
 
-export const noneAreTrue: AllAreTrue = ({
+export const noneAreTrue: NoneAreTrue = ({
   value,
   allFields,
   message,
