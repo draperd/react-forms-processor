@@ -119,9 +119,6 @@ export default class Form extends Component<
           valueFromProps || valueFromState || {}
         );
       }
-      if (prevState.showValidationBeforeTouched !== nextProps.showValidationBeforeTouched) {
-        fields.forEach(field => (field.touched = nextProps.showValidationBeforeTouched));
-      }
 
       const nextState = getNextStateFromFields(
         fields,
