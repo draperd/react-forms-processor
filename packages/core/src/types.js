@@ -40,8 +40,8 @@ export type MatchesRegEx = ({
 
 export type FallsWithinNumericalRange = ({
   value: Value,
-  min: number,
-  max: number,
+  min?: number,
+  max?: number,
   required?: boolean,
   message: string
 }) => void | string;
