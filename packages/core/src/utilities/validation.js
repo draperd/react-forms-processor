@@ -29,7 +29,9 @@ export const findFieldsToCompareTo = (
       const target = allFields.find(currField => targetField === currField.id);
       if (!target) {
         console.warn(`Could not find field ${targetField} to compare against`);
-      } else {
+      } else if (target.visible === true) {
+        // TODO: Only comparing against visible fields at the moment, but is there a case where
+        //       you might want to hide a value in a hidden field?
         targetFields.push(target);
       }
     });

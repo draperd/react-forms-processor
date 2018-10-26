@@ -14,6 +14,7 @@ import type {
 import chai from "chai";
 import chaiEnzyme from "chai-enzyme";
 import FormFragment from "./components/FormFragment";
+import nativeRenderer from "./renderer";
 
 chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
@@ -58,6 +59,9 @@ const customRenderer: FieldRenderer = (field, onChange, onFieldFocus) => {
           )}
         </div>
       );
+    }
+    default: {
+      return nativeRenderer(field, onChange, onFieldFocus);
     }
   }
 };
@@ -180,5 +184,180 @@ describe("compare date fields", () => {
     secondDate.prop("onChange")({ target: { value: newYearString } });
     expect(form.state().isValid).toBe(true);
     expect(form.state().fields[0].errorMessages).toBe("");
+  });
+});
+
+// This test was added in an attempt to accurately represent the problem with a failing form...
+export const DATE_METHODS = {
+  AS_EARLY_AS_POSSIBLE: "asEarlyAsPossible",
+  RELATIVE_TO_PREVIOUS_RELEASE: "relativeToPreviousRelease",
+  FIXED_DATE: "fixedDate",
+  AFTER_ALL_ISSUES_ARE_COMPLETED: "afterAllIssuesAreCompleted"
+};
+
+const fields: FieldDef[] = [
+  {
+    id: "name",
+    type: "text",
+    name: "name",
+    label: "Name",
+    required: true,
+    defaultValue: "Default name",
+    validWhen: {
+      lengthIsLessThan: {
+        length: 256,
+        message: "Too long"
+      }
+    }
+  },
+  {
+    id: "startMethod",
+    type: "select",
+    name: "startMethod",
+    label: "Start method",
+    required: true,
+    defaultValue: DATE_METHODS.AS_EARLY_AS_POSSIBLE,
+    options: [
+      {
+        items: [
+          {
+            label: "As early as possible",
+            value: DATE_METHODS.AS_EARLY_AS_POSSIBLE
+          },
+          {
+            label: "Fixed date",
+            value: DATE_METHODS.FIXED_DATE
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "start",
+    type: "date",
+    name: "start",
+    required: true,
+    visibleWhen: [
+      {
+        field: "startMethod",
+        is: [DATE_METHODS.FIXED_DATE]
+      }
+    ],
+    validWhen: {
+      comparedTo: {
+        fields: ["end"],
+        is: "SMALLER",
+        message: "TOO BIG"
+      },
+      isNot: {
+        values: [""],
+        message: "EMPTY STRING"
+      }
+    }
+  },
+  {
+    id: "endMethod",
+    type: "select",
+    name: "endMethod",
+    label: "End method",
+    required: true,
+    defaultValue: DATE_METHODS.AFTER_ALL_ISSUES_ARE_COMPLETED,
+    options: [
+      {
+        items: [
+          {
+            label: "After all completed",
+            value: DATE_METHODS.AFTER_ALL_ISSUES_ARE_COMPLETED
+          },
+          {
+            label: "Fixed date",
+            value: DATE_METHODS.FIXED_DATE
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "end",
+    type: "date",
+    name: "end",
+    required: true,
+    visibleWhen: [
+      {
+        field: "endMethod",
+        is: [DATE_METHODS.FIXED_DATE]
+      }
+    ],
+    validWhen: {
+      comparedTo: {
+        fields: ["start"],
+        is: "BIGGER",
+        message: "TOO SMALL"
+      }
+    }
+  }
+];
+
+describe("complex test case", () => {
+  const form = mount(
+    <Form
+      defaultFields={fields}
+      renderer={customRenderer}
+      showValidationBeforeTouched
+    />
+  );
+
+  form.update();
+
+  const startMethodField = form.find("select#startMethod").at(0);
+  const endMethodField = form.find("select#endMethod").at(0);
+
+  test("form is initially invalid (with default values set)", () => {
+    expect(form.state().isValid).toBe(true);
+  });
+
+  let fixedStartDateField;
+  test("setting a fixed start date makes form invalid", done => {
+    startMethodField.prop("onChange")({
+      target: { value: DATE_METHODS.FIXED_DATE }
+    });
+    form.update(); // Need update to force render...
+
+    expect(form.state().isValid).toBe(false);
+
+    setTimeout(() => {
+      fixedStartDateField = form.find("input#start").at(0);
+      done();
+    });
+  });
+
+  test("giving the fixed date field a value makes the form valid again", () => {
+    fixedStartDateField.prop("onChange")({
+      target: { value: newYearsEveString }
+    });
+    expect(form.state().isValid).toBe(true);
+  });
+
+  let fixedEndDateField;
+  test("setting a fixed end date makes the form invalid", done => {
+    // When the end date comes into play the form should be invalid because it can now be compared against...
+    endMethodField.prop("onChange")({ target: { value: "fixedDate" } });
+    form.update();
+
+    setTimeout(() => {
+      fixedEndDateField = form.find("input#end").at(0);
+      done();
+    }, 0);
+    expect(form.state().isValid).toBe(false);
+  });
+
+  test("giving the fixed end date field a value BEFORE the start date keeps the form invalid", () => {
+    fixedEndDateField.prop("onChange")({ target: { value: xmasString } });
+    expect(form.state().isValid).toBe(false);
+  });
+
+  test("giving the fixed end date field a value AFTER the start date makes the form valid", () => {
+    fixedEndDateField.prop("onChange")({ target: { value: newYearString } });
+    expect(form.state().isValid).toBe(true);
   });
 });
