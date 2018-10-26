@@ -39,6 +39,12 @@ const formDisabledStateHasChanged = (
 ) =>
   nextProps.disabled !== undefined && nextProps.disabled !== prevState.disabled;
 
+const formTouchedBehaviourHasChanged = (
+  nextProps: FormComponentProps,
+  prevState: FormComponentState
+) =>
+  nextProps.showValidationBeforeTouched !== prevState.showValidationBeforeTouched;
+
 export default class Form extends Component<
   FormComponentProps,
   FormComponentState
@@ -50,7 +56,8 @@ export default class Form extends Component<
       value: props.value || {},
       isValid: false,
       defaultFields: [],
-      disabled: props.disabled || false
+      disabled: props.disabled || false,
+      showValidationBeforeTouched: props.showValidationBeforeTouched
     };
   }
 
@@ -78,7 +85,8 @@ export default class Form extends Component<
     if (
       defaultFieldsHaveChanged(nextProps, prevState) ||
       valueHasChanged(nextProps, prevState) ||
-      formDisabledStateHasChanged(nextProps, prevState)
+      formDisabledStateHasChanged(nextProps, prevState) ||
+      formTouchedBehaviourHasChanged(nextProps, prevState)
     ) {
       const { fields: fieldsFromState, value: valueFromState } = prevState;
 
@@ -123,7 +131,8 @@ export default class Form extends Component<
       return {
         ...nextState,
         defaultFields: defaultFieldsFromProps,
-        disabled
+        disabled,
+        showValidationBeforeTouched
       };
     } else {
       return null;
