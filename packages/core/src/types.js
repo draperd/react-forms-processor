@@ -82,8 +82,8 @@ export type MatchesRegExConfig = {|
 |};
 
 export type FallsWithinNumericalRangeConfig = {|
-  min: number,
-  max: number,
+  min?: number,
+  max?: number,
   required?: boolean,
   message?: string
 |};
