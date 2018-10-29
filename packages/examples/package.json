@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "react-forms-processor-examples",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,9 +18,9 @@
     "lodash": "^4.17.10",
     "react-ace": "^6.1.1",
     "react-beautiful-dnd": "^8.0.5",
-    "react-forms-processor": "^0.0.21",
+    "react-forms-processor": "^0.0.22",
     "react-forms-processor-atlaskit": "^0.0.19",
-    "react-forms-processor-formbuilder": "^0.0.21",
+    "react-forms-processor-formbuilder": "^0.0.22",
     "react-forms-processor-material-ui": "^0.0.19",
     "react-markdown": "^3.3.2"
   },
