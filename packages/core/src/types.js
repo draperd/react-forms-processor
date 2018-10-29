@@ -1,5 +1,14 @@
 // @flow
 import type { Node } from "react";
+import type { FormComponentState } from "./types/components";
+
+export type {
+  FormComponentState,
+  FormComponentProps,
+  FormFragmentComponentProps,
+  FormFragmentComponentWithContextProps,
+  FieldWrapperComponentProps
+} from "./types";
 
 export type FormButtonProps = {
   label?: string,
@@ -219,29 +228,6 @@ export type FormValue = {
 
 export type OnFormChange = (FormValue, boolean) => void;
 
-export type FormComponentProps = {
-  defaultFields?: FieldDef[],
-  value?: FormValue,
-  onChange?: OnFormChange,
-  renderer?: FieldRenderer,
-  optionsHandler?: OptionsHandler,
-  validationHandler?: ValidationHandler,
-  children?: Node,
-  parentContext?: FormContextData,
-  showValidationBeforeTouched?: boolean,
-  conditionalUpdate?: boolean,
-  disabled?: boolean
-};
-
-export type FormComponentState = {
-  fields: FieldDef[],
-  value: FormValue,
-  isValid: boolean,
-  defaultFields: [],
-  disabled: boolean,
-  showValidationBeforeTouched: boolean
-};
-
 export type EvaluateRule = (rule?: Rule, targetValue: Value) => boolean;
 
 export type FieldsById = {
@@ -325,7 +311,7 @@ export type FormContextData = {
   },
   optionsHandler?: OptionsHandler,
   validationHandler?: ValidationHandler,
-  registerField: any,
+  registerField: FieldDef => void,
   renderer: FieldRenderer,
   onFieldChange: OnFieldChange,
   onFieldFocus: OnFieldFocus,

@@ -2,15 +2,11 @@
 import React, { type Node } from "react";
 import isEqual from "lodash/isEqual";
 import FormContext from "./FormContext";
-import type { Field, FieldDef } from "../types";
+import type { Field, FieldDef, FieldWrapperComponentProps } from "../types";
 import "./FieldWrapper.css";
 
-export type FieldWrapperProps = Field & {
-  children: Node
-};
-
-class FieldWrapper extends React.Component<FieldWrapperProps> {
-  constructor(props: FieldWrapperProps) {
+class FieldWrapper extends React.Component<FieldWrapperComponentProps> {
+  constructor(props: FieldWrapperComponentProps) {
     super(props);
     const { registerField, onFieldChange, ...fieldDef } = props;
     if (registerField) {
@@ -23,7 +19,7 @@ class FieldWrapper extends React.Component<FieldWrapperProps> {
     }
   }
 
-  shouldComponentUpdate(nextProps: FieldWrapperProps, nextState) {
+  shouldComponentUpdate(nextProps: FieldWrapperComponentProps, nextState) {
     // TODO: Ideally options, onFieldChange, registerField and fields should NOT be changing - need to investigate this
     const {
       children: c1,
