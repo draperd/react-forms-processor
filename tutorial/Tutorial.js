@@ -50,6 +50,10 @@ var _tutorial15 = require("./tutorial8.md");
 
 var _tutorial16 = _interopRequireDefault(_tutorial15);
 
+var _tutorial17 = require("./tutorial9.md");
+
+var _tutorial18 = _interopRequireDefault(_tutorial17);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -57,6 +61,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// $FlowFixMe
+
+// $FlowFixMe
+
+// $FlowFixMe
+
+// $FlowFixMe
+
+// $FlowFixMe
+
+// $FlowFixMe
+
+// $FlowFixMe
+
+// $FlowFixMe
+
+// $FlowFixMe
+
 
 var swapiOptions = function swapiOptions(fieldId, fields, parentContext) {
   return (0, _SwapiOptionsHandler.getOptions)();
@@ -136,6 +159,12 @@ var Tutorial = function (_Component) {
           defaultDefinition: JSON.stringify(_definitions.comparisonValidation),
           editorTitle: "Validating against other fields",
           editorDescription: _tutorial16.default,
+          renderer: renderer
+        }),
+        _react2.default.createElement(_LiveEditor2.default, {
+          defaultDefinition: JSON.stringify(_definitions.complexValidation),
+          editorTitle: "Complex validation",
+          editorDescription: _tutorial18.default,
           renderer: renderer
         })
       );
