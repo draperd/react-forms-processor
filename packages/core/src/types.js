@@ -239,7 +239,7 @@ export type FormComponentState = {
   isValid: boolean,
   defaultFields: [],
   disabled: boolean,
-  showValidationBeforeTouched
+  showValidationBeforeTouched: boolean
 };
 
 export type EvaluateRule = (rule?: Rule, targetValue: Value) => boolean;
