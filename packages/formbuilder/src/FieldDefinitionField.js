@@ -103,6 +103,7 @@ export default class FieldDefinitionField extends Component<FieldDef, State> {
       <FormContext.Consumer>
         {context => {
           const {
+            conditionalUpdate,
             renderer,
             optionsHandler,
             validationHandler,
@@ -112,6 +113,7 @@ export default class FieldDefinitionField extends Component<FieldDef, State> {
 
           return (
             <Form
+              conditionalUpdate={true}
               value={value}
               parentContext={context}
               renderer={renderer}

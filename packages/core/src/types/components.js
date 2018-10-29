@@ -43,3 +43,6 @@ export type FormFragmentComponentWithContextProps = FormContextData &
 export type FieldWrapperComponentProps = Field & {
   children: Node
 };
+
+export type FieldWrapperComponentWithContextProps = FormContextData &
+  FieldWrapperComponentProps;

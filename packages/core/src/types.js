@@ -7,7 +7,8 @@ export type {
   FormComponentProps,
   FormFragmentComponentProps,
   FormFragmentComponentWithContextProps,
-  FieldWrapperComponentProps
+  FieldWrapperComponentProps,
+  FieldWrapperComponentWithContextProps
 } from "./types";
 
 export type FormButtonProps = {
