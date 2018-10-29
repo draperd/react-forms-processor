@@ -43,7 +43,8 @@ const formTouchedBehaviourHasChanged = (
   nextProps: FormComponentProps,
   prevState: FormComponentState
 ) =>
-  nextProps.showValidationBeforeTouched !== prevState.showValidationBeforeTouched;
+  nextProps.showValidationBeforeTouched !==
+  prevState.showValidationBeforeTouched;
 
 export default class Form extends Component<
   FormComponentProps,
@@ -57,7 +58,7 @@ export default class Form extends Component<
       isValid: false,
       defaultFields: [],
       disabled: props.disabled || false,
-      showValidationBeforeTouched: props.showValidationBeforeTouched
+      showValidationBeforeTouched: !!props.showValidationBeforeTouched
     };
   }
 

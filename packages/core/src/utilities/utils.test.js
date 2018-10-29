@@ -549,7 +549,8 @@ describe("setOptionsInFieldInState", () => {
     value: {},
     isValid: true,
     defaultFields: [],
-    disabled: false
+    disabled: false,
+    showValidationBeforeTouched: false
   };
 
   const options: Options = [
