@@ -22,8 +22,7 @@
     "@atlaskit/icon": "13.2.3",
     "@atlaskit/select": "5.0.7",
     "@atlaskit/tooltip": "12.0.4",
-    "lodash": "^4.17.10",
-    "react-beautiful-dnd": "^9.0.2"
+    "lodash": "^4.17.10"
   },
   "peerDependencies": {
     "react": "^16.4",

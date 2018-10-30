@@ -7,15 +7,10 @@ import Checkbox from "./components/fields/Checkbox";
 import RadioGroup from "./components/fields/RadioGroup";
 import Select from "./components/fields/Select";
 import MultiSelect from "./components/fields/MultiSelect";
-import RepeatingFormField from "./components/fields/Repeats";
-import type {
-  FieldRenderer,
-  FieldDef,
-  OnFieldChange
-} from "react-forms-processor";
+import type { FieldRenderer } from "react-forms-processor";
 
 const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
-  const { defaultValue = [], id, type, label, misc = {} } = field;
+  const { id, type, label } = field;
   switch (type) {
     case "text":
       return <FieldText key={id} {...field} />;
@@ -37,26 +32,6 @@ const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
 
     case "radiogroup":
       return <RadioGroup key={id} {...field} />;
-
-    case "repeating":
-      const fields: FieldDef[] = misc.fields || [];
-      const addButtonLabel: string = misc.addButtonLabel;
-      const unidentifiedLabel: string = misc.unidentifiedLabel;
-      const noItemsMessage: string = misc.noItemsMessage;
-      const idAttribute: string = misc.idAttribute;
-      return (
-        <RepeatingFormField
-          key={id}
-          addButtonLabel={addButtonLabel}
-          defaultValue={defaultValue}
-          label={label}
-          onChange={value => onChange(id, value)}
-          fields={fields}
-          unidentifiedLabel={unidentifiedLabel}
-          noItemsMessage={noItemsMessage}
-          idAttribute={idAttribute}
-        />
-      );
 
     default:
       return <div>No mapped field</div>;
