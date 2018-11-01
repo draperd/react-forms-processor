@@ -180,6 +180,11 @@ export const fallsWithinNumericalRange: FallsWithinNumericalRange = ({
   message
 }) => {
   const parsedValue = parseFloat(value);
+
+  if (typeof value === "string" && !value.length) {
+    return undefined;
+  }
+
   if (isNaN(parsedValue)) {
     return message || "Value must be a number";
   }
