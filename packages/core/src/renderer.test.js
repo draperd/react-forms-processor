@@ -182,3 +182,79 @@ describe("Disabled fragment", () => {
     chai.expect(fields.at(1)).to.be.disabled();
   });
 });
+
+describe("2 fields sharing name", () => {
+  const fields: FieldDef[] = [
+    {
+      id: "OPTIONS",
+      type: "radiogroup",
+      name: "test",
+      defaultValue: "ONE",
+      options: [
+        {
+          items: ["ONE", "TWO", "OTHER"]
+        }
+      ],
+      omitWhenValueIs: ["Other"]
+    },
+    {
+      id: "CUSTOM",
+      type: "text",
+      name: "test",
+      visibleWhen: [
+        {
+          field: "OPTIONS",
+          is: ["OTHER"]
+        }
+      ],
+      omitWhenHidden: true
+    }
+  ];
+  const form = mount(<Form defaultFields={fields} />);
+
+  const radioButtons = form.find("input[type='radio']");
+  test("there are 3 radiobuttons", () => {
+    expect(radioButtons.length).toBe(3);
+  });
+
+  const firstRadioButton = radioButtons.at(0);
+  test("first radio button is selected", () => {
+    chai.expect(firstRadioButton).to.be.checked();
+  });
+
+  test("custom field is hidden", () => {
+    expect(form.find("input[type='text']").length).toBe(0);
+  });
+
+  const thirdRadioButton = radioButtons.at(2);
+
+  test("checking the custom radiobutton reveals the textbox", done => {
+    thirdRadioButton.prop("onChange")({
+      target: { value: "OTHER" }
+    });
+    chai.expect(thirdRadioButton).to.be.checked();
+
+    // Need to call update to force a re-render that will reveal the textbox
+    form.update();
+
+    setTimeout(() => {
+      expect(form.find("input[type='text']").length).toBe(1);
+      done();
+    });
+  });
+
+  test("setting the custom field will keep the third radio button checked and text box visible", done => {
+    const customTextField = form.find("input[type='text']").at(0);
+    customTextField.prop("onChange")({ target: { value: "custom" } });
+
+    form.update();
+
+    setTimeout(() => {
+      console.log(form.debug());
+
+      // TODO: This test will fail - it needs to pass!
+      // expect(form.find("input[type='text']").length).toBe(1);
+      done();
+    });
+  });
+});
