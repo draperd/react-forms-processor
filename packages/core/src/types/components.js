@@ -27,6 +27,7 @@ export type FormComponentProps = {
 export type FormComponentState = {
   fields: FieldDef[],
   value: FormValue,
+  valueByFieldId: FormValue,
   isValid: boolean,
   defaultFields: [],
   disabled: boolean,

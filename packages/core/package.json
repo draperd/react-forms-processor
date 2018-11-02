@@ -54,8 +54,8 @@
     "lodash": "^4.17.10"
   },
   "jest": {
-    "verbose": true,
-    "bail": true,
+    "verbose": false,
+    "bail": false,
     "rootDir": "src"
   }
 }

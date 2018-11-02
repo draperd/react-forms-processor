@@ -83,13 +83,19 @@ export default class Form extends Component<
     nextProps: FormComponentProps,
     prevState: FormComponentState
   ) {
+    console.log("getDerivedStateFromProps");
+    const defaultFieldChange = defaultFieldsHaveChanged(nextProps, prevState);
     if (
-      defaultFieldsHaveChanged(nextProps, prevState) ||
+      defaultFieldChange ||
       valueHasChanged(nextProps, prevState) ||
       formDisabledStateHasChanged(nextProps, prevState) ||
       formTouchedBehaviourHasChanged(nextProps, prevState)
     ) {
-      const { fields: fieldsFromState, value: valueFromState } = prevState;
+      const {
+        fields: fieldsFromState,
+        value: valueFromState,
+        valueByFieldId
+      } = prevState;
 
       let {
         defaultFields: defaultFieldsFromProps,
@@ -103,25 +109,24 @@ export default class Form extends Component<
         showValidationBeforeTouched = false
       } = nextProps;
 
-      const defaultFields = defaultFieldsFromProps || fieldsFromState;
+      const value = valueFromProps || valueFromState || {};
       let fields;
-      if (
-        defaultFieldsFromProps &&
-        defaultFieldsHaveChanged(nextProps, prevState)
-      ) {
-        fields = registerFields(
-          defaultFieldsFromProps,
-          valueFromProps || valueFromState || {}
-        );
+      if (defaultFieldsFromProps && defaultFieldChange) {
+        console.log("Default fields have CHANGED");
+        fields = registerFields(defaultFieldsFromProps, value, {});
       } else {
-        // TODO: Ideally we shouldn't need to register to update the value...
-        fields = registerFields(
-          fieldsFromState,
-          valueFromProps || valueFromState || {}
+        console.log(
+          "Default fields are the SAME",
+          valueFromProps,
+          valueFromState,
+          valueByFieldId
         );
+        // TODO: Ideally we shouldn't need to register to update the value...
+        fields = registerFields(fieldsFromState, value, valueByFieldId);
       }
 
       const nextState = getNextStateFromFields(
+        value,
         fields,
         showValidationBeforeTouched,
         disabled,
@@ -146,11 +151,15 @@ export default class Form extends Component<
       validationHandler,
       parentContext,
       showValidationBeforeTouched = false,
-      disabled = false
+      disabled = false,
+      value: valueFromProps
     } = this.props;
-    let { fields } = this.state;
+    let { fields, value: valueFromState } = this.state;
     fields = updateFieldValue(id, value, fields);
+
+    const formValue = valueFromProps || valueFromState || {};
     const nextState = getNextStateFromFields(
+      formValue,
       fields,
       showValidationBeforeTouched,
       disabled,
@@ -179,11 +188,15 @@ export default class Form extends Component<
       validationHandler,
       parentContext,
       showValidationBeforeTouched = false,
-      disabled = false
+      disabled = false,
+      value: valueFromProps
     } = this.props;
-    let { fields } = this.state;
+    let { fields, value: valueFromState } = this.state;
     fields = updateFieldTouchedState(id, true, fields);
+
+    const formValue = valueFromProps || valueFromState || {};
     const nextState = getNextStateFromFields(
+      formValue,
       fields,
       showValidationBeforeTouched,
       disabled,
@@ -199,11 +212,14 @@ export default class Form extends Component<
 
   // Register field is provided in the context to allow children to register with this form...
   registerField(field: FieldDef) {
+    console.log("Registering field", field);
     let { fields = [], value = {} } = this.state;
     const {
       showValidationBeforeTouched = false,
-      disabled = false
+      disabled = false,
+      value: valueFromProps
     } = this.props;
+    const { value: valueFromState } = this.state;
 
     if (fields.find(existingField => field.id === existingField.id)) {
       // Don't register fields twice...
@@ -216,7 +232,10 @@ export default class Form extends Component<
         );
         // let updatedFields = fields.concat(filteredFields);
         let updatedFields = filteredFields.concat(field);
+        const formValue = valueFromProps || valueFromState || {};
+
         const nextState = getNextStateFromFields(
+          formValue,
           updatedFields,
           showValidationBeforeTouched,
           disabled,
@@ -232,7 +251,7 @@ export default class Form extends Component<
   }
 
   createFormContext() {
-    const { fields, value, isValid } = this.state;
+    const { fields, value, valueByFieldId, isValid } = this.state;
     const {
       renderer = defaultRenderer,
       optionsHandler,
@@ -249,6 +268,7 @@ export default class Form extends Component<
       fields,
       isValid,
       value,
+      valueByFieldId,
       registerField: this.registerField.bind(this),
       renderer,
       optionsHandler,
@@ -265,6 +285,7 @@ export default class Form extends Component<
   }
 
   render() {
+    console.log("Render");
     const { children, defaultFields } = this.props;
     const { fields } = this.state;
 

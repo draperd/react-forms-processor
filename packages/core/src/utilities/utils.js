@@ -43,17 +43,23 @@ export const registerField: RegisterField = (field, fields, formValue) => {
   return fields.slice();
 };
 
-export const registerFields: RegisterFields = (fieldsToValidate, formValue) => {
+export const registerFields: RegisterFields = (
+  fieldsToRegister,
+  formValue,
+  valueByFieldId = {}
+) => {
   const fields = [];
-  fieldsToValidate.forEach(field => {
+  fieldsToRegister.forEach(field => {
     if (fieldDefIsValid(field, fields)) {
-      const { defaultValue, name, value, valueDelimiter } = field;
+      const { defaultValue, id, name, value, valueDelimiter } = field;
       const initialValue = getFirstDefinedValue(
+        valueByFieldId[id],
         formValue[name],
         value,
         defaultValue
       );
 
+      console.log("Initial value is", initialValue);
       const fieldToRegister = {
         ...field,
         value: splitDelimitedValue(initialValue, valueDelimiter)
@@ -65,6 +71,7 @@ export const registerFields: RegisterFields = (fieldsToValidate, formValue) => {
 };
 
 export const getNextStateFromFields: GetNextStateFromProps = (
+  formValue,
   fields,
   showValidationBeforeTouched,
   formIsDisabled,
@@ -72,7 +79,8 @@ export const getNextStateFromFields: GetNextStateFromProps = (
   validationHandler,
   parentContext
 ) => {
-  fields = processFields(fields, !!formIsDisabled);
+  console.log("Get next state from fields", fields);
+  fields = processFields(fields, !!formIsDisabled, formValue);
   if (optionsHandler) {
     fields = processOptions(fields, optionsHandler, parentContext);
   }
@@ -85,15 +93,27 @@ export const getNextStateFromFields: GetNextStateFromProps = (
   );
 
   const value = calculateFormValue(fields);
+  const valueByFieldId = getValueByFieldId(fields);
+
+  console.log("value", value);
+  console.log("valueByFieldId", valueByFieldId);
+
   const isValid = fields.every(field => field.isValid);
   const isDiscretelyInvalid = fields.some(field => field.isDiscretelyInvalid);
   const nextState = {
     fields,
     value,
+    valueByFieldId,
     isValid: isValid && !isDiscretelyInvalid
   };
   return nextState;
 };
+
+export const getValueByFieldId: CalculateFormValue = fields =>
+  fields.reduce((value, field) => {
+    value[field.id] = field.value;
+    return value;
+  }, {});
 
 export const setOptionsInFieldInState = (
   prevState: FormComponentState,
@@ -188,7 +208,6 @@ export const processFields: ProcessFields = (fields, formIsDisabled) => {
       visible,
       required,
       defaultDisabled,
-      trimValue,
       touched = false,
       visibleWhen = [],
       requiredWhen = [],
@@ -196,14 +215,11 @@ export const processFields: ProcessFields = (fields, formIsDisabled) => {
     } = field;
 
     let processedValue = typeof value !== "undefined" ? value : defaultValue;
-    if (
-      trimValue &&
-      processedValue &&
-      typeof processedValue.trim === "function"
-    ) {
-      processedValue = processedValue.trim();
-    }
 
+    console.log(
+      `Processed field value for ${field.id}:${field.name} is `,
+      processedValue
+    );
     return {
       ...field,
       touched,
@@ -286,6 +302,7 @@ export const createField: CreateFieldDef = field => {
 };
 
 export const getFirstDefinedValue = (...values: Value) => {
+  console.log("Values", values);
   let valueToReturn;
   values.some(value => {
     if (typeof value !== "undefined") {
@@ -398,7 +415,7 @@ export const shouldOmitFieldValue: OmitFieldValue = field => {
 
 export const calculateFormValue: CalculateFormValue = fields => {
   return fields.reduce((formValue, field) => {
-    const { name, value, useChangesAsValues } = field;
+    const { name, value, trimValue, useChangesAsValues } = field;
     if (shouldOmitFieldValue(field)) {
       return formValue;
     } else if (useChangesAsValues) {
@@ -406,7 +423,15 @@ export const calculateFormValue: CalculateFormValue = fields => {
         set(formValue, name, value)
       );
     } else {
-      set(formValue, name, value);
+      let processedValue = value;
+      if (
+        trimValue &&
+        processedValue &&
+        typeof processedValue.trim === "function"
+      ) {
+        processedValue = processedValue.trim();
+      }
+      set(formValue, name, processedValue);
     }
 
     return formValue;

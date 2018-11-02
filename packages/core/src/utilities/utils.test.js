@@ -8,6 +8,7 @@ import {
   fieldDefIsValid,
   getFirstDefinedValue,
   getMissingItems,
+  getValueByFieldId,
   joinDelimitedValue,
   mapFieldsById,
   shouldOmitFieldValue,
@@ -17,7 +18,12 @@ import {
   splitDelimitedValue,
   updateFieldValue
 } from "./utils";
-import type { FieldDef, FormComponentState, Options } from "../types";
+import type {
+  FieldDef,
+  FormComponentState,
+  FormValue,
+  Options
+} from "../types";
 
 const field1 = createField({
   id: "one",
@@ -45,7 +51,7 @@ describe("registerFields", () => {
   const fields = [field1, field2, field3];
 
   test("fields with duplicate IDs are filtered out", () => {
-    const registeredFields = registerFields(fields, {});
+    const registeredFields = registerFields(fields, {}, {});
     expect(registeredFields.length).toEqual(2);
     expect(registeredFields[0].id).toEqual("a");
     expect(registeredFields[1].id).toEqual("b");
@@ -163,6 +169,8 @@ describe("evaluateRule", () => {
 // });
 
 describe("processFields", () => {
+  const formValue: FormValue = {};
+
   const triggerField = createField({
     id: "triggerField",
     name: "triggerField",
@@ -346,6 +354,13 @@ describe("calculateFormValue", () => {
     name: "test.dot.notation",
     value: "ted"
   };
+  const fieldToTrim = {
+    ...baseField,
+    id: "TEST6",
+    name: "testTrim",
+    value: "     trimmed     ",
+    trimValue: true
+  };
 
   const value = calculateFormValue([field1, field2, field3, field4]);
   test("two field values should be omitted", () => {
@@ -377,6 +392,11 @@ describe("calculateFormValue", () => {
     const value = calculateFormValue([field1]);
     expect(value.test_added).toEqual("4,5");
     expect(value.test_removed).toEqual("1,3");
+  });
+
+  test("field value can be trimmed", () => {
+    const value = calculateFormValue([fieldToTrim]);
+    expect(value.testTrim).toBe("trimmed");
   });
 
   // test("dot-notation values setting", () => {
@@ -511,19 +531,22 @@ describe("default value handling", () => {
 });
 
 describe("trimming behaviour", () => {
+  const value = "   foo     ";
   const field: FieldDef = {
     id: "TO_BE_TRIMMED",
     name: "test",
     type: "text",
-    value: "   foo     ",
+    value,
     trimValue: true
   };
 
-  test("leading and trailing whitespace is removed from value", () => {
+  test("leading and trailing whitespace is NOT removed from when processed", () => {
     const processedFields = processFields([field], false);
     const trimmedField = processedFields[0];
-    expect(trimmedField.value).toEqual("foo");
+    expect(trimmedField.value).toEqual(value);
   });
+
+  // TODO: Check that form value is trimmed...
 });
 
 describe("setOptionsInFieldInState", () => {
@@ -579,5 +602,32 @@ describe("setOptionsInFieldInState", () => {
 
   test("assigns pending options as undefined", () => {
     expect(updatedState.fields[1].pendingOptions).toBeUndefined();
+  });
+});
+
+describe("getValueByFieldId", () => {
+  // 'a' is used as the 'name' attribute for both fields
+  const field1 = createField({
+    id: "a",
+    name: "a",
+    type: "text",
+    value: "V1"
+  });
+  const field2 = createField({
+    id: "b",
+    name: "a",
+    type: "text",
+    value: "V2"
+  });
+  const field3 = createField({
+    id: "c",
+    name: "c",
+    type: "text",
+    value: "V3"
+  });
+
+  test("matches snapshot", () => {
+    const valueByFieldId = getValueByFieldId([field1, field2, field3]);
+    expect(valueByFieldId).toMatchSnapshot();
   });
 });

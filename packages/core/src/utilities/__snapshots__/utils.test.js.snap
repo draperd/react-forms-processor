@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getValueByFieldId matches snapshot 1`] = `
+Object {
+  "a": "V1",
+  "b": "V2",
+  "c": "V3",
+}
+`;

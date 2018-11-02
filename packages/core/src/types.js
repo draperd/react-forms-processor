@@ -241,7 +241,7 @@ export type EvaluateAllRules = (
   defaultResult: boolean
 ) => boolean;
 
-export type ProcessFields = (FieldDef[], boolean) => FieldDef[];
+export type ProcessFields = (FieldDef[], boolean, FormValue) => FieldDef[];
 export type ProcessOptions = (
   FieldDef[],
   OptionsHandler,
@@ -273,7 +273,7 @@ export type CreateFieldDef = ($Shape<FieldDef>) => FieldDef;
 export type MapFieldsById = (FieldDef[]) => FieldsById;
 
 export type RegisterField = (FieldDef, FieldDef[], FormValue) => FieldDef[];
-export type RegisterFields = (FieldDef[], FormValue) => FieldDef[];
+export type RegisterFields = (FieldDef[], FormValue, FormValue) => FieldDef[];
 
 export type UpdateFieldValue = (string, Value, FieldDef[]) => FieldDef[];
 export type UpdateFieldTouchedState = (
@@ -291,6 +291,7 @@ export type DetermineChangedValues = FieldDef => Array<{
 }>;
 
 export type GetNextStateFromProps = (
+  FormValue,
   FieldDef[],
   boolean,
   boolean,
@@ -306,6 +307,7 @@ export type OmitFieldValue = FieldDef => boolean;
 export type FormContextData = {
   fields: FieldDef[],
   value: FormValue,
+  valueByFieldId: FormValue,
   isValid: boolean,
   options: {
     [string]: Options
