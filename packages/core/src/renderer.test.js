@@ -250,7 +250,7 @@ describe("2 fields sharing name", () => {
     form.update();
 
     setTimeout(() => {
-      console.log(form.debug());
+      // console.log(form.debug());
 
       // TODO: This test will fail - it needs to pass!
       // expect(form.find("input[type='text']").length).toBe(1);

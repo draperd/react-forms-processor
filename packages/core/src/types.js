@@ -190,6 +190,7 @@ export type FieldDef = {
   value?: void | string | number | boolean | Array<any>,
   visible?: boolean,
   required?: boolean,
+  missingValueMessage?: string,
   defaultDisabled?: boolean,
   disabled?: boolean,
   disabledWhen?: Rule[],

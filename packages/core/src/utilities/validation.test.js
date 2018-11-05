@@ -78,7 +78,7 @@ describe("validateField", () => {
     expect(validateField(testField, [testField], true).isValid).toBe(true);
   });
 
-  test("visible, required field with empty array value is valid", () => {
+  test("visible, required field with empty array value is invalid", () => {
     const testField = {
       ...field1,
       visible: true,
@@ -96,6 +96,20 @@ describe("validateField", () => {
       value: [1]
     };
     expect(validateField(testField, [testField], true).isValid).toBe(true);
+  });
+
+  test("visible, required field with missing data shows custom message", () => {
+    const errorMessage = "Where's my data?";
+    const testField = {
+      ...field1,
+      visible: true,
+      required: true,
+      value: "",
+      missingValueMessage: errorMessage
+    };
+    const validationResult = validateField(testField, [testField], true);
+    expect(validationResult.isValid).toBe(false);
+    expect(validationResult.errorMessages).toBe(errorMessage);
   });
 
   test("using validation handler reporting invalid", () => {
