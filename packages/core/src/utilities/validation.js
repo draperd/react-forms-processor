@@ -181,7 +181,11 @@ export const fallsWithinNumericalRange: FallsWithinNumericalRange = ({
 }) => {
   const parsedValue = parseFloat(value);
 
-  if (!value || (typeof value === "string" && !value.length)) {
+  if (
+    typeof value === "undefined" ||
+    value === null ||
+    (typeof value === "string" && !value.length)
+  ) {
     return undefined;
   }
 

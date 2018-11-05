@@ -279,12 +279,12 @@ describe("fallsWithinNumericalRange", () => {
     expect(
       // $FlowFixMe - Typing should prevent this, but we're testing the output
       fallsWithinNumericalRange({
-        value: null,
+        value: "null",
         min: 0,
         max: 5,
         message: "Fail"
       })
-    ).toBeUndefined();
+    ).toBe("Fail");
   });
 
   test("succeeds with undefined", () => {
