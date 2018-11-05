@@ -196,13 +196,6 @@ export const processFields: ProcessFields = (fields, formIsDisabled) => {
     } = field;
 
     let processedValue = typeof value !== "undefined" ? value : defaultValue;
-    if (
-      trimValue &&
-      processedValue &&
-      typeof processedValue.trim === "function"
-    ) {
-      processedValue = processedValue.trim();
-    }
 
     return {
       ...field,
@@ -398,7 +391,7 @@ export const shouldOmitFieldValue: OmitFieldValue = field => {
 
 export const calculateFormValue: CalculateFormValue = fields => {
   return fields.reduce((formValue, field) => {
-    const { name, value, useChangesAsValues } = field;
+    const { name, value, trimValue, useChangesAsValues } = field;
     if (shouldOmitFieldValue(field)) {
       return formValue;
     } else if (useChangesAsValues) {
@@ -406,7 +399,15 @@ export const calculateFormValue: CalculateFormValue = fields => {
         set(formValue, name, value)
       );
     } else {
-      set(formValue, name, value);
+      let processedValue = value;
+      if (
+        trimValue &&
+        processedValue &&
+        typeof processedValue.trim === "function"
+      ) {
+        processedValue = processedValue.trim();
+      }
+      set(formValue, name, processedValue);
     }
 
     return formValue;

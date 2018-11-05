@@ -133,6 +133,29 @@ describe("validateField", () => {
       validateField(testField, [testField], true, validationHandler).isValid
     ).toBe(true);
   });
+
+  test("validation of trimmed and required field with whitespace value is false", () => {
+    const testField = {
+      ...field1,
+      visible: true,
+      required: true,
+      value: "     ",
+      trimValue: true
+    };
+    const validationResult = validateField(testField, [testField], true);
+    expect(validationResult.isValid).toBe(false);
+  });
+
+  test("validation of untrimmed and required field with whitespace value is true", () => {
+    const testField = {
+      ...field1,
+      visible: true,
+      required: true,
+      value: "     "
+    };
+    const validationResult = validateField(testField, [testField], true);
+    expect(validationResult.isValid).toBe(true);
+  });
 });
 
 describe("lengthIsGreaterThan validator", () => {
