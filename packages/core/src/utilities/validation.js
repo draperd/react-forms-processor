@@ -312,6 +312,22 @@ export const validators = {
   someAreTrue
 };
 
+export const hasValue = (value: Value): boolean => {
+  const valueIsEmptyArray = Array.isArray(value) && value.length === 0;
+  const hasNoValue =
+    (value || value === 0 || value === false) && !valueIsEmptyArray;
+  return !hasNoValue;
+};
+
+export const getValueFromField = (field: FieldDef): Value => {
+  const { trimValue = false, value } = field;
+  let trimmedValue = value;
+  if (trimValue && trimmedValue && typeof trimmedValue.trim === "function") {
+    trimmedValue = trimmedValue.trim();
+  }
+  return trimmedValue;
+};
+
 export const validateField: ValidateField = (
   field,
   fields,
@@ -319,13 +335,13 @@ export const validateField: ValidateField = (
   validationHandler,
   parentContext
 ) => {
-  const { required, visible, value, validWhen = {}, touched = false } = field;
+  const { required, visible, validWhen = {}, touched = false } = field;
   let isValid = true;
   let errorMessages = [];
   if (visible) {
+    const value = getValueFromField(field);
     if (required) {
-      const valueIsEmptyArray = Array.isArray(value) && value.length === 0;
-      isValid = (value || value === 0 || value === false) && !valueIsEmptyArray;
+      isValid = !hasValue(value);
       if (!isValid) {
         const { missingValueMessage = "A value must be provided" } = field;
         errorMessages.push(missingValueMessage);

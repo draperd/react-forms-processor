@@ -346,6 +346,13 @@ describe("calculateFormValue", () => {
     name: "test.dot.notation",
     value: "ted"
   };
+  const fieldToTrim = {
+    ...baseField,
+    id: "TEST6",
+    name: "testTrim",
+    value: "     trimmed     ",
+    trimValue: true
+  };
 
   const value = calculateFormValue([field1, field2, field3, field4]);
   test("two field values should be omitted", () => {
@@ -388,6 +395,11 @@ describe("calculateFormValue", () => {
   //   const value = calculateFormValue([field1]);
   //   expect(value.some.nested.prop).toEqual("foo");
   // });
+
+  test("field value can be trimmed", () => {
+    const value = calculateFormValue([fieldToTrim]);
+    expect(value.testTrim).toBe("trimmed");
+  });
 });
 
 describe("updateFieldValue", () => {
@@ -511,18 +523,19 @@ describe("default value handling", () => {
 });
 
 describe("trimming behaviour", () => {
+  const value = "   foo     ";
   const field: FieldDef = {
     id: "TO_BE_TRIMMED",
     name: "test",
     type: "text",
-    value: "   foo     ",
+    value,
     trimValue: true
   };
 
-  test("leading and trailing whitespace is removed from value", () => {
+  test("leading and trailing whitespace is NOT removed from when processed", () => {
     const processedFields = processFields([field], false);
     const trimmedField = processedFields[0];
-    expect(trimmedField.value).toEqual("foo");
+    expect(trimmedField.value).toEqual(value);
   });
 });
 
