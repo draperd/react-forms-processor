@@ -12,7 +12,8 @@ import {
   lengthIsGreaterThan,
   lengthIsLessThan,
   matchesRegEx,
-  validateField
+  validateField,
+  hasValue
 } from "./validation";
 import { createField } from "./utils.js";
 import type {
@@ -535,5 +536,39 @@ describe("isNotValue", () => {
         message: "Fail"
       })
     ).toBeUndefined();
+  });
+});
+
+describe("hasValue", () => {
+  test("string", () => {
+    expect(hasValue("value")).toEqual(true);
+  });
+
+  test("array", () => {
+    expect(hasValue([1, 2])).toEqual(true);
+  });
+
+  test("true", () => {
+    expect(hasValue(true)).toEqual(true);
+  });
+
+  test("false", () => {
+    expect(hasValue(false)).toEqual(true);
+  });
+
+  test("empty array", () => {
+    expect(hasValue([])).toEqual(false);
+  });
+
+  test("empty string", () => {
+    expect(hasValue("")).toEqual(false);
+  });
+
+  test("undefined", () => {
+    expect(hasValue(undefined)).toEqual(false);
+  });
+
+  test("null", () => {
+    expect(hasValue(null)).toEqual(false);
   });
 });

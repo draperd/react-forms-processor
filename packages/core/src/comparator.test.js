@@ -115,6 +115,7 @@ describe("compare date fields", () => {
       id: "DATE1",
       name: "date1",
       type: "date",
+      required: true,
       validWhen: {
         comparedTo: {
           fields: ["DATE2"],
@@ -146,12 +147,14 @@ describe("compare date fields", () => {
     firstDate.prop("onFocus")();
     secondDate.prop("onFocus")();
     form.update();
-    expect(form.state().fields[0].errorMessages).toBe(firstDateError);
-    expect(form.state().fields[1].errorMessages).toBe(secondDateError);
+    expect(form.state().fields[0].errorMessages).toBe(
+      "A value must be provided"
+    );
+    expect(form.state().fields[1].errorMessages).toBe("");
   });
 
   test("warning shown for fields", () => {
-    expect(form.find("span.errors").length).toBe(2);
+    expect(form.find("span.errors").length).toBe(1);
   });
 
   test("first date becomes valid when set, but form is still invalid because second date is not set", () => {
@@ -177,6 +180,15 @@ describe("compare date fields", () => {
     expect(form.state().isValid).toBe(false);
     expect(form.state().fields[0].isValid).toBe(false);
     expect(form.state().fields[0].errorMessages).toBe(firstDateError);
+  });
+
+  test("setting second date to date before second date causes fields to be invalid", () => {
+    secondDate.prop("onChange")({ target: { value: xmasString } });
+    expect(form.state().isValid).toBe(false);
+    expect(form.state().fields[0].isValid).toBe(false);
+    expect(form.state().fields[1].isValid).toBe(false);
+    expect(form.state().fields[0].errorMessages).toBe(firstDateError);
+    expect(form.state().fields[1].errorMessages).toBe(secondDateError);
   });
 
   test("updating both dates so first date is before second date makes the form valid", () => {

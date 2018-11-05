@@ -314,9 +314,9 @@ export const validators = {
 
 export const hasValue = (value: Value): boolean => {
   const valueIsEmptyArray = Array.isArray(value) && value.length === 0;
-  const hasNoValue =
+  const hasValue =
     (value || value === 0 || value === false) && !valueIsEmptyArray;
-  return !hasNoValue;
+  return hasValue;
 };
 
 export const getValueFromField = (field: FieldDef): Value => {
@@ -341,11 +341,20 @@ export const validateField: ValidateField = (
   if (visible) {
     const value = getValueFromField(field);
     if (required) {
-      isValid = !hasValue(value);
+      isValid = hasValue(value);
       if (!isValid) {
         const { missingValueMessage = "A value must be provided" } = field;
         errorMessages.push(missingValueMessage);
       }
+    }
+
+    if (!hasValue(value)) {
+      // do not run all validations if the field is empty
+      return Object.assign({}, field, {
+        isValid,
+        isDiscretelyInvalid: !isValid,
+        errorMessages: errorMessages.length ? errorMessages.join(", ") : ""
+      });
     }
 
     isValid =
