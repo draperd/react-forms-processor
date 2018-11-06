@@ -197,6 +197,14 @@ describe("compare date fields", () => {
     expect(form.state().isValid).toBe(true);
     expect(form.state().fields[0].errorMessages).toBe("");
   });
+
+  test("clearing second date makes the form invalid and first date shows an error", () => {
+    firstDate.prop("onChange")({ target: { value: newYearsEveString } });
+    secondDate.prop("onChange")({ target: { value: "" } });
+    expect(form.state().isValid).toBe(false);
+    expect(form.state().fields[0].errorMessages).toBe(firstDateError);
+    expect(form.state().fields[1].errorMessages).toBe("");
+  });
 });
 
 // This test was added in an attempt to accurately represent the problem with a failing form...
