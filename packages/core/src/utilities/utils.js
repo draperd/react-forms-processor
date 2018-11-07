@@ -11,6 +11,7 @@ import type {
   FormComponentState,
   GetMissingItems,
   GetNextStateFromProps,
+  GetTouchedStateForField,
   JoinDelimitedValue,
   MapFieldsById,
   OmitFieldValue,
@@ -68,11 +69,12 @@ export const getNextStateFromFields: GetNextStateFromProps = (
   fields,
   showValidationBeforeTouched,
   formIsDisabled,
+  resetTouchedState,
   optionsHandler,
   validationHandler,
   parentContext
 ) => {
-  fields = processFields(fields, !!formIsDisabled);
+  fields = processFields(fields, !!formIsDisabled, resetTouchedState);
   if (optionsHandler) {
     fields = processOptions(fields, optionsHandler, parentContext);
   }
@@ -179,7 +181,21 @@ export const evaluateAllRules: EvaluateAllRules = (
   return rulesPass;
 };
 
-export const processFields: ProcessFields = (fields, formIsDisabled) => {
+export const getTouchedStateForField: GetTouchedStateForField = (
+  currentState,
+  resetState
+) => {
+  if (resetState === true) {
+    return false;
+  }
+  return currentState;
+};
+
+export const processFields: ProcessFields = (
+  fields,
+  formIsDisabled,
+  resetTouchedState = false
+) => {
   const fieldsById = mapFieldsById(fields);
   const updatedFields = fields.map(field => {
     const {
@@ -199,7 +215,7 @@ export const processFields: ProcessFields = (fields, formIsDisabled) => {
 
     return {
       ...field,
-      touched,
+      touched: getTouchedStateForField(touched, resetTouchedState),
       value: processedValue,
       visible: evaluateAllRules(visibleWhen, fieldsById, visible !== false),
       required: evaluateAllRules(requiredWhen, fieldsById, !!required),

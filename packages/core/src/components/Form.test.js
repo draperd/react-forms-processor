@@ -169,3 +169,49 @@ describe("validation warnings", () => {
     });
   });
 });
+
+describe("changing form value prop", () => {
+  const fields: FieldDef[] = [
+    {
+      id: "FIELD1",
+      type: "text",
+      name: "field1",
+      validWhen: {
+        matchesRegEx: {
+          pattern: "^[\\d]+$",
+          message: "Numbers only"
+        }
+      }
+    }
+  ];
+
+  const onButtonClick = jest.fn();
+  const formValue1 = {
+    field1: "value1"
+  };
+  const formValue2 = {
+    field1: "value2"
+  };
+
+  const form = mount(
+    <Form value={formValue1}>
+      <FormFragment defaultFields={fields} />
+    </Form>
+  );
+
+  test("field has not been touched", () => {
+    expect(form.state().fields[0].touched).toBe(false);
+  });
+
+  test("field should be touched after focus", () => {
+    form.find("input").prop("onFocus")();
+    form.update();
+    expect(form.state().fields[0].touched).toBe(true);
+  });
+
+  test("field should not be touched after form value update", () => {
+    form.setProps({ value: formValue2 });
+    form.update();
+    expect(form.state().fields[0].touched).toBe(false);
+  });
+});
