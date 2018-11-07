@@ -264,6 +264,41 @@ describe("fallsWithinNumericalRange", () => {
     ).toBeUndefined();
   });
 
+  test("succeeds with null", () => {
+    expect(
+      // $FlowFixMe - Typing should prevent this, but we're testing the output
+      fallsWithinNumericalRange({
+        value: null,
+        min: 0,
+        max: 5,
+        message: "Fail"
+      })
+    ).toBeUndefined();
+  });
+  test("succeeds with string null", () => {
+    expect(
+      // $FlowFixMe - Typing should prevent this, but we're testing the output
+      fallsWithinNumericalRange({
+        value: "null",
+        min: 0,
+        max: 5,
+        message: "Fail"
+      })
+    ).toBe("Fail");
+  });
+
+  test("succeeds with undefined", () => {
+    expect(
+      // $FlowFixMe - Typing should prevent this, but we're testing the output
+      fallsWithinNumericalRange({
+        value: undefined,
+        min: 0,
+        max: 5,
+        message: "Fail"
+      })
+    ).toBeUndefined();
+  });
+
   test("fails with whitespace", () => {
     expect(
       // $FlowFixMe - Typing should prevent this, but we're testing the output
@@ -291,6 +326,41 @@ describe("fallsWithinNumericalRange", () => {
       // $FlowFixMe - Typing should prevent this, but we're testing the output
       fallsWithinNumericalRange({
         value: "",
+        min: 0,
+        max: 5,
+        message: "Fail"
+      })
+    ).toBeUndefined();
+  });
+
+  test("succeeds with null", () => {
+    expect(
+      // $FlowFixMe - Typing should prevent this, but we're testing the output
+      fallsWithinNumericalRange({
+        value: null,
+        min: 0,
+        max: 5,
+        message: "Fail"
+      })
+    ).toBeUndefined();
+  });
+  test("succeeds with string null", () => {
+    expect(
+      // $FlowFixMe - Typing should prevent this, but we're testing the output
+      fallsWithinNumericalRange({
+        value: null,
+        min: 0,
+        max: 5,
+        message: "Fail"
+      })
+    ).toBeUndefined();
+  });
+
+  test("succeeds with undefined", () => {
+    expect(
+      // $FlowFixMe - Typing should prevent this, but we're testing the output
+      fallsWithinNumericalRange({
+        value: undefined,
         min: 0,
         max: 5,
         message: "Fail"
