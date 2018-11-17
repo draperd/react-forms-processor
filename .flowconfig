@@ -1,6 +1,5 @@
 [ignore]
-dist
-node_modules
+.*/dist/.*\.flow
 .*/node_modules/@atlaskit/.*\.flow
 
 [include]
