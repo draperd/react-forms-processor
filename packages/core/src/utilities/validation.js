@@ -344,18 +344,17 @@ export const validateField: ValidateField = (
   let errorMessages = [];
   if (visible) {
     const value = getValueFromField(field);
+    const valueProvided = hasValue(value);
     if (required) {
-      isValid = hasValue(value);
-      if (!isValid) {
+      if (!valueProvided) {
+        isValid = valueProvided;
         const { missingValueMessage = "A value must be provided" } = field;
         errorMessages.push(missingValueMessage);
       }
-    }
-
-    if (!hasValue(value)) {
+    } else if (!valueProvided) {
       // do not run all validations if the field is empty
       return Object.assign({}, field, {
-        isValid,
+        isValid: true,
         isDiscretelyInvalid: !isValid,
         errorMessages: errorMessages.length ? errorMessages.join(", ") : ""
       });

@@ -157,6 +157,53 @@ describe("validateField", () => {
     const validationResult = validateField(testField, [testField], true);
     expect(validationResult.isValid).toBe(true);
   });
+
+  test("field is only discretely invalid if not touched", () => {
+    const testField = {
+      ...field1,
+      visible: true,
+      required: true,
+      value: "",
+      touched: false
+    };
+    const validationResult = validateField(testField, [testField], false);
+    expect(validationResult.isValid).toBe(true);
+    expect(validationResult.isDiscretelyInvalid).toBe(true);
+    expect(validationResult.errorMessages).toBe("");
+  });
+
+  test("field is invalid when touched", () => {
+    const testField = {
+      ...field1,
+      visible: true,
+      required: true,
+      value: "",
+      touched: true
+    };
+    const validationResult = validateField(testField, [testField], false);
+    expect(validationResult.isValid).toBe(false);
+    expect(validationResult.isDiscretelyInvalid).toBe(true);
+    expect(validationResult.errorMessages).toBe("A value must be provided");
+  });
+
+  test("field validation rules not processed without value", () => {
+    const testField = {
+      ...field1,
+      visible: true,
+      required: false,
+      value: "",
+      touched: true,
+      validWhen: {
+        matchesRegEx: {
+          pattern: "^[\\d]+$",
+          message: "Length can only be in whole numbers"
+        }
+      }
+    };
+    const validationResult = validateField(testField, [testField], true);
+    expect(validationResult.isValid).toBe(true);
+    expect(validationResult.isDiscretelyInvalid).toBe(false);
+  });
 });
 
 describe("lengthIsGreaterThan validator", () => {

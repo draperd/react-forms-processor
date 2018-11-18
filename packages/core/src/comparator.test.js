@@ -148,7 +148,7 @@ describe("compare date fields", () => {
     secondDate.prop("onFocus")();
     form.update();
     expect(form.state().fields[0].errorMessages).toBe(
-      "A value must be provided"
+      "A value must be provided, Must be before second date"
     );
     expect(form.state().fields[1].errorMessages).toBe("");
   });
