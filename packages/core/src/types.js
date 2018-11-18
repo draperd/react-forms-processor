@@ -242,7 +242,7 @@ export type EvaluateAllRules = (
   defaultResult: boolean
 ) => boolean;
 
-export type ProcessFields = (FieldDef[], boolean) => FieldDef[];
+export type ProcessFields = (FieldDef[], boolean, boolean) => FieldDef[];
 export type ProcessOptions = (
   FieldDef[],
   OptionsHandler,
@@ -291,8 +291,11 @@ export type DetermineChangedValues = FieldDef => Array<{
   value: Value
 }>;
 
+export type GetTouchedStateForField = (boolean, boolean) => boolean;
+
 export type GetNextStateFromProps = (
   FieldDef[],
+  boolean,
   boolean,
   boolean,
   ?OptionsHandler,

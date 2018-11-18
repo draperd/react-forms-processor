@@ -8,6 +8,7 @@ import {
   fieldDefIsValid,
   getFirstDefinedValue,
   getMissingItems,
+  getTouchedStateForField,
   joinDelimitedValue,
   mapFieldsById,
   shouldOmitFieldValue,
@@ -239,7 +240,7 @@ describe("processFields", () => {
     shouldBeEnabled
   ];
 
-  const processedFields = processFields(fields, false);
+  const processedFields = processFields(fields, false, false);
   const processedFieldsById = mapFieldsById(processedFields);
 
   test("field should be visible", () => {
@@ -262,7 +263,7 @@ describe("processFields", () => {
   });
 
   test("all fields should be disabled when form is disabled", () => {
-    const processedFields = processFields(fields, true);
+    const processedFields = processFields(fields, true, false);
     const processedFieldsById = mapFieldsById(processedFields);
     expect(processedFieldsById.shouldBeVisible.disabled).toBe(true);
     expect(processedFieldsById.shouldBeHidden.disabled).toBe(true);
@@ -505,19 +506,19 @@ describe("default value handling", () => {
   };
 
   test("default value is assigned to value", () => {
-    const processedFields = processFields([field], false);
+    const processedFields = processFields([field], false, false);
     expect(processedFields[0].value).toEqual("bob");
   });
 
   test("Value takes precedence over defaultValue", () => {
     field.value = "ted";
-    const processedFields = processFields([field], false);
+    const processedFields = processFields([field], false, false);
     expect(processedFields[0].value).toEqual("ted");
   });
 
   test("Falsy value takes precedence over defaultValue", () => {
     field.value = false;
-    const processedFields = processFields([field], false);
+    const processedFields = processFields([field], false, false);
     expect(processedFields[0].value).toEqual(false);
   });
 });
@@ -533,7 +534,7 @@ describe("trimming behaviour", () => {
   };
 
   test("leading and trailing whitespace is NOT removed from when processed", () => {
-    const processedFields = processFields([field], false);
+    const processedFields = processFields([field], false, false);
     const trimmedField = processedFields[0];
     expect(trimmedField.value).toEqual(value);
   });
@@ -592,5 +593,20 @@ describe("setOptionsInFieldInState", () => {
 
   test("assigns pending options as undefined", () => {
     expect(updatedState.fields[1].pendingOptions).toBeUndefined();
+  });
+});
+
+describe("getTouchedStateForField", () => {
+  test("returns false on reset when touched is true", () => {
+    expect(getTouchedStateForField(true, true)).toBe(false);
+  });
+  test("returns false on reset when touched is false", () => {
+    expect(getTouchedStateForField(false, true)).toBe(false);
+  });
+  test("returns false with no reset when touched is false", () => {
+    expect(getTouchedStateForField(false, false)).toBe(false);
+  });
+  test("returns true with no reset when touched is true", () => {
+    expect(getTouchedStateForField(true, false)).toBe(true);
   });
 });

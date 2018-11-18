@@ -55,7 +55,7 @@
   },
   "jest": {
     "verbose": true,
-    "bail": true,
+    "bail": false,
     "rootDir": "src"
   }
 }

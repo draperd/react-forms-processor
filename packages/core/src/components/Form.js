@@ -33,6 +33,11 @@ const valueHasChanged = (
   prevState: FormComponentState
 ) => nextProps.value && nextProps.value !== prevState.value;
 
+const defaultValueHasChanged = (
+  nextProps: FormComponentProps,
+  prevState: FormComponentState
+) => nextProps.value && nextProps.value !== prevState.defaultValue;
+
 const formDisabledStateHasChanged = (
   nextProps: FormComponentProps,
   prevState: FormComponentState
@@ -54,6 +59,7 @@ export default class Form extends Component<
     super(props);
     this.state = {
       fields: [],
+      defaultValue: props.value || {},
       value: props.value || {},
       isValid: false,
       defaultFields: [],
@@ -83,8 +89,10 @@ export default class Form extends Component<
     nextProps: FormComponentProps,
     prevState: FormComponentState
   ) {
+    const defaultFieldsChange = defaultFieldsHaveChanged(nextProps, prevState);
+    const defaultValueChange = defaultValueHasChanged(nextProps, prevState);
     if (
-      defaultFieldsHaveChanged(nextProps, prevState) ||
+      defaultFieldsChange ||
       valueHasChanged(nextProps, prevState) ||
       formDisabledStateHasChanged(nextProps, prevState) ||
       formTouchedBehaviourHasChanged(nextProps, prevState)
@@ -103,28 +111,27 @@ export default class Form extends Component<
         showValidationBeforeTouched = false
       } = nextProps;
 
+      // If a new value has been passed to the Form as a prop then it should take precedence over the last calculated state
+      const value = valueFromProps || valueFromState || {};
+
       const defaultFields = defaultFieldsFromProps || fieldsFromState;
       let fields;
-      if (
-        defaultFieldsFromProps &&
-        defaultFieldsHaveChanged(nextProps, prevState)
-      ) {
-        fields = registerFields(
-          defaultFieldsFromProps,
-          valueFromProps || valueFromState || {}
-        );
+      if (defaultFieldsFromProps && defaultFieldsChange) {
+        fields = registerFields(defaultFieldsFromProps, value);
       } else {
         // TODO: Ideally we shouldn't need to register to update the value...
-        fields = registerFields(
-          fieldsFromState,
-          valueFromProps || valueFromState || {}
-        );
+        fields = registerFields(fieldsFromState, value);
       }
+
+      // We should reset the touched state of all the fields if the value passed as a prop to the form
+      // changes...
+      const resetTouchedState = defaultValueChange;
 
       const nextState = getNextStateFromFields(
         fields,
         showValidationBeforeTouched,
         disabled,
+        resetTouchedState,
         optionsHandler,
         validationHandler,
         parentContext
@@ -154,6 +161,7 @@ export default class Form extends Component<
       fields,
       showValidationBeforeTouched,
       disabled,
+      false,
       optionsHandler,
       validationHandler,
       parentContext
@@ -187,6 +195,7 @@ export default class Form extends Component<
       fields,
       showValidationBeforeTouched,
       disabled,
+      false,
       optionsHandler,
       validationHandler,
       parentContext
@@ -220,6 +229,7 @@ export default class Form extends Component<
           updatedFields,
           showValidationBeforeTouched,
           disabled,
+          false,
           props.optionsHandler,
           props.validationHandler,
           props.parentContext
