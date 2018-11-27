@@ -185,6 +185,7 @@ export default class Form extends Component<
     const {
       optionsHandler,
       validationHandler,
+      onFocus,
       parentContext,
       showValidationBeforeTouched = false,
       disabled = false
@@ -201,9 +202,7 @@ export default class Form extends Component<
       parentContext
     );
 
-    this.setState((state, props) => {
-      return nextState;
-    });
+    this.setState(nextState, () => onFocus && onFocus(id));
   }
 
   // Register field is provided in the context to allow children to register with this form...
