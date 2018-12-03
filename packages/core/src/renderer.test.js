@@ -32,7 +32,7 @@ describe("Default renderer", () => {
 
 describe("Basic single field form capabilities", () => {
   const onFormChange = jest.fn();
-  const onFormFocus = jest.fn();
+  const onFieldFocus = jest.fn();
   const onButtonClick = jest.fn();
   const singleField: FieldDef[] = [
     {
@@ -44,7 +44,7 @@ describe("Basic single field form capabilities", () => {
   ];
 
   const wrapper = mount(
-    <Form defaultFields={singleField} onChange={onFormChange} onFocus={onFormFocus}>
+    <Form defaultFields={singleField} onChange={onFormChange} onFieldFocus={onFieldFocus}>
       <FormButton onClick={onButtonClick} />
     </Form>
   );
@@ -76,7 +76,7 @@ describe("Basic single field form capabilities", () => {
   });
   test("focusing field value calls onFocus", () => {
     inputField.prop("onFocus")();
-    expect(onFormFocus).toHaveBeenLastCalledWith(singleField[0].id);
+    expect(onFieldFocus).toHaveBeenLastCalledWith(singleField[0].id);
   });
 
   test("button initially has no value", () => {

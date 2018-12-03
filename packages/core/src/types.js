@@ -230,7 +230,7 @@ export type FormValue = {
 
 export type OnFormChange = (FormValue, boolean) => void;
 
-export type OnFormFocus = (fieldId: string) => void;
+export type OnFieldFocus = (fieldId: string) => void;
 
 export type EvaluateRule = (rule?: Rule, targetValue: Value) => boolean;
 
