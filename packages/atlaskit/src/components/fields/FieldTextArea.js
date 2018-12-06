@@ -20,7 +20,7 @@ class AtlaskitFieldTextArea extends React.Component<Field> {
       required,
       value,
       label,
-      autoFocus
+      autofocus
     } = this.props;
     return (
       <AkField
@@ -38,7 +38,7 @@ class AtlaskitFieldTextArea extends React.Component<Field> {
           value={value}
           onChange={(evt: any) => onFieldChange(id, evt.target.value)}
           onFocus={() => onFieldFocus(id)}
-          autoFocus={autoFocus}
+          autoFocus={autofocus}
         />
       </AkField>
     );

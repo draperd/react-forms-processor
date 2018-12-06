@@ -20,7 +20,7 @@ class AtlaskitDate extends React.Component<Field> {
       required,
       value,
       label,
-      autoFocus
+      autofocus
     } = this.props;
     return (
       <AkField
@@ -39,7 +39,7 @@ class AtlaskitDate extends React.Component<Field> {
           value={value}
           isDisabled={disabled}
           onFocus={() => onFieldFocus(id)}
-          autoFocus={autoFocus}
+          autoFocus={autofocus}
         />
       </AkField>
     );
