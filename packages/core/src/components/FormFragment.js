@@ -17,7 +17,6 @@ const registerFieldIfNew = (
   if (currentFields.find(existingField => existingField.id === field.id)) {
     // console.warn("Fragment tried to re-register field", field.id);
   } else {
-    // console.log(">>> ", JSON.parse(JSON.stringify(field)));
     registerField(field);
   }
 };
