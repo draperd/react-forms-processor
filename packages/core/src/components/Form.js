@@ -224,6 +224,7 @@ export default class Form extends Component<
         );
         // let updatedFields = fields.concat(filteredFields);
         let updatedFields = filteredFields.concat(field);
+        console.log("FIELDS >>> ", JSON.parse(JSON.stringify(updatedFields)));
         const nextState = getNextStateFromFields(
           updatedFields,
           showValidationBeforeTouched,

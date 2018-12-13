@@ -26,8 +26,6 @@ export type Rule = {
   isNot?: Value[]
 };
 
-export type OnFieldFocus = (id: string) => void;
-
 export type OnFieldChange = (id: string, value: any) => void;
 
 export type LengthIsGreaterThan = ({
