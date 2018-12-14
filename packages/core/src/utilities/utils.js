@@ -32,13 +32,6 @@ import type {
 // form) but safer when children of forms are registering themselves
 export const registerField: RegisterField = (field, fields, formValue) => {
   if (fieldDefIsValid(field, fields)) {
-    const { defaultValue, name, value, valueDelimiter } = field;
-    field.defaultValue = getFirstDefinedValue(
-      formValue[name],
-      value,
-      defaultValue
-    );
-    field.value = splitDelimitedValue(value, valueDelimiter);
     return fields.concat(field);
   }
   return fields.slice();
