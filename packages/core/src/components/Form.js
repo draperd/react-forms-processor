@@ -156,6 +156,7 @@ export default class Form extends Component<
       disabled = false
     } = this.props;
     let { fields } = this.state;
+    fields = updateFieldTouchedState(id, true, fields);
     fields = updateFieldValue(id, value, fields);
     const nextState = getNextStateFromFields(
       fields,
@@ -191,7 +192,6 @@ export default class Form extends Component<
       disabled = false
     } = this.props;
     let { fields } = this.state;
-    fields = updateFieldTouchedState(id, true, fields);
     const nextState = getNextStateFromFields(
       fields,
       showValidationBeforeTouched,
