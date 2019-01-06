@@ -127,15 +127,15 @@ export default class Form extends Component<
       // changes...
       const resetTouchedState = defaultValueChange;
 
-      const nextState = getNextStateFromFields(
+      const nextState = getNextStateFromFields({
         fields,
         showValidationBeforeTouched,
-        disabled,
+        formIsDisabled: disabled,
         resetTouchedState,
         optionsHandler,
         validationHandler,
         parentContext
-      );
+      });
       return {
         ...nextState,
         defaultFields: defaultFieldsFromProps,
@@ -157,15 +157,16 @@ export default class Form extends Component<
     } = this.props;
     let { fields } = this.state;
     fields = updateFieldValue(id, value, fields);
-    const nextState = getNextStateFromFields(
+    const nextState = getNextStateFromFields({
       fields,
+      lastFieldUpdated: id,
       showValidationBeforeTouched,
-      disabled,
-      false,
+      formIsDisabled: disabled,
+      resetTouchedState: false,
       optionsHandler,
       validationHandler,
       parentContext
-    );
+    });
 
     this.setState(
       (state, props) => {
@@ -192,15 +193,15 @@ export default class Form extends Component<
     } = this.props;
     let { fields } = this.state;
     fields = updateFieldTouchedState(id, true, fields);
-    const nextState = getNextStateFromFields(
+    const nextState = getNextStateFromFields({
       fields,
       showValidationBeforeTouched,
-      disabled,
-      false,
+      formIsDisabled: disabled,
+      resetTouchedState: false,
       optionsHandler,
       validationHandler,
       parentContext
-    );
+    });
 
     this.setState(nextState, () => onFieldFocusProp && onFieldFocusProp(id));
   }
@@ -219,20 +220,21 @@ export default class Form extends Component<
     } else {
       fields = registerField(field, fields, value);
       this.setState((state, props) => {
+        const { optionsHandler, validationHandler, parentContext } = props;
         const filteredFields = state.fields.filter(
           existingField => existingField.id !== field.id
         );
         // let updatedFields = fields.concat(filteredFields);
         let updatedFields = filteredFields.concat(field);
-        const nextState = getNextStateFromFields(
-          updatedFields,
+        const nextState = getNextStateFromFields({
+          fields: updatedFields,
           showValidationBeforeTouched,
-          disabled,
-          false,
-          props.optionsHandler,
-          props.validationHandler,
-          props.parentContext
-        );
+          formIsDisabled: disabled,
+          resetTouchedState: false,
+          optionsHandler,
+          validationHandler,
+          parentContext
+        });
         return {
           ...nextState
         };
