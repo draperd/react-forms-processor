@@ -205,6 +205,7 @@ export type FieldDef = {
   addedSuffix?: string,
   removedSuffix?: string,
   options?: Options,
+  refreshOptionsOnChangesTo?: string[],
   pendingOptions?: Promise<Options>,
   misc?: {
     [string]: any
@@ -244,11 +245,18 @@ export type EvaluateAllRules = (
 ) => boolean;
 
 export type ProcessFields = (FieldDef[], boolean, boolean) => FieldDef[];
-export type ProcessOptions = (
-  FieldDef[],
-  OptionsHandler,
-  ?FormContextData
-) => FieldDef[];
+
+export type ShouldOptionsBeRefreshed = ({
+  lastFieldUpdated?: string,
+  field: FieldDef
+}) => boolean;
+
+export type ProcessOptions = ({
+  fields: FieldDef[],
+  lastFieldUpdated?: string,
+  optionsHandler: OptionsHandler,
+  parentContext: ?FormContextData
+}) => FieldDef[];
 
 export type ValidationResult = {
   isValid: boolean,
@@ -294,15 +302,16 @@ export type DetermineChangedValues = FieldDef => Array<{
 
 export type GetTouchedStateForField = (boolean, boolean) => boolean;
 
-export type GetNextStateFromProps = (
-  FieldDef[],
-  boolean,
-  boolean,
-  boolean,
-  ?OptionsHandler,
-  ?ValidationHandler,
-  ?FormContextData
-) => $Shape<FormComponentState>;
+export type GetNextStateFromProps = ({
+  fields: FieldDef[],
+  lastFieldUpdated?: string,
+  showValidationBeforeTouched: boolean,
+  formIsDisabled: boolean,
+  resetTouchedState: boolean,
+  optionsHandler: ?OptionsHandler,
+  validationHandler: ?ValidationHandler,
+  parentContext: ?FormContextData
+}) => $Shape<FormComponentState>;
 
 export type CalculateFormValue = (FieldDef[]) => FormValue;
 
