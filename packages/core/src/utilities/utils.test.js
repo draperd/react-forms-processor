@@ -455,6 +455,10 @@ describe("splitDelimitedValue", () => {
   test("leave value as is if no delimiter provided", () => {
     expect(splitDelimitedValue("test")).toEqual("test");
   });
+
+  test("array value remain unchanged", () => {
+    expect(splitDelimitedValue(["one", "two"], ",")).toEqual(["one", "two"]);
+  });
 });
 
 describe("getMissingItems", () => {
