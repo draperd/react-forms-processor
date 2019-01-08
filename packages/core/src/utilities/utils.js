@@ -349,7 +349,7 @@ export const splitDelimitedValue: SplitDelimitedValue = (
   if (valueDelimiter) {
     if (typeof value === "string") {
       value = value.split(valueDelimiter);
-    } else {
+    } else if (!Array.isArray(value)) {
       value = [];
     }
   }
