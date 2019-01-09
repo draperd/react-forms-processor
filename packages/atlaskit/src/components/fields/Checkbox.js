@@ -16,6 +16,7 @@ class AtlaskitCheckbox extends React.Component<Field> {
       name,
       onFieldChange,
       onFieldFocus,
+      onFieldBlur,
       value,
       label,
       required
@@ -38,6 +39,7 @@ class AtlaskitCheckbox extends React.Component<Field> {
           initiallyChecked={value}
           onChange={evt => onFieldChange(id, evt.isChecked)}
           onFocus={() => onFieldFocus(id)}
+          onBlur={() => onFieldBlur(id)}
         />
       </AkField>
     );

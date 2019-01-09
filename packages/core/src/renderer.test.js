@@ -44,7 +44,11 @@ describe("Basic single field form capabilities", () => {
   ];
 
   const wrapper = mount(
-    <Form defaultFields={singleField} onChange={onFormChange} onFieldFocus={onFieldFocus}>
+    <Form
+      defaultFields={singleField}
+      onChange={onFormChange}
+      onFieldFocus={onFieldFocus}
+    >
       <FormButton onClick={onButtonClick} />
     </Form>
   );

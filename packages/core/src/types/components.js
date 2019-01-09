@@ -6,6 +6,7 @@ import type {
   FormValue,
   OnFormChange,
   OnFieldFocus,
+  OnFieldBlur,
   FieldRenderer,
   OptionsHandler,
   ValidationHandler
@@ -16,6 +17,7 @@ export type FormComponentProps = {
   value?: FormValue,
   onChange?: OnFormChange,
   onFieldFocus?: OnFieldFocus,
+  onFieldBlur?: OnFieldBlur,
   renderer?: FieldRenderer,
   optionsHandler?: OptionsHandler,
   validationHandler?: ValidationHandler,

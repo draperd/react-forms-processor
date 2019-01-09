@@ -219,10 +219,16 @@ export type Field = FieldDef & {
   fields: FieldDef[],
   onFieldChange: OnFieldChange,
   onFieldFocus: OnFieldFocus,
+  onFieldBlur: OnFieldBlur,
   registerField?: FieldDef => void
 };
 
-export type FieldRenderer = (FieldDef, OnFieldChange, OnFieldFocus) => any;
+export type FieldRenderer = (
+  FieldDef,
+  OnFieldChange,
+  OnFieldFocus,
+  OnFieldBlur
+) => any;
 
 export type FormValue = {
   [string]: Value
@@ -231,6 +237,7 @@ export type FormValue = {
 export type OnFormChange = (FormValue, boolean) => void;
 
 export type OnFieldFocus = (fieldId: string) => void;
+export type OnFieldBlur = (fieldId: string) => void;
 
 export type EvaluateRule = (rule?: Rule, targetValue: Value) => boolean;
 
@@ -271,12 +278,13 @@ export type ValidateField = (
   ?FormContextData
 ) => FieldDef;
 
-export type ValidateAllFields = (
-  FieldDef[],
-  boolean,
-  ?ValidationHandler,
-  ?FormContextData
-) => FieldDef[];
+export type ValidateAllFields = ({
+  fields: FieldDef[],
+  showValidationBeforeTouched: boolean,
+  showValidationOnBlur: boolean,
+  validationHandler: ?ValidationHandler,
+  parentContext: ?FormContextData
+}) => FieldDef[];
 
 export type CreateFieldDef = ($Shape<FieldDef>) => FieldDef;
 
@@ -306,6 +314,7 @@ export type GetNextStateFromProps = ({
   fields: FieldDef[],
   lastFieldUpdated?: string,
   showValidationBeforeTouched: boolean,
+  showValidationOnBlur: boolean,
   formIsDisabled: boolean,
   resetTouchedState: boolean,
   optionsHandler: ?OptionsHandler,
@@ -330,8 +339,10 @@ export type FormContextData = {
   renderer: FieldRenderer,
   onFieldChange: OnFieldChange,
   onFieldFocus: OnFieldFocus,
+  onFieldBlur: OnFieldBlur,
   parentContext?: FormContextData,
   showValidationBeforeTouched: boolean,
+  showValidationOnBlur: boolean,
   conditionalUpdate: boolean,
   disabled: boolean
 };

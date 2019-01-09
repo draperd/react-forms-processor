@@ -5,6 +5,7 @@ import type {
   FieldDef,
   OnFieldChange,
   OnFieldFocus,
+  OnFieldBlur,
   Option
 } from "./types";
 
@@ -29,6 +30,7 @@ const renderSelect = (
   field: FieldDef,
   onChange: OnFieldChange,
   onFieldFocus: OnFieldFocus,
+  onFieldBlur: OnFieldBlur,
   multiple: boolean
 ) => {
   const {
@@ -77,6 +79,7 @@ const renderSelect = (
         disabled={disabled}
         required={required}
         onFocus={() => onFieldFocus(id)}
+        onBlur={() => onFieldBlur(id)}
         onChange={evt => {
           if (multiple) {
             const options = evt.target.options;
@@ -95,7 +98,12 @@ const renderSelect = (
   );
 };
 
-const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
+const renderer: FieldRenderer = (
+  field,
+  onChange,
+  onFieldFocus,
+  onFieldBlur
+) => {
   const {
     disabled = false,
     errorMessages,
@@ -126,14 +134,15 @@ const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
             checked={value}
             onChange={evt => onChange(id, evt.target.checked)}
             onFocus={() => onFieldFocus(id)}
+            onFieldBlur={() => onFieldBlur(id)}
           />
         </div>
       );
     case "select":
-      return renderSelect(field, onChange, onFieldFocus, false);
+      return renderSelect(field, onChange, onFieldFocus, onFieldBlur, false);
 
     case "multiselect":
-      return renderSelect(field, onChange, onFieldFocus, true);
+      return renderSelect(field, onChange, onFieldFocus, onFieldBlur, true);
 
     case "radiogroup":
       items = options.reduce((itemsSoFar, option) => {
@@ -151,6 +160,7 @@ const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
                     checked={item === value}
                     onChange={evt => onChange(id, evt.target.value)}
                     onFocus={() => onFieldFocus(id)}
+                    onBlur={() => onFieldBlur(id)}
                   />
                   <label htmlFor={inputId}>{item}</label>
                 </div>
@@ -166,6 +176,7 @@ const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
                     checked={item.value === value}
                     onChange={evt => onChange(id, evt.target.value)}
                     onFocus={() => onFieldFocus(id)}
+                    onBlur={() => onFieldBlur(id)}
                   />
                   <label htmlFor={inputId}>{item.label || item.value}</label>
                 </div>
@@ -191,6 +202,7 @@ const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
             checked={checked}
             onChange={evt => onChange(id, evt.target.value)}
             onFocus={() => onFieldFocus(id)}
+            onBlur={() => onFieldBlur(id)}
           />
           {required ? "*" : null}
           {!isValid ? <span className="errors">{errorMessages}</span> : null}

@@ -63,6 +63,7 @@ export const getNextStateFromFields: GetNextStateFromProps = ({
   fields,
   lastFieldUpdated,
   showValidationBeforeTouched,
+  showValidationOnBlur,
   formIsDisabled,
   resetTouchedState,
   optionsHandler,
@@ -79,12 +80,13 @@ export const getNextStateFromFields: GetNextStateFromProps = ({
     });
   }
 
-  fields = validateAllFields(
+  fields = validateAllFields({
     fields,
     showValidationBeforeTouched,
+    showValidationOnBlur,
     validationHandler,
     parentContext
-  );
+  });
 
   const value = calculateFormValue(fields);
   const isValid = fields.every(field => field.isValid);

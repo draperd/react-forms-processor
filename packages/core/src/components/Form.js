@@ -108,7 +108,8 @@ export default class Form extends Component<
         optionsHandler,
         validationHandler,
         parentContext,
-        showValidationBeforeTouched = false
+        showValidationBeforeTouched = false,
+        showValidationOnBlur = true
       } = nextProps;
 
       // If a new value has been passed to the Form as a prop then it should take precedence over the last calculated state
@@ -130,6 +131,7 @@ export default class Form extends Component<
       const nextState = getNextStateFromFields({
         fields,
         showValidationBeforeTouched,
+        showValidationOnBlur,
         formIsDisabled: disabled,
         resetTouchedState,
         optionsHandler,
@@ -153,6 +155,7 @@ export default class Form extends Component<
       validationHandler,
       parentContext,
       showValidationBeforeTouched = false,
+      showValidationOnBlur = true,
       disabled = false
     } = this.props;
     let { fields } = this.state;
@@ -161,6 +164,7 @@ export default class Form extends Component<
       fields,
       lastFieldUpdated: id,
       showValidationBeforeTouched,
+      showValidationOnBlur,
       formIsDisabled: disabled,
       resetTouchedState: false,
       optionsHandler,
@@ -189,6 +193,7 @@ export default class Form extends Component<
       onFieldFocus: onFieldFocusProp,
       parentContext,
       showValidationBeforeTouched = false,
+      showValidationOnBlur = true,
       disabled = false
     } = this.props;
     let { fields } = this.state;
@@ -196,6 +201,7 @@ export default class Form extends Component<
     const nextState = getNextStateFromFields({
       fields,
       showValidationBeforeTouched,
+      showValidationOnBlur,
       formIsDisabled: disabled,
       resetTouchedState: false,
       optionsHandler,
@@ -206,11 +212,16 @@ export default class Form extends Component<
     this.setState(nextState, () => onFieldFocusProp && onFieldFocusProp(id));
   }
 
+  onFieldBlur(id: string) {
+    // TODO: Set the touched state depending on the field configuration...
+  }
+
   // Register field is provided in the context to allow children to register with this form...
   registerField(field: FieldDef) {
     let { fields = [], value = {} } = this.state;
     const {
       showValidationBeforeTouched = false,
+      showValidationOnBlur = true,
       disabled = false
     } = this.props;
 
@@ -229,6 +240,7 @@ export default class Form extends Component<
         const nextState = getNextStateFromFields({
           fields: updatedFields,
           showValidationBeforeTouched,
+          showValidationOnBlur,
           formIsDisabled: disabled,
           resetTouchedState: false,
           optionsHandler,
@@ -250,11 +262,13 @@ export default class Form extends Component<
       validationHandler,
       parentContext,
       showValidationBeforeTouched = false,
+      showValidationOnBlur = true,
       conditionalUpdate = false,
       disabled = false
     } = this.props;
     const onFieldChange = this.onFieldChange.bind(this); // TODO: Is this creating a new function each time? Does this result in too many listeners?
     const onFieldFocus = this.onFieldFocus.bind(this); // TODO: See above comment
+    const onFieldBlur = this.onFieldBlur.bind(this);
 
     const context: FormContextData = {
       fields,
@@ -264,10 +278,12 @@ export default class Form extends Component<
       renderer,
       optionsHandler,
       options: {},
+      onFieldBlur,
       onFieldChange,
       onFieldFocus,
       parentContext,
       showValidationBeforeTouched,
+      showValidationOnBlur,
       validationHandler,
       conditionalUpdate,
       disabled

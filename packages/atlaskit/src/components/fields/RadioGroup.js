@@ -28,6 +28,7 @@ class AtlaskitRadioGroup extends React.Component<Field> {
       value,
       label,
       onFieldFocus,
+      onFieldBlur,
       onFieldChange
     } = this.props;
     const stringValue: string | void = value ? value.toString() : undefined;
@@ -75,6 +76,7 @@ class AtlaskitRadioGroup extends React.Component<Field> {
             items={items}
             onRadioChange={(evt: any) => onFieldChange(id, evt.target.value)}
             onFocus={() => onFieldFocus(id)}
+            onBlur={() => onFieldBlur(id)}
           />
         </Layout>
       </AkField>

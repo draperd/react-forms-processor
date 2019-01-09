@@ -16,6 +16,7 @@ class AtlaskitDate extends React.Component<Field> {
       name,
       onFieldChange,
       onFieldFocus,
+      onFieldBlur,
       placeholder,
       required,
       value,
@@ -39,6 +40,7 @@ class AtlaskitDate extends React.Component<Field> {
           value={value}
           isDisabled={disabled}
           onFocus={() => onFieldFocus(id)}
+          onBlur={() => onFieldBlur(id)}
           autoFocus={autofocus}
         />
       </AkField>

@@ -404,12 +404,13 @@ export const validateField: ValidateField = (
   });
 };
 
-export const validateAllFields: ValidateAllFields = (
+export const validateAllFields: ValidateAllFields = ({
   fields,
   showValidationBeforeTouched,
+  showValidationOnBlur,
   validationHandler,
   parentContext
-) => {
+}) => {
   const validatedFields = fields.map(field =>
     validateField(
       field,

@@ -21,6 +21,7 @@ class AtlaskitSelect extends React.Component<Field> {
       label,
       onFieldChange,
       onFieldFocus,
+      onFieldBlur,
       touched,
       validWhen,
       requiredWhen,
@@ -91,6 +92,7 @@ class AtlaskitSelect extends React.Component<Field> {
             onFieldChange(id, value.map(item => item.value));
           }}
           onFocus={() => onFieldFocus(id)}
+          onBlur={() => onFieldBlur(id)}
           autoFocus={autofocus}
         />
       </AkField>

@@ -12,7 +12,12 @@ import type {
   OnFieldChange
 } from "react-forms-processor";
 
-const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
+const renderer: FieldRenderer = (
+  field,
+  onChange,
+  onFieldFocus,
+  onFieldBlur
+) => {
   const { id, type, label, misc = {} } = field;
   switch (type) {
     case "text":
