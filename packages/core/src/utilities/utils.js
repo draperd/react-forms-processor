@@ -20,6 +20,7 @@ import type {
   ProcessOptions,
   RegisterField,
   RegisterFields,
+  ShouldOptionsBeRefreshed,
   SplitDelimitedValue,
   UpdateFieldTouchedState,
   UpdateFieldValue,
@@ -58,18 +59,24 @@ export const registerFields: RegisterFields = (fieldsToValidate, formValue) => {
   return fields;
 };
 
-export const getNextStateFromFields: GetNextStateFromProps = (
+export const getNextStateFromFields: GetNextStateFromProps = ({
   fields,
+  lastFieldUpdated,
   showValidationBeforeTouched,
   formIsDisabled,
   resetTouchedState,
   optionsHandler,
   validationHandler,
   parentContext
-) => {
+}) => {
   fields = processFields(fields, !!formIsDisabled, resetTouchedState);
   if (optionsHandler) {
-    fields = processOptions(fields, optionsHandler, parentContext);
+    fields = processOptions({
+      fields,
+      lastFieldUpdated,
+      optionsHandler,
+      parentContext
+    });
   }
 
   fields = validateAllFields(
@@ -220,14 +227,27 @@ export const processFields: ProcessFields = (
   return updatedFields;
 };
 
-export const processOptions: ProcessOptions = (
+export const shouldOptionsBeRefreshed: ShouldOptionsBeRefreshed = ({
+  lastFieldUpdated,
+  field
+}) => {
+  const { refreshOptionsOnChangesTo } = field;
+  if (lastFieldUpdated && refreshOptionsOnChangesTo) {
+    return refreshOptionsOnChangesTo.indexOf(lastFieldUpdated) !== -1;
+  }
+
+  return false;
+};
+
+export const processOptions: ProcessOptions = ({
   fields,
+  lastFieldUpdated,
   optionsHandler,
   parentContext
-) => {
+}) => {
   return fields.map(field => {
     const { id, options } = field;
-    if (!options) {
+    if (!options || shouldOptionsBeRefreshed({ lastFieldUpdated, field })) {
       const handlerOptions = optionsHandler(id, fields, parentContext);
       if (handlerOptions instanceof Promise) {
         field.options = [];
@@ -329,7 +349,7 @@ export const splitDelimitedValue: SplitDelimitedValue = (
   if (valueDelimiter) {
     if (typeof value === "string") {
       value = value.split(valueDelimiter);
-    } else {
+    } else if (!Array.isArray(value)) {
       value = [];
     }
   }

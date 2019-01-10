@@ -109,11 +109,13 @@ export default class LiveEditor extends Component<
               onChange={value => {
                 this.setState({ value });
               }}
-              // value={value}
               defaultFields={fieldsToRender}
               optionsHandler={optionsHandler}
             >
-              <FormButton label="Preview" />
+              <FormButton
+                label="Preview"
+                onClick={(value: FormValue) => console.log("Form value", value)}
+              />
             </Form>
           </div>
           <div className="value">
