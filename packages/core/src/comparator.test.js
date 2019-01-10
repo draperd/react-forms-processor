@@ -150,8 +150,8 @@ describe("compare date fields", () => {
   test("form is initially invalid because no dates are set", () => {
     expect(form.state().isValid).toBe(false);
 
-    firstDate.prop("onFocus")();
-    secondDate.prop("onFocus")();
+    firstDate.prop("onBlur")();
+    secondDate.prop("onBlur")();
     form.update();
     expect(form.state().fields[0].errorMessages).toBe(
       "A value must be provided, Must be before second date"
