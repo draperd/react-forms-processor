@@ -281,7 +281,6 @@ export type ValidateField = (
 export type ValidateAllFields = ({
   fields: FieldDef[],
   showValidationBeforeTouched: boolean,
-  showValidationOnBlur: boolean,
   validationHandler: ?ValidationHandler,
   parentContext: ?FormContextData
 }) => FieldDef[];
@@ -314,7 +313,6 @@ export type GetNextStateFromProps = ({
   fields: FieldDef[],
   lastFieldUpdated?: string,
   showValidationBeforeTouched: boolean,
-  showValidationOnBlur: boolean,
   formIsDisabled: boolean,
   resetTouchedState: boolean,
   optionsHandler: ?OptionsHandler,
@@ -342,7 +340,6 @@ export type FormContextData = {
   onFieldBlur: OnFieldBlur,
   parentContext?: FormContextData,
   showValidationBeforeTouched: boolean,
-  showValidationOnBlur: boolean,
   conditionalUpdate: boolean,
   disabled: boolean
 };

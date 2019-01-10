@@ -407,7 +407,6 @@ export const validateField: ValidateField = (
 export const validateAllFields: ValidateAllFields = ({
   fields,
   showValidationBeforeTouched,
-  showValidationOnBlur,
   validationHandler,
   parentContext
 }) => {

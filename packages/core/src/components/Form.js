@@ -108,8 +108,7 @@ export default class Form extends Component<
         optionsHandler,
         validationHandler,
         parentContext,
-        showValidationBeforeTouched = false,
-        showValidationOnBlur = true
+        showValidationBeforeTouched = false
       } = nextProps;
 
       // If a new value has been passed to the Form as a prop then it should take precedence over the last calculated state
@@ -131,7 +130,6 @@ export default class Form extends Component<
       const nextState = getNextStateFromFields({
         fields,
         showValidationBeforeTouched,
-        showValidationOnBlur,
         formIsDisabled: disabled,
         resetTouchedState,
         optionsHandler,
@@ -155,16 +153,15 @@ export default class Form extends Component<
       validationHandler,
       parentContext,
       showValidationBeforeTouched = false,
-      showValidationOnBlur = true,
       disabled = false
     } = this.props;
     let { fields } = this.state;
+    fields = updateFieldTouchedState(id, true, fields);
     fields = updateFieldValue(id, value, fields);
     const nextState = getNextStateFromFields({
       fields,
       lastFieldUpdated: id,
       showValidationBeforeTouched,
-      showValidationOnBlur,
       formIsDisabled: disabled,
       resetTouchedState: false,
       optionsHandler,
@@ -187,13 +184,22 @@ export default class Form extends Component<
   }
 
   onFieldFocus(id: string) {
+    // At one stage the plan was to only show validation error messages once a field
+    // had been touched, but in reality we only want to show validation messages when
+    // a field has been changed OR has been blurred.
+    // So now we just want to make sure that callbacks on the form for handling when
+    // a field is focused are called.
+    const { onFieldFocus: onFieldFocusProp } = this.props;
+    onFieldFocusProp && onFieldFocusProp(id);
+  }
+
+  onFieldBlur(id: string) {
     const {
       optionsHandler,
       validationHandler,
-      onFieldFocus: onFieldFocusProp,
+      onFieldBlur: onFieldBlurProp,
       parentContext,
       showValidationBeforeTouched = false,
-      showValidationOnBlur = true,
       disabled = false
     } = this.props;
     let { fields } = this.state;
@@ -201,7 +207,6 @@ export default class Form extends Component<
     const nextState = getNextStateFromFields({
       fields,
       showValidationBeforeTouched,
-      showValidationOnBlur,
       formIsDisabled: disabled,
       resetTouchedState: false,
       optionsHandler,
@@ -209,11 +214,7 @@ export default class Form extends Component<
       parentContext
     });
 
-    this.setState(nextState, () => onFieldFocusProp && onFieldFocusProp(id));
-  }
-
-  onFieldBlur(id: string) {
-    // TODO: Set the touched state depending on the field configuration...
+    this.setState(nextState, () => onFieldBlurProp && onFieldBlurProp(id));
   }
 
   // Register field is provided in the context to allow children to register with this form...
@@ -221,7 +222,6 @@ export default class Form extends Component<
     let { fields = [], value = {} } = this.state;
     const {
       showValidationBeforeTouched = false,
-      showValidationOnBlur = true,
       disabled = false
     } = this.props;
 
@@ -240,7 +240,6 @@ export default class Form extends Component<
         const nextState = getNextStateFromFields({
           fields: updatedFields,
           showValidationBeforeTouched,
-          showValidationOnBlur,
           formIsDisabled: disabled,
           resetTouchedState: false,
           optionsHandler,
@@ -262,7 +261,6 @@ export default class Form extends Component<
       validationHandler,
       parentContext,
       showValidationBeforeTouched = false,
-      showValidationOnBlur = true,
       conditionalUpdate = false,
       disabled = false
     } = this.props;
@@ -283,7 +281,6 @@ export default class Form extends Component<
       onFieldFocus,
       parentContext,
       showValidationBeforeTouched,
-      showValidationOnBlur,
       validationHandler,
       conditionalUpdate,
       disabled

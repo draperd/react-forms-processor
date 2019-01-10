@@ -63,7 +63,6 @@ export const getNextStateFromFields: GetNextStateFromProps = ({
   fields,
   lastFieldUpdated,
   showValidationBeforeTouched,
-  showValidationOnBlur,
   formIsDisabled,
   resetTouchedState,
   optionsHandler,
@@ -83,7 +82,6 @@ export const getNextStateFromFields: GetNextStateFromProps = ({
   fields = validateAllFields({
     fields,
     showValidationBeforeTouched,
-    showValidationOnBlur,
     validationHandler,
     parentContext
   });
