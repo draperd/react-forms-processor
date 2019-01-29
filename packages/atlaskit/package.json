@@ -18,9 +18,10 @@
     "@atlaskit/field-range": "5.0.2",
     "@atlaskit/field-text": "7.0.3",
     "@atlaskit/field-text-area": "4.0.3",
-    "@atlaskit/form": "^3.1.4",
+    "@atlaskit/form": "5.1.1",
     "@atlaskit/icon": "13.2.3",
     "@atlaskit/select": "5.0.7",
+    "@atlaskit/textfield": "^0.1.5",
     "@atlaskit/tooltip": "12.0.4",
     "lodash": "^4.17.10"
   },

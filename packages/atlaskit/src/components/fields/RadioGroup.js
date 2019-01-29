@@ -59,28 +59,7 @@ class AtlaskitRadioGroup extends React.Component<Field> {
       );
     }, []);
 
-    return (
-      <AkField
-        label={label}
-        helperText={description}
-        isRequired={required}
-        isInvalid={!isValid}
-        invalidMessage={errorMessages}
-        validateOnBlur={false}
-      >
-        <Layout>
-          <RadioGroup
-            name={name}
-            placeholder={placeholder}
-            value={stringValue}
-            items={items}
-            onRadioChange={(evt: any) => onFieldChange(id, evt.target.value)}
-            onFocus={() => onFieldFocus(id)}
-            onBlur={() => onFieldBlur(id)}
-          />
-        </Layout>
-      </AkField>
-    );
+    return null;
   }
 }
 

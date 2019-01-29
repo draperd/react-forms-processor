@@ -14,6 +14,14 @@
   dependencies:
     prop-types "^15.5.10"
 
+"@atlaskit/analytics-next@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@atlaskit/analytics-next/-/analytics-next-3.1.2.tgz#8035e4691eeb5bcdf3d4e3005468939d7fa365d8"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    babel-runtime "^6.26.0"
+    prop-types "^15.5.10"
+
 "@atlaskit/button@9.0.4":
   version "9.0.4"
   resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-9.0.4.tgz#5935ccb7d203f48c29671fa4488a41564b243d68"
@@ -125,13 +133,19 @@
     "@atlaskit/field-base" "^11.0.2"
     "@atlaskit/theme" "^5.1.2"
 
-"@atlaskit/form@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@atlaskit/form/-/form-3.1.4.tgz#38686ca0973469fc92ec3f1d29e975b6c570f5f1"
+"@atlaskit/form@5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@atlaskit/form/-/form-5.1.1.tgz#497a40b157f5509d2362110a0e19f9ecd6fe14a4"
   dependencies:
-    "@atlaskit/icon" "^13.2.2"
-    "@atlaskit/theme" "^5.1.2"
-    "@atlaskit/util-shared-styles" "^2.10.3"
+    "@atlaskit/icon" "^15.0.2"
+    "@atlaskit/theme" "^7.0.1"
+    "@babel/runtime" "^7.0.0"
+    final-form "^4.10.0"
+    final-form-focus "^1.1.0"
+    memoize-one "^3.0.1"
+    shallow-equal "^1.0.0"
+    tiny-invariant "^0.0.3"
+    uuid "^3.1.0"
 
 "@atlaskit/icon@13.2.3", "@atlaskit/icon@^13.2.2":
   version "13.2.3"
@@ -146,6 +160,15 @@
   resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-13.3.0.tgz#0037f45f40ae657ed3a98e09bedbbe7700ade059"
   dependencies:
     "@atlaskit/theme" "^6.0.0"
+    babel-runtime "^6.26.0"
+    uuid "^3.1.0"
+
+"@atlaskit/icon@^15.0.2":
+  version "15.0.3"
+  resolved "https://registry.yarnpkg.com/@atlaskit/icon/-/icon-15.0.3.tgz#6071ac0a33d2445d6985972a66957c05d871423d"
+  dependencies:
+    "@atlaskit/theme" "^7.0.1"
+    "@babel/runtime" "^7.0.0"
     babel-runtime "^6.26.0"
     uuid "^3.1.0"
 
@@ -255,6 +278,14 @@
     debounce "^1.0.0"
     keycode "^2.1.7"
 
+"@atlaskit/textfield@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@atlaskit/textfield/-/textfield-0.1.5.tgz#10c16cd265b147cd494394d1cd3c0fb225701fa0"
+  dependencies:
+    "@atlaskit/analytics-next" "^3.1.2"
+    "@atlaskit/theme" "^7.0.1"
+    "@babel/runtime" "^7.0.0"
+
 "@atlaskit/theme@^3.1.1":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-3.2.0.tgz#5eb4f2c02a929d427db60e52fcb65f929e849d4e"
@@ -280,6 +311,14 @@
   dependencies:
     prop-types "^15.5.10"
 
+"@atlaskit/theme@^7.0.1":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-7.0.3.tgz#b914ba85a337b4982918fb98b4aae67cb22899f3"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    exenv "^1.2.2"
+    prop-types "^15.5.10"
+
 "@atlaskit/tooltip@12.0.4":
   version "12.0.4"
   resolved "https://registry.yarnpkg.com/@atlaskit/tooltip/-/tooltip-12.0.4.tgz#7e1e86296dcbb7d0222b96010ce8ded1145ade18"
@@ -289,12 +328,6 @@
     "@atlaskit/theme" "^5.1.2"
     react-node-resolver "^1.0.1"
     react-transition-group "^2.2.1"
-
-"@atlaskit/util-shared-styles@^2.10.3":
-  version "2.10.8"
-  resolved "https://registry.yarnpkg.com/@atlaskit/util-shared-styles/-/util-shared-styles-2.10.8.tgz#07fb6903cb749575c36a1d7e25f4638bbcf866f7"
-  dependencies:
-    babel-runtime "^6.11.6"
 
 "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0-beta.46"
@@ -343,6 +376,12 @@
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.52.tgz#3f3b42b82b92b4e1a283fc78df1bb2fd4ba8d0c7"
   dependencies:
     core-js "^2.5.7"
+    regenerator-runtime "^0.12.0"
+
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.5":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.2.0.tgz#b03e42eeddf5898e00646e4c840fa07ba8dcad7f"
+  dependencies:
     regenerator-runtime "^0.12.0"
 
 "@babel/runtime@^7.0.0-beta.42":
@@ -1625,7 +1664,7 @@ babel-register@^6.26.0, babel-register@^6.9.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.x.x, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@6.x.x, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -3887,6 +3926,16 @@ fill-range@^4.0.0:
     is-number "^3.0.0"
     repeat-string "^1.6.1"
     to-regex-range "^2.1.0"
+
+final-form-focus@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/final-form-focus/-/final-form-focus-1.1.0.tgz#a4b0e6792dda637461d448a20f594d57e3380411"
+
+final-form@^4.10.0:
+  version "4.11.0"
+  resolved "https://registry.yarnpkg.com/final-form/-/final-form-4.11.0.tgz#81750bda11b82c3ddf7b27092f29ebe427f8a560"
+  dependencies:
+    "@babel/runtime" "^7.1.5"
 
 finalhandler@1.1.1:
   version "1.1.1"
@@ -8652,6 +8701,10 @@ sha.js@^2.4.0, sha.js@^2.4.8:
   dependencies:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
+
+shallow-equal@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/shallow-equal/-/shallow-equal-1.0.0.tgz#508d1838b3de590ab8757b011b25e430900945f7"
 
 shebang-command@^1.2.0:
   version "1.2.0"

@@ -25,6 +25,7 @@ class AtlaskitFieldTextArea extends React.Component<Field> {
     } = this.props;
     return (
       <AkField
+        name={name}
         label={label}
         helperText={description}
         isRequired={required}
