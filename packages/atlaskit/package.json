@@ -7,20 +7,21 @@
     "start": "webpack-dev-server --mode development",
     "transpile": "babel src -d dist --copy-files",
     "prepublishOnly": "npm run transpile",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "dev:watch": "webpack --mode development --watch"
   },
   "license": "MIT",
   "dependencies": {
     "@atlaskit/button": "9.0.4",
     "@atlaskit/checkbox": "4.0.2",
-    "@atlaskit/datetime-picker": "^6.3.3",
+    "@atlaskit/datetime-picker": "^6.4.0",
     "@atlaskit/field-radio-group": "4.0.3",
     "@atlaskit/field-range": "5.0.2",
-    "@atlaskit/field-text": "7.0.3",
-    "@atlaskit/field-text-area": "4.0.3",
+    "@atlaskit/field-text": "7.0.20",
+    "@atlaskit/field-text-area": "4.0.16",
     "@atlaskit/form": "5.1.1",
     "@atlaskit/icon": "13.2.3",
-    "@atlaskit/select": "5.0.7",
+    "@atlaskit/select": "6.1.19",
     "@atlaskit/textfield": "^0.1.5",
     "@atlaskit/tooltip": "12.0.4",
     "lodash": "^4.17.10"

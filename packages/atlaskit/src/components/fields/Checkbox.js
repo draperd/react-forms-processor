@@ -22,7 +22,30 @@ class AtlaskitCheckbox extends React.Component<Field> {
       required
     } = this.props;
     const stringValue: string | void = value ? value.toString() : undefined;
-    return null;
+    return (
+      <AkField
+        name={name}
+        helperText={description}
+        isRequired={required}
+        isInvalid={!isValid}
+        invalidMessage={errorMessages}
+        validateOnBlur={false}
+      >
+        {({ fieldProps }) => (<Checkbox
+          {...fieldProps}
+          label={label}
+          name={name}
+          isDisabled={disabled}
+          value={stringValue}
+          isChecked={stringValue}
+          onChange={evt => {
+            onFieldChange(id, evt.isChecked)
+          }}
+          onFocus={() => onFieldFocus(id)}
+          onBlur={() => onFieldBlur(id)}
+        />)}
+      </AkField>
+    );
   }
 }
 

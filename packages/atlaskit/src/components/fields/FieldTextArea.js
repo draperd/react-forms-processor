@@ -33,16 +33,18 @@ class AtlaskitFieldTextArea extends React.Component<Field> {
         invalidMessage={errorMessages}
         validateOnBlur={false}
       >
-        <FieldTextArea
-          name={name}
+        {({fieldProps}) => (<FieldTextArea
+          {...fieldProps}
           placeholder={placeholder}
           disabled={disabled}
           value={value}
           onChange={(evt: any) => onFieldChange(id, evt.target.value)}
           onFocus={() => onFieldFocus(id)}
-          onBlur={() => onFieldBlur(id)}
+          onBlur={() => {
+            onFieldBlur(id)
+          }}
           autoFocus={autofocus}
-        />
+        />)}
       </AkField>
     );
   }

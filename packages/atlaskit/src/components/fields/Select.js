@@ -63,7 +63,36 @@ class AtlaskitSelect extends React.Component<Field> {
       (requiredWhen && requiredWhen.length) ||
       required;
 
-    return null;
+      return (
+        <AkField
+          name={name}
+          label={label}
+          helperText={description}
+          isRequired={required}
+          isInvalid={touched && needsValidation ? !isValid : undefined}
+          invalidMessage={errorMessages}
+          validateOnBlur={false}
+        >
+          {({ fieldProps }) => (<Select
+            {...fieldProps}
+            name={name}
+            defaultValue={defaultSelected}
+            placeholder={placeholder}
+            isDisabled={disabled}
+            options={items}
+            onChange={value => {
+              if (value.hasOwnProperty("value")) {
+                onFieldChange(id, value.value);
+              } else {
+                onFieldChange(id, value);
+              }
+            }}
+            onFocus={() => onFieldFocus(id)}
+            onBlur={() => onFieldBlur(id)}
+            autoFocus={autofocus}
+          />)}
+        </AkField>
+      );
   }
 }
 

@@ -11,8 +11,74 @@ export const singleField: FieldDef[] = [
     placeholder: "Enter a value",
     defaultValue: "",
     visible: true,
-    required: false,
+    required: true,
     disabled: false
+  },
+  {
+    id: "ADDRESS",
+    name: "address",
+    label: "Address",
+    type: "textarea",
+    placeholder: "Enter address...",
+    defaultValue: "",
+    required: true
+  },
+  {
+    id: "ONE",
+    type: "checkbox",
+    name: "prop1",
+    label: "Show the field in the next tab",
+    value: true
+  },
+  {
+    id: "DATE_OF_BIRTH",
+    name: "dateOfBirth",
+    label: "Date of birth",
+    type: "date",
+    placeholder: "Enter date...",
+    required: true,
+  },
+  {
+    id: "OPTIONS2",
+    name: "betterFruit",
+    type: "select",
+    label: "Pick your better named fruit?",
+    defaultValue: "A",
+    options: [
+      {
+        heading: "Round fruits",
+        items: [{ label: "Apple", value: "A" }, { label: "Orange", value: "O" }]
+      },
+      {
+        heading: "Other shapes",
+        items: [{ label: "Banana", value: "B" }, { label: "Pear", value: "C" }]
+      }
+    ]
+  },
+  {
+    id: "OPTIONS3",
+    name: "characters",
+    type: "multiselect",
+    required: true,
+    label: "Pick some fruits?",
+    defaultValue: [],
+    options: [
+      {
+        items: ["apple", "banana", "orange", "pear"]
+      }
+    ]
+  },
+  {
+    id: "OPTIONS1",
+    name: "fruit",
+    type: "radiogroup",
+    label: "Pick your fruit?",
+    defaultValue: "orange",
+    options: [
+      {
+        items: ["apple", "banana", "orange", "pear"]
+      }
+    ]
   }
 ];
 

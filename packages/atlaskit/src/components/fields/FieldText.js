@@ -43,7 +43,6 @@ class AtlaskitFieldText extends React.Component<Field> {
             onChange={(evt: any) => onFieldChange(id, evt.target.value)}
             onFocus={() => onFieldFocus(id)}
             onBlur={() => {
-              console.log("Field has been blurred");
               onFieldBlur(id);
             }}
             value={value}

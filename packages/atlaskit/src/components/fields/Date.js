@@ -23,7 +23,30 @@ class AtlaskitDate extends React.Component<Field> {
       label,
       autofocus
     } = this.props;
-    return null;
+    return (
+      <AkField
+        name={name}
+        label={label}
+        helperText={description}
+        isRequired={required}
+        isInvalid={!isValid}
+        invalidMessage={errorMessages}
+        validateOnBlur={false}
+      >
+        {({fieldProps}) => (<DatePicker
+          {...fieldProps}
+          autoComplete="off"
+          name={name}
+          placeholder={placeholder}
+          onChange={value => onFieldChange(id, value)}
+          value={value}
+          isDisabled={disabled}
+          onFocus={() => onFieldFocus(id)}
+          onBlur={() => onFieldBlur(id)}
+          autoFocus={autofocus}
+        />)}
+      </AkField>
+    );
   }
 }
 
