@@ -11,8 +11,30 @@ export const singleField: FieldDef[] = [
     placeholder: "Enter a value",
     defaultValue: "",
     visible: true,
-    required: true,
+    required: false,
     disabled: false
+  }
+];
+
+export const visibility: FieldDef[] = [
+  {
+    id: "TEXT",
+    name: "key",
+    type: "text",
+    label: "Name",
+    visibleWhen: [
+      {
+        field: "CHECKBOX",
+        is: [true]
+      }
+    ]
+  },
+  {
+    id: "CHECKBOX",
+    name: "show",
+    type: "checkbox",
+    label: "Show the name field?",
+    defaultValue: true
   }
 ];
 
