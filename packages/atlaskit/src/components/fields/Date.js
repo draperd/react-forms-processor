@@ -16,6 +16,7 @@ class AtlaskitDate extends React.Component<Field> {
       name,
       onFieldChange,
       onFieldFocus,
+      onFieldBlur,
       placeholder,
       required,
       value,
@@ -24,6 +25,7 @@ class AtlaskitDate extends React.Component<Field> {
     } = this.props;
     return (
       <AkField
+        name={name}
         label={label}
         helperText={description}
         isRequired={required}
@@ -31,7 +33,8 @@ class AtlaskitDate extends React.Component<Field> {
         invalidMessage={errorMessages}
         validateOnBlur={false}
       >
-        <DatePicker
+        {({fieldProps}) => (<DatePicker
+          {...fieldProps}
           autoComplete="off"
           name={name}
           placeholder={placeholder}
@@ -39,8 +42,9 @@ class AtlaskitDate extends React.Component<Field> {
           value={value}
           isDisabled={disabled}
           onFocus={() => onFieldFocus(id)}
+          onBlur={() => onFieldBlur(id)}
           autoFocus={autofocus}
-        />
+        />)}
       </AkField>
     );
   }

@@ -57,13 +57,14 @@ const renderFieldIfVisible = (
     fields,
     onFieldChange,
     onFieldFocus,
+    onFieldBlur,
     renderer,
     value
   } = props;
   const fieldToRender = findRegisteredField(fields, field.id);
   if (fieldToRender && fieldToRender.visible) {
     setFieldValue(fieldToRender, field, value);
-    return renderer(fieldToRender, onFieldChange, onFieldFocus);
+    return renderer(fieldToRender, onFieldChange, onFieldFocus, onFieldBlur);
   }
   return null;
 };

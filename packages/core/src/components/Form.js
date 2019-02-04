@@ -156,6 +156,7 @@ export default class Form extends Component<
       disabled = false
     } = this.props;
     let { fields } = this.state;
+    fields = updateFieldTouchedState(id, true, fields);
     fields = updateFieldValue(id, value, fields);
     const nextState = getNextStateFromFields({
       fields,
@@ -183,10 +184,20 @@ export default class Form extends Component<
   }
 
   onFieldFocus(id: string) {
+    // At one stage the plan was to only show validation error messages once a field
+    // had been touched, but in reality we only want to show validation messages when
+    // a field has been changed OR has been blurred.
+    // So now we just want to make sure that callbacks on the form for handling when
+    // a field is focused are called.
+    const { onFieldFocus: onFieldFocusProp } = this.props;
+    onFieldFocusProp && onFieldFocusProp(id);
+  }
+
+  onFieldBlur(id: string) {
     const {
       optionsHandler,
       validationHandler,
-      onFieldFocus: onFieldFocusProp,
+      onFieldBlur: onFieldBlurProp,
       parentContext,
       showValidationBeforeTouched = false,
       disabled = false
@@ -203,7 +214,7 @@ export default class Form extends Component<
       parentContext
     });
 
-    this.setState(nextState, () => onFieldFocusProp && onFieldFocusProp(id));
+    this.setState(nextState, () => onFieldBlurProp && onFieldBlurProp(id));
   }
 
   // Register field is provided in the context to allow children to register with this form...
@@ -255,6 +266,7 @@ export default class Form extends Component<
     } = this.props;
     const onFieldChange = this.onFieldChange.bind(this); // TODO: Is this creating a new function each time? Does this result in too many listeners?
     const onFieldFocus = this.onFieldFocus.bind(this); // TODO: See above comment
+    const onFieldBlur = this.onFieldBlur.bind(this);
 
     const context: FormContextData = {
       fields,
@@ -264,6 +276,7 @@ export default class Form extends Component<
       renderer,
       optionsHandler,
       options: {},
+      onFieldBlur,
       onFieldChange,
       onFieldFocus,
       parentContext,

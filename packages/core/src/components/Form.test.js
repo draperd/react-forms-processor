@@ -146,8 +146,13 @@ describe("validation warnings", () => {
       expect(form.find("span.errors").length).toBe(0);
     });
 
-    test("field should be touched after focus", () => {
+    test("field should NOT be touched after focus", () => {
       form.find("input").prop("onFocus")();
+      expect(form.state().fields[0].touched).toBe(false);
+    });
+
+    test("field should be touched after blur", () => {
+      form.find("input").prop("onBlur")();
       expect(form.state().fields[0].touched).toBe(true);
     });
 
@@ -203,8 +208,14 @@ describe("changing form value prop", () => {
     expect(form.state().fields[0].touched).toBe(false);
   });
 
-  test("field should be touched after focus", () => {
+  test("field should NOT be touched after focus", () => {
     form.find("input").prop("onFocus")();
+    form.update();
+    expect(form.state().fields[0].touched).toBe(false);
+  });
+
+  test("field should be touched after blur", () => {
+    form.find("input").prop("onBlur")();
     form.update();
     expect(form.state().fields[0].touched).toBe(true);
   });

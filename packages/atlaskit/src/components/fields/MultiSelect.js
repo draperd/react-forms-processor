@@ -21,6 +21,7 @@ class AtlaskitSelect extends React.Component<Field> {
       label,
       onFieldChange,
       onFieldFocus,
+      onFieldBlur,
       touched,
       validWhen,
       requiredWhen,
@@ -70,31 +71,35 @@ class AtlaskitSelect extends React.Component<Field> {
       (requiredWhen && requiredWhen.length) ||
       required;
 
-    return (
-      <AkField
-        label={label}
-        helperText={description}
-        isRequired={required}
-        isInvalid={touched && needsValidation ? !isValid : undefined}
-        invalidMessage={errorMessages}
-        validateOnBlur={false}
-      >
-        <Select
-          isMulti={true}
-          isSearchable={false}
+      return (
+        <AkField
           name={name}
-          defaultValue={defaultValue}
-          placeholder={placeholder}
-          isDisabled={disabled}
-          options={items}
-          onChange={value => {
-            onFieldChange(id, value.map(item => item.value));
-          }}
-          onFocus={() => onFieldFocus(id)}
-          autoFocus={autofocus}
-        />
-      </AkField>
-    );
+          label={label}
+          helperText={description}
+          isRequired={required}
+          isInvalid={touched && needsValidation ? !isValid : undefined}
+          invalidMessage={errorMessages}
+        >
+          {({ fieldProps }) => (<Select
+            {...fieldProps}
+            isMulti={true}
+            isSearchable={false}
+            name={name}
+            defaultValue={defaultValue}
+            placeholder={placeholder}
+            isDisabled={disabled}
+            options={items}
+            onChange={value => {
+              onFieldChange(id, value.map(item => item.value));
+            }}
+            onFocus={() => onFieldFocus(id)}
+            onBlur={() => {
+              onFieldFocus(id)
+            }}
+            autoFocus={autofocus}
+          />)}
+        </AkField>
+      );
   }
 }
 

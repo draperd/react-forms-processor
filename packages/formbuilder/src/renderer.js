@@ -9,7 +9,12 @@ import type {
 } from "react-forms-processor";
 import RepeatingFormField from "./Repeats";
 
-const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
+const renderer: FieldRenderer = (
+  field,
+  onChange,
+  onFieldFocus,
+  onFieldBlur
+) => {
   const { defaultValue = [], id, label, type, misc = {} } = field;
   switch (type) {
     case "field":
@@ -36,7 +41,7 @@ const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
       );
 
     default:
-      return akRenderer(field, onChange, onFieldFocus);
+      return akRenderer(field, onChange, onFieldFocus, onFieldBlur);
   }
 };
 

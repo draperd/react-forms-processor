@@ -20,7 +20,12 @@ chai.use(chaiEnzyme());
 Enzyme.configure({ adapter: new Adapter() });
 
 // We want to create a custom renderer that takes numbers as input values but displays them as strings...
-const customRenderer: FieldRenderer = (field, onChange, onFieldFocus) => {
+const customRenderer: FieldRenderer = (
+  field,
+  onChange,
+  onFieldFocus,
+  onFieldBlur
+) => {
   const {
     disabled = false,
     errorMessages,
@@ -51,6 +56,7 @@ const customRenderer: FieldRenderer = (field, onChange, onFieldFocus) => {
             required={required}
             onChange={evt => onChange(id, new Date(evt.target.value).getTime())}
             onFocus={() => onFieldFocus(id)}
+            onBlur={() => onFieldBlur(id)}
           />
           {!isValid ? (
             <span className="errors">{errorMessages}</span>
@@ -61,7 +67,7 @@ const customRenderer: FieldRenderer = (field, onChange, onFieldFocus) => {
       );
     }
     default: {
-      return nativeRenderer(field, onChange, onFieldFocus);
+      return nativeRenderer(field, onChange, onFieldFocus, onFieldBlur);
     }
   }
 };
@@ -144,8 +150,8 @@ describe("compare date fields", () => {
   test("form is initially invalid because no dates are set", () => {
     expect(form.state().isValid).toBe(false);
 
-    firstDate.prop("onFocus")();
-    secondDate.prop("onFocus")();
+    firstDate.prop("onBlur")();
+    secondDate.prop("onBlur")();
     form.update();
     expect(form.state().fields[0].errorMessages).toBe(
       "A value must be provided, Must be before second date"

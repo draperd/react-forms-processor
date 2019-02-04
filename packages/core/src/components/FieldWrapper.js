@@ -8,9 +8,7 @@ import type {
 } from "../types";
 import "./FieldWrapper.css";
 
-class FieldWrapper extends React.Component<
-  FieldWrapperComponentWithContextProps
-> {
+class FieldWrapper extends React.Component<FieldWrapperComponentWithContextProps> {
   constructor(props: FieldWrapperComponentWithContextProps) {
     super(props);
     const { registerField, onFieldChange, ...fieldDef } = props;
@@ -37,6 +35,7 @@ class FieldWrapper extends React.Component<
         parentContext: pc1,
         onFieldChange: ofc1,
         onFieldFocus: off1,
+        onFieldBlur: ofb1,
         options: o1,
         registerField: rf1,
         fields: f1,
@@ -48,6 +47,7 @@ class FieldWrapper extends React.Component<
         parentContext: pc2,
         onFieldChange: ofc2,
         onFieldFocus: off2,
+        onFieldBlur: ofb2,
         options: o2,
         registerField: rf2,
         fields: f2,
@@ -69,6 +69,7 @@ class FieldWrapper extends React.Component<
       fields = [],
       onFieldChange,
       onFieldFocus,
+      onFieldBlur,
       children
     } = this.props;
     const fieldToRender = fields.find(field => field.id === id);
@@ -77,6 +78,7 @@ class FieldWrapper extends React.Component<
         React.cloneElement(child, {
           onFieldChange,
           onFieldFocus,
+          onFieldBlur,
           ...fieldToRender
         })
       );

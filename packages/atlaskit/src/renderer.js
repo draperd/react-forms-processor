@@ -9,7 +9,12 @@ import Select from "./components/fields/Select";
 import MultiSelect from "./components/fields/MultiSelect";
 import type { FieldRenderer } from "react-forms-processor";
 
-const renderer: FieldRenderer = (field, onChange, onFieldFocus) => {
+const renderer: FieldRenderer = (
+  field,
+  onChange,
+  onFieldFocus,
+  onFieldBlur
+) => {
   const { id, type, label } = field;
   switch (type) {
     case "text":
