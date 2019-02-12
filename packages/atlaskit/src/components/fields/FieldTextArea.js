@@ -3,7 +3,7 @@ import React from "react";
 import FieldTextArea from "@atlaskit/field-text-area";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "react-forms-processor";
-import { Field as AkField } from "@atlaskit/form";
+import { Field as AkField, ErrorMessage } from "@atlaskit/form";
 
 class AtlaskitFieldTextArea extends React.Component<Field> {
   render() {
@@ -33,18 +33,24 @@ class AtlaskitFieldTextArea extends React.Component<Field> {
         invalidMessage={errorMessages}
         validateOnBlur={false}
       >
-        {({fieldProps}) => (<FieldTextArea
-          {...fieldProps}
-          placeholder={placeholder}
-          disabled={disabled}
-          value={value}
-          onChange={(evt: any) => onFieldChange(id, evt.target.value)}
-          onFocus={() => onFieldFocus(id)}
-          onBlur={() => {
-            onFieldBlur(id)
-          }}
-          autoFocus={autofocus}
-        />)}
+        {({ fieldProps }) => (
+          <React.Fragment>
+            <FieldTextArea
+              {...fieldProps}
+              placeholder={placeholder}
+              disabled={disabled}
+              value={value}
+              onChange={(evt: any) => onFieldChange(id, evt.target.value)}
+              onFocus={() => onFieldFocus(id)}
+              onBlur={() => {
+                onFieldBlur(id);
+              }}
+              autoFocus={autofocus}
+              isInvalid={!isValid}
+            />
+            {!isValid && <ErrorMessage>{errorMessages}</ErrorMessage>}
+          </React.Fragment>
+        )}
       </AkField>
     );
   }

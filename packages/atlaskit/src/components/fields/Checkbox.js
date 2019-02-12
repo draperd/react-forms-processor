@@ -3,7 +3,7 @@ import React from "react";
 import Checkbox from "@atlaskit/checkbox";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "react-forms-processor";
-import { Field as AkField } from "@atlaskit/form";
+import { Field as AkField, ErrorMessage } from "@atlaskit/form";
 
 class AtlaskitCheckbox extends React.Component<Field> {
   render() {
@@ -31,19 +31,25 @@ class AtlaskitCheckbox extends React.Component<Field> {
         invalidMessage={errorMessages}
         validateOnBlur={false}
       >
-        {({ fieldProps }) => (<Checkbox
-          {...fieldProps}
-          label={label}
-          name={name}
-          isDisabled={disabled}
-          value={stringValue}
-          isChecked={stringValue}
-          onChange={evt => {
-            onFieldChange(id, evt.isChecked)
-          }}
-          onFocus={() => onFieldFocus(id)}
-          onBlur={() => onFieldBlur(id)}
-        />)}
+        {({ fieldProps }) => (
+          <React.Fragment>
+            <Checkbox
+              {...fieldProps}
+              label={label}
+              name={name}
+              isDisabled={disabled}
+              value={stringValue}
+              isChecked={stringValue}
+              isInvalid={!isValid}
+              onChange={evt => {
+                onFieldChange(id, evt.isChecked);
+              }}
+              onFocus={() => onFieldFocus(id)}
+              onBlur={() => onFieldBlur(id)}
+            />
+            {!isValid && <ErrorMessage>{errorMessages}</ErrorMessage>}
+          </React.Fragment>
+        )}
       </AkField>
     );
   }

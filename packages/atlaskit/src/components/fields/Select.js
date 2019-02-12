@@ -3,7 +3,7 @@ import React from "react";
 import Select from "@atlaskit/select";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "react-forms-processor";
-import { Field as AkField } from "@atlaskit/form";
+import { Field as AkField, ErrorMessage } from "@atlaskit/form";
 
 class AtlaskitSelect extends React.Component<Field> {
   render() {
@@ -62,37 +62,44 @@ class AtlaskitSelect extends React.Component<Field> {
       (validWhen && Object.keys(validWhen).length) ||
       (requiredWhen && requiredWhen.length) ||
       required;
-
-      return (
-        <AkField
-          name={name}
-          label={label}
-          helperText={description}
-          isRequired={required}
-          isInvalid={touched && needsValidation ? !isValid : undefined}
-          invalidMessage={errorMessages}
-          validateOnBlur={false}
-        >
-          {({ fieldProps }) => (<Select
-            {...fieldProps}
-            name={name}
-            defaultValue={defaultSelected}
-            placeholder={placeholder}
-            isDisabled={disabled}
-            options={items}
-            onChange={value => {
-              if (value.hasOwnProperty("value")) {
-                onFieldChange(id, value.value);
-              } else {
-                onFieldChange(id, value);
-              }
-            }}
-            onFocus={() => onFieldFocus(id)}
-            onBlur={() => onFieldBlur(id)}
-            autoFocus={autofocus}
-          />)}
-        </AkField>
-      );
+    const isInvalid = touched && needsValidation && !isValid;
+    return (
+      <AkField
+        name={name}
+        label={label}
+        helperText={description}
+        isRequired={required}
+        isInvalid={isInvalid}
+        invalidMessage={errorMessages}
+        validateOnBlur={false}
+      >
+        {({ fieldProps }) => (
+          <React.Fragment>
+            <Select
+              {...fieldProps}
+              name={name}
+              defaultValue={defaultSelected}
+              placeholder={placeholder}
+              isDisabled={disabled}
+              options={items}
+              onChange={value => {
+                if (value.hasOwnProperty("value")) {
+                  onFieldChange(id, value.value);
+                } else {
+                  onFieldChange(id, value);
+                }
+              }}
+              onFocus={() => onFieldFocus(id)}
+              onBlur={() => onFieldBlur(id)}
+              autoFocus={autofocus}
+              isInvalid={isInvalid}
+              isRequired={required}
+            />
+            {isInvalid && <ErrorMessage>{errorMessages}</ErrorMessage>}
+          </React.Fragment>
+        )}
+      </AkField>
+    );
   }
 }
 
