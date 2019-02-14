@@ -110,7 +110,7 @@ const basicInfo: FieldDef[] = [
     name: "name",
     type: "text",
     required: true,
-    defaultValue: "",
+    defaultValue: " ", // TODO: investigate where it fails
     label: "Name",
     placeholder: "Enter the name for the field"
   },

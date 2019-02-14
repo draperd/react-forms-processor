@@ -40,8 +40,7 @@ const createFormForItem = (
 ): Node => {
   const mappedFields = fieldsForForm.map(field => ({
     ...field,
-    id: `${field.id}_${targetIndex}_FIELDS`,
-    name: field.name || field.id // AkField requires name property or fails.
+    id: `${field.id}_${targetIndex}_FIELDS`
   }));
   return (
     <FormContext.Consumer>
