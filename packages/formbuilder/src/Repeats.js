@@ -41,6 +41,7 @@ const createFormForItem = (
   const mappedFields = fieldsForForm.map(field => ({
     ...field,
     id: `${field.id}_${targetIndex}_FIELDS`
+    name: field.name || field.id // AkField requires name property or fails. 
   }));
   return (
     <FormContext.Consumer>
@@ -228,8 +229,8 @@ export default class Repeats extends Component<Props, State> {
 
     return (
       <div>
-        <AkField label={label}>
-          <div>{items.length > 0 ? this.getForms() : noItems}</div>
+        <AkField label={label} name="formBuilder">
+          {() => <div>{items.length > 0 ? this.getForms() : noItems}</div>}
         </AkField>
         <Button onClick={() => this.addItem()}>{addButtonLabel}</Button>
       </div>
