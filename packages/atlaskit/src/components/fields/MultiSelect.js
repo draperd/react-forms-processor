@@ -3,7 +3,7 @@ import React from "react";
 import Select from "@atlaskit/select";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "react-forms-processor";
-import { Field as AkField } from "@atlaskit/form";
+import { Field as AkField, ErrorMessage } from "@atlaskit/form";
 
 class AtlaskitSelect extends React.Component<Field> {
   render() {
@@ -70,36 +70,43 @@ class AtlaskitSelect extends React.Component<Field> {
       (validWhen && Object.keys(validWhen).length) ||
       (requiredWhen && requiredWhen.length) ||
       required;
+    const isInvalid = touched && needsValidation && !isValid;
 
-      return (
-        <AkField
-          name={name}
-          label={label}
-          helperText={description}
-          isRequired={required}
-          isInvalid={touched && needsValidation ? !isValid : undefined}
-          invalidMessage={errorMessages}
-        >
-          {({ fieldProps }) => (<Select
-            {...fieldProps}
-            isMulti={true}
-            isSearchable={false}
-            name={name}
-            defaultValue={defaultValue}
-            placeholder={placeholder}
-            isDisabled={disabled}
-            options={items}
-            onChange={value => {
-              onFieldChange(id, value.map(item => item.value));
-            }}
-            onFocus={() => onFieldFocus(id)}
-            onBlur={() => {
-              onFieldFocus(id)
-            }}
-            autoFocus={autofocus}
-          />)}
-        </AkField>
-      );
+    return (
+      <AkField
+        name={name}
+        label={label}
+        helperText={description}
+        isRequired={required}
+        isInvalid={isInvalid}
+        invalidMessage={errorMessages}
+      >
+        {({ fieldProps }) => (
+          <React.Fragment>
+            <Select
+              {...fieldProps}
+              isMulti={true}
+              isSearchable={false}
+              name={name}
+              defaultValue={defaultValue}
+              placeholder={placeholder}
+              isDisabled={disabled}
+              options={items}
+              onChange={value => {
+                onFieldChange(id, value.map(item => item.value));
+              }}
+              onFocus={() => onFieldFocus(id)}
+              onBlur={() => {
+                onFieldFocus(id);
+              }}
+              autoFocus={autofocus}
+              isInvalid={isInvalid}
+            />
+            {isInvalid && <ErrorMessage>{errorMessages}</ErrorMessage>}
+          </React.Fragment>
+        )}
+      </AkField>
+    );
   }
 }
 

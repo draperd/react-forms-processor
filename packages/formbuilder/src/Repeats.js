@@ -228,8 +228,8 @@ export default class Repeats extends Component<Props, State> {
 
     return (
       <div>
-        <AkField label={label}>
-          <div>{items.length > 0 ? this.getForms() : noItems}</div>
+        <AkField label={label} name="formBuilder">
+          {() => <div>{items.length > 0 ? this.getForms() : noItems}</div>}
         </AkField>
         <Button onClick={() => this.addItem()}>{addButtonLabel}</Button>
       </div>

@@ -3,9 +3,15 @@ import React from "react";
 import FieldText from "@atlaskit/field-text";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "react-forms-processor";
-import { Field as AkField } from "@atlaskit/form";
+import styled from "styled-components";
+import { Field as AkField, ErrorMessage } from "@atlaskit/form";
 import TextField from "@atlaskit/textfield";
 
+const Layout = styled.div`
+  label {
+    display: none;
+  }
+`;
 class AtlaskitFieldText extends React.Component<Field> {
   render() {
     const {
@@ -34,22 +40,30 @@ class AtlaskitFieldText extends React.Component<Field> {
         invalidMessage={errorMessages}
         validateOnBlur={false}
       >
-        {({ fieldProps }) => (
-          <FieldText
-            {...fieldProps}
-            autoComplete="off"
-            name={name}
-            placeholder={placeholder}
-            onChange={(evt: any) => onFieldChange(id, evt.target.value)}
-            onFocus={() => onFieldFocus(id)}
-            onBlur={() => {
-              onFieldBlur(id);
-            }}
-            value={value}
-            disabled={disabled}
-            autoFocus={autofocus}
-          />
-        )}
+        {({ fieldProps, ...rest }) => {
+          return (
+            <React.Fragment>
+              <Layout>
+                <FieldText
+                  {...fieldProps}
+                  autoComplete="off"
+                  name={name}
+                  placeholder={placeholder}
+                  onChange={(evt: any) => onFieldChange(id, evt.target.value)}
+                  onFocus={() => onFieldFocus(id)}
+                  onBlur={() => {
+                    onFieldBlur(id);
+                  }}
+                  value={value}
+                  isInvalid={!isValid}
+                  disabled={disabled}
+                  autoFocus={autofocus}
+                />
+              </Layout>
+              {!isValid && <ErrorMessage>{errorMessages}</ErrorMessage>}
+            </React.Fragment>
+          );
+        }}
       </AkField>
     );
   }

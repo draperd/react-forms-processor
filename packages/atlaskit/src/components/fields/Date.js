@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 import { DatePicker } from "@atlaskit/datetime-picker";
-import { Field as AkField } from "@atlaskit/form";
+import { Field as AkField, ErrorMessage } from "@atlaskit/form";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "react-forms-processor";
 
@@ -33,18 +33,24 @@ class AtlaskitDate extends React.Component<Field> {
         invalidMessage={errorMessages}
         validateOnBlur={false}
       >
-        {({fieldProps}) => (<DatePicker
-          {...fieldProps}
-          autoComplete="off"
-          name={name}
-          placeholder={placeholder}
-          onChange={value => onFieldChange(id, value)}
-          value={value}
-          isDisabled={disabled}
-          onFocus={() => onFieldFocus(id)}
-          onBlur={() => onFieldBlur(id)}
-          autoFocus={autofocus}
-        />)}
+        {({ fieldProps }) => (
+          <React.Fragment>
+            <DatePicker
+              {...fieldProps}
+              autoComplete="off"
+              name={name}
+              placeholder={placeholder}
+              onChange={value => onFieldChange(id, value)}
+              value={value}
+              isInvalid={!isValid}
+              isDisabled={disabled}
+              onFocus={() => onFieldFocus(id)}
+              onBlur={() => onFieldBlur(id)}
+              autoFocus={autofocus}
+            />
+            {!isValid && <ErrorMessage>{errorMessages}</ErrorMessage>}
+          </React.Fragment>
+        )}
       </AkField>
     );
   }
