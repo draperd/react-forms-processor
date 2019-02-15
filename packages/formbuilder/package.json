@@ -1,6 +1,6 @@
 {
   "name": "react-forms-processor-formbuilder",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "main": "dist/index.js",
   "scripts": {
     "test": "jest",
@@ -15,8 +15,8 @@
     "@atlaskit/tabs": "^7.1.3",
     "lodash": "^4.17.10",
     "react-beautiful-dnd": "^9.0.2",
-    "react-forms-processor": "^0.0.34",
-    "react-forms-processor-atlaskit": "^0.0.34"
+    "react-forms-processor": "^0.0.35",
+    "react-forms-processor-atlaskit": "^0.0.35"
   },
   "peerDependencies": {
     "react": "^16.4",
