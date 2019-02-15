@@ -10,6 +10,8 @@ import {
   getFirstDefinedValue,
   getMissingItems,
   getTouchedStateForField,
+  isDisabled,
+  isRequired,
   isVisible,
   joinDelimitedValue,
   mapFieldsById,
@@ -286,6 +288,72 @@ describe("rule evaluation", () => {
       expect(isVisible(testField, fieldsById)).toBe(false);
     });
   });
+
+  describe("isRequired", () => {
+    const field = {
+      ...createField({
+        id: "test",
+        name: "test",
+        value: "bob"
+      })
+    };
+    const fieldsById: FieldsById = {
+      test: field,
+      a: fieldA,
+      b: fieldB,
+      c: fieldC
+    };
+
+    test("returns true when visibleWhen rule is true", () => {
+      const testField = { ...field, requiredWhen: [aIs1] };
+      expect(isRequired(testField, fieldsById)).toBe(true);
+    });
+    test("return false when visibleWhen rule is false", () => {
+      const testField = { ...field, requiredWhen: [cIs3] };
+      expect(isRequired(testField, fieldsById)).toBe(false);
+    });
+    test("returns true when visibleWhenAll rule is true", () => {
+      const testField = { ...field, requiredWhenAll: [aIs1, bIs2] };
+      expect(isRequired(testField, fieldsById)).toBe(true);
+    });
+    test("return false when visibleWhenAll rule is false", () => {
+      const testField = { ...field, requiredWhenAll: [aIs1, cIs3] };
+      expect(isRequired(testField, fieldsById)).toBe(false);
+    });
+  });
+
+  describe("isDisabled", () => {
+    const field = {
+      ...createField({
+        id: "test",
+        name: "test",
+        value: "bob"
+      })
+    };
+    const fieldsById: FieldsById = {
+      test: field,
+      a: fieldA,
+      b: fieldB,
+      c: fieldC
+    };
+
+    test("returns true when visibleWhen rule is true", () => {
+      const testField = { ...field, disabledWhen: [aIs1] };
+      expect(isDisabled(testField, fieldsById)).toBe(true);
+    });
+    test("return false when visibleWhen rule is false", () => {
+      const testField = { ...field, disabledWhen: [cIs3] };
+      expect(isDisabled(testField, fieldsById)).toBe(false);
+    });
+    test("returns true when visibleWhenAll rule is true", () => {
+      const testField = { ...field, disabledWhenAll: [aIs1, bIs2] };
+      expect(isDisabled(testField, fieldsById)).toBe(true);
+    });
+    test("return false when visibleWhenAll rule is false", () => {
+      const testField = { ...field, disabledWhenAll: [aIs1, cIs3] };
+      expect(isDisabled(testField, fieldsById)).toBe(false);
+    });
+  });
 });
 
 describe("processFields", () => {
@@ -343,7 +411,7 @@ describe("processFields", () => {
     visibleWhenAll: [
       {
         field: "triggerField",
-        is: ["woof"]
+        is: ["test"]
       },
       {
         field: "triggerField2",
@@ -371,6 +439,35 @@ describe("processFields", () => {
       }
     ]
   });
+
+  const shouldBeRequired_All = createField({
+    id: "shouldBeRequired_All",
+    name: "shouldBeRequired_All",
+    requiredWhenAll: [
+      {
+        field: "triggerField",
+        is: ["test"]
+      },
+      {
+        field: "triggerField2",
+        is: ["check"]
+      }
+    ]
+  });
+  const shouldBeOptional_All = createField({
+    id: "shouldBeOptional_All",
+    name: "shouldBeOptional_All",
+    requiredWhenAll: [
+      {
+        field: "triggerField",
+        is: ["woof"]
+      },
+      {
+        field: "triggerField2",
+        is: ["check"]
+      }
+    ]
+  });
   const shouldBeDisabled = createField({
     id: "shouldBeDisabled",
     name: "shouldBeDisabled",
@@ -392,6 +489,35 @@ describe("processFields", () => {
     ]
   });
 
+  const shouldBeDisabled_All = createField({
+    id: "shouldBeDisabled_All",
+    name: "shouldBeDisabled_All",
+    disabledWhenAll: [
+      {
+        field: "triggerField",
+        is: ["test"]
+      },
+      {
+        field: "triggerField2",
+        is: ["check"]
+      }
+    ]
+  });
+  const shouldBeEnabled_All = createField({
+    id: "shouldBeEnabled_All",
+    name: "shouldBeEnabled_All",
+    disabledWhenAll: [
+      {
+        field: "triggerField",
+        isNot: ["test"]
+      },
+      {
+        field: "triggerField2",
+        is: ["check"]
+      }
+    ]
+  });
+
   const fields = [
     triggerField,
     secondTriggerField,
@@ -402,7 +528,11 @@ describe("processFields", () => {
     shouldBeDisabled,
     shouldBeEnabled,
     shouldBeVisible_All,
-    shouldBeHidden_All
+    shouldBeHidden_All,
+    shouldBeRequired_All,
+    shouldBeOptional_All,
+    shouldBeDisabled_All,
+    shouldBeEnabled_All
   ];
 
   const processedFields = processFields(fields, false, false);
@@ -426,11 +556,23 @@ describe("processFields", () => {
   test("field should be optional", () => {
     expect(processedFieldsById.shouldBeOptional.required).toBe(false);
   });
+  test("field should be required (when all rules pass)", () => {
+    expect(processedFieldsById.shouldBeRequired_All.required).toBe(true);
+  });
+  test("field should be optional (when one rule fails)", () => {
+    expect(processedFieldsById.shouldBeOptional_All.required).toBe(false);
+  });
   test("field should be disabled", () => {
     expect(processedFieldsById.shouldBeDisabled.disabled).toBe(true);
   });
   test("field should be enabled", () => {
     expect(processedFieldsById.shouldBeEnabled.disabled).toBe(false);
+  });
+  test("field should be disabled (when all rules pass)", () => {
+    expect(processedFieldsById.shouldBeDisabled_All.disabled).toBe(true);
+  });
+  test("field should be enabled (when one rule fails)", () => {
+    expect(processedFieldsById.shouldBeEnabled_All.disabled).toBe(false);
   });
 
   test("all fields should be disabled when form is disabled", () => {

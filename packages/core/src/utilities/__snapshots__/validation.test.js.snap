@@ -5,6 +5,7 @@ Array [
   Object {
     "disabled": false,
     "disabledWhen": Array [],
+    "disabledWhenAll": Array [],
     "errorMessages": "",
     "id": "BIGGEST",
     "isValid": true,
@@ -12,6 +13,7 @@ Array [
     "placeholder": "",
     "required": false,
     "requiredWhen": Array [],
+    "requiredWhenAll": Array [],
     "touched": false,
     "type": "",
     "validWhen": Object {},
@@ -23,6 +25,7 @@ Array [
   Object {
     "disabled": false,
     "disabledWhen": Array [],
+    "disabledWhenAll": Array [],
     "errorMessages": "",
     "id": "SHORTEST",
     "isValid": true,
@@ -30,6 +33,7 @@ Array [
     "placeholder": "",
     "required": false,
     "requiredWhen": Array [],
+    "requiredWhenAll": Array [],
     "touched": false,
     "type": "",
     "validWhen": Object {},
