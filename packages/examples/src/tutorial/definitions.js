@@ -73,6 +73,68 @@ export const requiredAndDisabledRules: FieldDef[] = [
   }
 ];
 
+export const allRulesMustPass: FieldDef[] = [
+  {
+    id: "BEHAVIOUR",
+    name: "behvaiour",
+    type: "radiogroup",
+    label: "What should change?",
+    description:
+      "Select the attribute to be changed and then confirm the change",
+    defaultValue: "Visibility",
+    options: [
+      {
+        items: ["Visibility", "Requirement", "Disability"]
+      }
+    ]
+  },
+  {
+    id: "CONFIRMATION",
+    name: "confirmation",
+    type: "checkbox",
+    label: "Confirm that you want the attribute to change",
+    defaultValue: false
+  },
+  {
+    id: "TARGET",
+    name: "target",
+    type: "text",
+    label: "Target field",
+    description: "This is the field that will be updated",
+    defaultValue: "Sample",
+    visibleWhen: [
+      {
+        field: "BEHAVIOUR",
+        isNot: ["Visibility"]
+      },
+      {
+        field: "CONFIRMATION",
+        is: [true]
+      }
+    ],
+    requiredWhenAll: [
+      {
+        field: "BEHAVIOUR",
+        is: ["Requirement"]
+      },
+      {
+        field: "CONFIRMATION",
+        is: [true]
+      }
+    ],
+    disabledWhenAll: [
+      {
+        field: "BEHAVIOUR",
+        is: ["Disability"]
+      },
+      {
+        field: "CONFIRMATION",
+        is: [true]
+      }
+    ]
+  }
+];
+
 export const fieldsWithOptions: FieldDef[] = [
   {
     id: "OPTIONS1",
