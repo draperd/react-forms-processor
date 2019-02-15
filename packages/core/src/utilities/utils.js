@@ -5,6 +5,7 @@ import type {
   CalculateFormValue,
   CreateFieldDef,
   DetermineChangedValues,
+  EvaluateAnyAndAllRules,
   EvaluateRule,
   EvaluateAllRules,
   EvaluateSomeRules,
@@ -211,20 +212,63 @@ export const getTouchedStateForField: GetTouchedStateForField = (
   return currentState;
 };
 
+export const evaluateAnyAndAllRules: EvaluateAnyAndAllRules = ({
+  anyRules,
+  allRules,
+  fieldsById,
+  defaultResult
+}): boolean => {
+  if (anyRules.length) {
+    return evaluateSomeRules({
+      rules: anyRules,
+      fieldsById,
+      defaultResult
+    });
+  }
+  if (allRules.length) {
+    return evaluateAllRules({
+      rules: allRules,
+      fieldsById,
+      defaultResult
+    });
+  }
+  return defaultResult;
+};
+
 export const isVisible = (field: FieldDef, fieldsById: FieldsById): boolean => {
   const { visible, visibleWhen = [], visibleWhenAll = [] } = field;
-  return (
-    evaluateAllRules({
-      rules: visibleWhenAll,
-      fieldsById,
-      defaultResult: visible !== false
-    }) &&
-    evaluateSomeRules({
-      rules: visibleWhen,
-      fieldsById,
-      defaultResult: visible !== false
-    })
-  );
+  return evaluateAnyAndAllRules({
+    anyRules: visibleWhen,
+    allRules: visibleWhenAll,
+    fieldsById,
+    defaultResult: visible !== false
+  });
+};
+
+export const isDisabled = (
+  field: FieldDef,
+  fieldsById: FieldsById
+): boolean => {
+  const { defaultDisabled, disabledWhen = [], disabledWhenAll = [] } = field;
+  return evaluateAnyAndAllRules({
+    anyRules: disabledWhen,
+    allRules: disabledWhenAll,
+    fieldsById,
+    defaultResult: !!defaultDisabled
+  });
+};
+
+export const isRequired = (
+  field: FieldDef,
+  fieldsById: FieldsById
+): boolean => {
+  const { required, requiredWhen = [], requiredWhenAll = [] } = field;
+  return evaluateAnyAndAllRules({
+    anyRules: requiredWhen,
+    allRules: requiredWhenAll,
+    fieldsById,
+    defaultResult: !!required
+  });
 };
 
 export const processFields: ProcessFields = (
@@ -234,18 +278,7 @@ export const processFields: ProcessFields = (
 ) => {
   const fieldsById = mapFieldsById(fields);
   const updatedFields = fields.map(field => {
-    const {
-      defaultValue,
-      value,
-      visible,
-      required,
-      defaultDisabled,
-      trimValue,
-      touched = false,
-      visibleWhen = [],
-      requiredWhen = [],
-      disabledWhen = []
-    } = field;
+    const { defaultValue, value, trimValue, touched = false } = field;
 
     let processedValue = typeof value !== "undefined" ? value : defaultValue;
 
@@ -254,18 +287,8 @@ export const processFields: ProcessFields = (
       touched: getTouchedStateForField(touched, resetTouchedState),
       value: processedValue,
       visible: isVisible(field, fieldsById),
-      required: evaluateSomeRules({
-        rules: requiredWhen,
-        fieldsById,
-        defaultResult: !!required
-      }),
-      disabled:
-        formIsDisabled ||
-        evaluateSomeRules({
-          rules: disabledWhen,
-          fieldsById,
-          defaultResult: !!defaultDisabled
-        })
+      required: isRequired(field, fieldsById),
+      disabled: formIsDisabled || isDisabled(field, fieldsById)
     };
   });
   return updatedFields;
@@ -325,6 +348,7 @@ export const createField: CreateFieldDef = field => {
     required = false,
     disabled = false,
     visibleWhen = [],
+    visibleWhenAll = [],
     requiredWhen = [],
     disabledWhen = [],
     validWhen = {},
@@ -342,6 +366,7 @@ export const createField: CreateFieldDef = field => {
     required,
     disabled,
     visibleWhen,
+    visibleWhenAll,
     requiredWhen,
     disabledWhen,
     isValid,
