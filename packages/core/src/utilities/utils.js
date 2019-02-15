@@ -7,7 +7,9 @@ import type {
   DetermineChangedValues,
   EvaluateRule,
   EvaluateAllRules,
+  EvaluateSomeRules,
   FieldDef,
+  FieldsById,
   FormComponentState,
   GetMissingItems,
   GetNextStateFromProps,
@@ -163,11 +165,29 @@ export const evaluateRule: EvaluateRule = (rule = {}, targetValue) => {
   return hasValidValue && !hasInvalidValue;
 };
 
-export const evaluateAllRules: EvaluateAllRules = (
+export const evaluateAllRules: EvaluateAllRules = ({
   rules = [],
   fieldsById = {},
   defaultResult = true
-) => {
+}) => {
+  let rulesPass = defaultResult;
+  if (rules.length) {
+    rulesPass = rules.every(rule => {
+      if (rule.field && fieldsById.hasOwnProperty(rule.field)) {
+        return evaluateRule(rule, fieldsById[rule.field].value);
+      } else {
+        return defaultResult;
+      }
+    });
+  }
+  return rulesPass;
+};
+
+export const evaluateSomeRules: EvaluateSomeRules = ({
+  rules = [],
+  fieldsById = {},
+  defaultResult = true
+}) => {
   let rulesPass = defaultResult;
   if (rules.length) {
     rulesPass = rules.some(rule => {
@@ -189,6 +209,22 @@ export const getTouchedStateForField: GetTouchedStateForField = (
     return false;
   }
   return currentState;
+};
+
+export const isVisible = (field: FieldDef, fieldsById: FieldsById): boolean => {
+  const { visible, visibleWhen = [], visibleWhenAll = [] } = field;
+  return (
+    evaluateAllRules({
+      rules: visibleWhenAll,
+      fieldsById,
+      defaultResult: visible !== false
+    }) &&
+    evaluateSomeRules({
+      rules: visibleWhen,
+      fieldsById,
+      defaultResult: visible !== false
+    })
+  );
 };
 
 export const processFields: ProcessFields = (
@@ -217,11 +253,19 @@ export const processFields: ProcessFields = (
       ...field,
       touched: getTouchedStateForField(touched, resetTouchedState),
       value: processedValue,
-      visible: evaluateAllRules(visibleWhen, fieldsById, visible !== false),
-      required: evaluateAllRules(requiredWhen, fieldsById, !!required),
+      visible: isVisible(field, fieldsById),
+      required: evaluateSomeRules({
+        rules: requiredWhen,
+        fieldsById,
+        defaultResult: !!required
+      }),
       disabled:
         formIsDisabled ||
-        evaluateAllRules(disabledWhen, fieldsById, !!defaultDisabled)
+        evaluateSomeRules({
+          rules: disabledWhen,
+          fieldsById,
+          defaultResult: !!defaultDisabled
+        })
     };
   });
   return updatedFields;

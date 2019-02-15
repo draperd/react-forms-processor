@@ -193,6 +193,7 @@ export type FieldDef = {
   disabled?: boolean,
   disabledWhen?: Rule[],
   visibleWhen?: Rule[],
+  visibleWhenAll?: Rule[],
   requiredWhen?: Rule[],
   validWhen?: ValidationRules,
   isValid?: boolean,
@@ -245,11 +246,17 @@ export type FieldsById = {
   [string]: FieldDef
 };
 
-export type EvaluateAllRules = (
+export type EvaluateAllRules = ({
   rules: Rule[],
   fieldsById: FieldsById,
   defaultResult: boolean
-) => boolean;
+}) => boolean;
+
+export type EvaluateSomeRules = ({
+  rules: Rule[],
+  fieldsById: FieldsById,
+  defaultResult: boolean
+}) => boolean;
 
 export type ProcessFields = (FieldDef[], boolean, boolean) => FieldDef[];
 
