@@ -22,7 +22,6 @@
     "@atlaskit/form": "5.1.1",
     "@atlaskit/icon": "13.2.3",
     "@atlaskit/select": "6.1.19",
-    "@atlaskit/textfield": "^0.1.5",
     "@atlaskit/tooltip": "12.0.4",
     "lodash": "^4.17.10"
   },

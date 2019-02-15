@@ -289,14 +289,6 @@
     debounce "^1.0.0"
     keycode "^2.1.7"
 
-"@atlaskit/textfield@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@atlaskit/textfield/-/textfield-0.1.5.tgz#10c16cd265b147cd494394d1cd3c0fb225701fa0"
-  dependencies:
-    "@atlaskit/analytics-next" "^3.1.2"
-    "@atlaskit/theme" "^7.0.1"
-    "@babel/runtime" "^7.0.0"
-
 "@atlaskit/theme@^3.1.1":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-3.2.0.tgz#5eb4f2c02a929d427db60e52fcb65f929e849d4e"
