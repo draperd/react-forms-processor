@@ -5,7 +5,6 @@ import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "react-forms-processor";
 import styled from "styled-components";
 import { Field as AkField, ErrorMessage } from "@atlaskit/form";
-import TextField from "@atlaskit/textfield";
 
 const Layout = styled.div`
   label {
