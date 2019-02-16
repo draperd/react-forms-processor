@@ -5,6 +5,7 @@ import {
   singleField,
   visibility,
   requiredAndDisabledRules,
+  allRulesMustPass,
   fieldsWithOptions,
   manipulateOptions,
   duplicateNames,
@@ -21,6 +22,8 @@ import singleFieldDescription from "./tutorial1.md";
 import visibilityDescription from "./tutorial2.md";
 // $FlowFixMe
 import requirementDescription from "./tutorial3.md";
+// $FlowFixMe
+import allRulesDescription from "./tutorial3_1.md";
 // $FlowFixMe
 import optionsDescription from "./tutorial4.md";
 // $FlowFixMe
@@ -70,6 +73,12 @@ class Tutorial extends Component<TutorialProps, *> {
           defaultDefinition={JSON.stringify(requiredAndDisabledRules)}
           editorTitle="Requirement and disablement rules"
           editorDescription={requirementDescription}
+          renderer={renderer}
+        />
+        <LiveEditor
+          defaultDefinition={JSON.stringify(allRulesMustPass)}
+          editorTitle="When all rules must pass"
+          editorDescription={allRulesDescription}
           renderer={renderer}
         />
         <LiveEditor
