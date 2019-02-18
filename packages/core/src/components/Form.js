@@ -115,6 +115,15 @@ export default class Form extends Component<
       const value = valueFromProps || valueFromState || {};
 
       const defaultFields = defaultFieldsFromProps || fieldsFromState;
+
+      // Merge value from fields (if set) into form value...
+      // This is done to ensure the form value has the latest value defined...
+      defaultFields.forEach(field => {
+        if (field.value) {
+          value[field.name] = field.value;
+        }
+      });
+
       let fields;
       if (defaultFieldsFromProps && defaultFieldsChange) {
         fields = registerFields(defaultFieldsFromProps, value);
@@ -122,12 +131,6 @@ export default class Form extends Component<
         // TODO: Ideally we shouldn't need to register to update the value...
         fields = registerFields(fieldsFromState, value);
       }
-
-      // TODO: Merge value from fields into valueu?
-      fields.forEach(field => {
-        console.log("field >> ", field);
-        value[field.name] = field.value;
-      });
 
       // We should reset the touched state of all the fields if the value passed as a prop to the form
       // changes...
