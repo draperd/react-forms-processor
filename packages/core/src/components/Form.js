@@ -118,11 +118,18 @@ export default class Form extends Component<
 
       // Merge value from fields (if set) into form value...
       // This is done to ensure the form value has the latest value defined...
+      // console.log("Next props", nextProps);
+
+      // TODO: Don't use the field value if the value prop has changed...
+      // if (valueFromProps) {
       defaultFields.forEach(field => {
         if (field.value) {
           value[field.name] = field.value;
         }
       });
+      // }
+
+      console.log("Form value", value);
 
       let fields;
       if (defaultFieldsFromProps && defaultFieldsChange) {
@@ -149,7 +156,8 @@ export default class Form extends Component<
         ...nextState,
         defaultFields: defaultFieldsFromProps,
         disabled,
-        showValidationBeforeTouched
+        showValidationBeforeTouched,
+        value
       };
     } else {
       return null;
@@ -312,7 +320,13 @@ export default class Form extends Component<
       }
     });
 
+    console.log(
+      "Value when rendering form",
+      this.props.value,
+      this.state.value
+    );
     const context = this.createFormContext();
+    console.log("Context value", context.value);
     return (
       <FormContext.Provider value={context}>
         {defaultFields && <FormFragment defaultFields={fields} />}
