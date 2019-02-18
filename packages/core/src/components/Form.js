@@ -123,6 +123,12 @@ export default class Form extends Component<
         fields = registerFields(fieldsFromState, value);
       }
 
+      // TODO: Merge value from fields into valueu?
+      fields.forEach(field => {
+        console.log("field >> ", field);
+        value[field.name] = field.value;
+      });
+
       // We should reset the touched state of all the fields if the value passed as a prop to the form
       // changes...
       const resetTouchedState = defaultValueChange;
@@ -158,6 +164,7 @@ export default class Form extends Component<
     let { fields } = this.state;
     fields = updateFieldTouchedState(id, true, fields);
     fields = updateFieldValue(id, value, fields);
+
     const nextState = getNextStateFromFields({
       fields,
       lastFieldUpdated: id,
