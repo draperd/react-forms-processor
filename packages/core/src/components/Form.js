@@ -115,6 +115,15 @@ export default class Form extends Component<
       const value = valueFromProps || valueFromState || {};
 
       const defaultFields = defaultFieldsFromProps || fieldsFromState;
+
+      // Merge value from fields (if set) into form value...
+      // This is done to ensure the form value has the latest value defined...
+      defaultFields.forEach(field => {
+        if (field.value) {
+          value[field.name] = field.value;
+        }
+      });
+
       let fields;
       if (defaultFieldsFromProps && defaultFieldsChange) {
         fields = registerFields(defaultFieldsFromProps, value);
@@ -158,6 +167,7 @@ export default class Form extends Component<
     let { fields } = this.state;
     fields = updateFieldTouchedState(id, true, fields);
     fields = updateFieldValue(id, value, fields);
+
     const nextState = getNextStateFromFields({
       fields,
       lastFieldUpdated: id,

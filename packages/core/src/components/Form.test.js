@@ -280,3 +280,27 @@ describe("Form and FormFragment behave the same with defaultFields and value", (
     expect(fieldValue).toEqual(["melon"]);
   });
 });
+
+describe("Form with initial value updates value on field change", () => {
+  const fields: FieldDef[] = [
+    {
+      id: "FIELD1",
+      type: "text",
+      name: "field1"
+    }
+  ];
+  const formValue1 = {
+    field1: "value1"
+  };
+
+  const form = mount(
+    <Form value={formValue1}>
+      <FormFragment defaultFields={fields} />
+    </Form>
+  );
+
+  test("moomin", () => {
+    form.find("input").prop("onChange")({ target: { value: "updated" } });
+    expect(form.state().value.field1).toBe("updated");
+  });
+});
