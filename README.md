@@ -58,6 +58,10 @@ A field is a simple JavaScript object. The current set of attributes you can use
  * removedSuffix - When using changes as values, this string will be appended to the `name` for the values removed
  * misc - Any else
 
+ #### Atlaskit specific options
+ * autofocus - Whether or not the field is focused on initialization
+ * shouldFitContainer - Ensure the input fits in to its containing element (works for  `text`, `textarea`, `select`, `multiselect` components)
+
 ### Anything else I should know?
 Because the forms can be defined declaratively it means that you can build and render forms dynamically in an application - check out the example in the [demo page](https://draperd.github.io/react-forms-processor/).
 

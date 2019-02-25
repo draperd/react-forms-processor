@@ -215,7 +215,8 @@ export type FieldDef = {
   },
   trimValue?: boolean,
   touched?: boolean, // TODO: Should this actually be on field?
-  autofocus?: boolean
+  autofocus?: boolean,
+  shouldFitContainer?: boolean,
 };
 
 export type Field = FieldDef & {

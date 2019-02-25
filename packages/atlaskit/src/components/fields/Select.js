@@ -25,7 +25,8 @@ class AtlaskitSelect extends React.Component<Field> {
       touched,
       validWhen,
       requiredWhen,
-      autofocus
+      autofocus,
+      shouldFitContainer
     } = this.props;
     let defaultSelected;
     const stringValue: string | void = value ? value.toString() : undefined;
@@ -94,6 +95,7 @@ class AtlaskitSelect extends React.Component<Field> {
               autoFocus={autofocus}
               isInvalid={isInvalid}
               isRequired={required}
+              shouldFitContainer={shouldFitContainer}
             />
             {isInvalid && <ErrorMessage>{errorMessages}</ErrorMessage>}
           </React.Fragment>
