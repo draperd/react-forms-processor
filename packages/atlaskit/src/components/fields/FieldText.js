@@ -27,7 +27,8 @@ class AtlaskitFieldText extends React.Component<Field> {
       required,
       value,
       label,
-      autofocus
+      autofocus,
+      shouldFitContainer
     } = this.props;
     return (
       <AkField
@@ -57,6 +58,7 @@ class AtlaskitFieldText extends React.Component<Field> {
                   isInvalid={!isValid}
                   disabled={disabled}
                   autoFocus={autofocus}
+                  shouldFitContainer={shouldFitContainer}
                 />
               </Layout>
               {!isValid && <ErrorMessage>{errorMessages}</ErrorMessage>}
