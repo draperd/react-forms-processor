@@ -72,7 +72,6 @@ class AtlaskitFieldText extends React.Component<Field> {
 
 export default (props: FieldDef) => (
   <FieldWrapper {...props}>
-    {/* $FlowFixMe */}
     <AtlaskitFieldText />
   </FieldWrapper>
 );

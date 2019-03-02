@@ -107,7 +107,6 @@ class AtlaskitSelect extends React.Component<Field> {
 
 export default (props: FieldDef) => (
   <FieldWrapper {...props}>
-    {/* $FlowFixMe */}
     <AtlaskitSelect />
   </FieldWrapper>
 );
