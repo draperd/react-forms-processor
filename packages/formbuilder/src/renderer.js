@@ -1,12 +1,12 @@
 // @flow
 import React from "react";
-import akRenderer from "../../atlaskit/src/renderer";
 import FieldDefinitionField from "./FieldDefinitionField";
 import type {
   FieldRenderer,
   FieldDef,
   OnFieldChange
 } from "react-forms-processor";
+import { renderer as akRenderer } from "react-forms-processor-atlaskit";
 import RepeatingFormField from "./Repeats";
 
 const renderer: FieldRenderer = (
