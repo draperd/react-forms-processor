@@ -38,7 +38,6 @@ const setFieldValue = (
 ): void => {
   const { name, omitWhenValueIs, value } = defaultDefinition;
   const formValueForName = formValue[name];
-  // console.log("Values", formValue, value);
   if (
     omitWhenValueIs &&
     omitWhenValueIs.find(targetValue => targetValue === formValueForName) === -1
@@ -77,7 +76,6 @@ class FormFragment extends Component<
   constructor(props: FormFragmentComponentWithContextProps) {
     super(props);
     const { defaultFields = [], registerField, fields = [], value } = props;
-    console.log("Value of fragment when created", value);
     defaultFields.forEach(field => {
       field.defaultValue =
         value[field.name] !== undefined

@@ -14,6 +14,7 @@ import type {
 
 export type FormComponentProps = {
   defaultFields?: FieldDef[],
+  defaultValue?: FormValue,
   value?: FormValue,
   onChange?: OnFormChange,
   onFieldFocus?: OnFieldFocus,

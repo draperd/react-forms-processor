@@ -31,7 +31,7 @@ describe("Context", () => {
       <Form
         defaultFields={singleField}
         onChange={onFormChange}
-        value={propValue}
+        defaultValue={propValue}
       >
         <FormContext.Consumer>
           {context => {
@@ -58,7 +58,7 @@ describe("Context", () => {
     const propValue = { prop1: "value1" };
     let value;
     const form = mount(
-      <Form onChange={onFormChange} value={propValue}>
+      <Form onChange={onFormChange} defaultValue={propValue}>
         <FormFragment defaultFields={singleField} />
       </Form>
     );
@@ -91,7 +91,7 @@ describe("validation warnings", () => {
 
   describe("shown immediately", () => {
     const form = mount(
-      <Form value={formValue} showValidationBeforeTouched>
+      <Form defaultValue={formValue} showValidationBeforeTouched>
         <FormFragment defaultFields={fields} />
         <FormButton onClick={onButtonClick} />
       </Form>
@@ -116,7 +116,7 @@ describe("validation warnings", () => {
 
   describe("shown when touched", () => {
     const form = mount(
-      <Form value={formValue}>
+      <Form defaultValue={formValue}>
         <FormFragment defaultFields={fields} />
         <FormButton onClick={onButtonClick} />
       </Form>
@@ -199,7 +199,7 @@ describe("changing form value prop", () => {
   };
 
   const form = mount(
-    <Form value={formValue1}>
+    <Form defaultValue={formValue1}>
       <FormFragment defaultFields={fields} />
     </Form>
   );
@@ -264,7 +264,7 @@ describe("Form and FormFragment behave the same with defaultFields and value", (
 
   test("Form field has correct value from value", () => {
     const form = mount(
-      <Form defaultFields={fruit} value={{ fruit: "melon" }} />
+      <Form defaultFields={fruit} defaultValue={{ fruit: "melon" }} />
     );
     const fieldValue = form.find("select").prop("value");
     expect(fieldValue).toEqual(["melon"]);
@@ -272,7 +272,7 @@ describe("Form and FormFragment behave the same with defaultFields and value", (
 
   test("FormFragment field has correct value from value", () => {
     const form = mount(
-      <Form value={{ fruit: "melon" }}>
+      <Form defaultValue={{ fruit: "melon" }}>
         <FormFragment defaultFields={fruit} />
       </Form>
     );
@@ -294,7 +294,7 @@ describe("Form with initial value updates value on field change", () => {
   };
 
   const form = mount(
-    <Form value={formValue1}>
+    <Form defaultValue={formValue1}>
       <FormFragment defaultFields={fields} />
     </Form>
   );

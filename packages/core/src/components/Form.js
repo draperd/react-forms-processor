@@ -33,11 +33,6 @@ const valueHasChanged = (
   prevState: FormComponentState
 ) => nextProps.value && nextProps.value !== prevState.value;
 
-const defaultValueHasChanged = (
-  nextProps: FormComponentProps,
-  prevState: FormComponentState
-) => nextProps.value && nextProps.value !== prevState.defaultValue;
-
 const formDisabledStateHasChanged = (
   nextProps: FormComponentProps,
   prevState: FormComponentState
@@ -59,8 +54,8 @@ export default class Form extends Component<
     super(props);
     this.state = {
       fields: [],
-      defaultValue: props.value || {},
-      value: props.value || {},
+      defaultValue: props.defaultValue || {},
+      value: props.value || props.defaultValue || {},
       isValid: false,
       defaultFields: [],
       disabled: props.disabled || false,
@@ -90,17 +85,22 @@ export default class Form extends Component<
     prevState: FormComponentState
   ) {
     const defaultFieldsChange = defaultFieldsHaveChanged(nextProps, prevState);
-    const defaultValueChange = defaultValueHasChanged(nextProps, prevState);
+    const valueChange = valueHasChanged(nextProps, prevState);
     if (
       defaultFieldsChange ||
-      valueHasChanged(nextProps, prevState) ||
+      valueChange ||
       formDisabledStateHasChanged(nextProps, prevState) ||
       formTouchedBehaviourHasChanged(nextProps, prevState)
     ) {
-      const { fields: fieldsFromState, value: valueFromState } = prevState;
+      const {
+        fields: fieldsFromState,
+        defaultValue: defaultValueFromState,
+        value: valueFromState
+      } = prevState;
 
       let {
         defaultFields: defaultFieldsFromProps,
+        defaultValue: defaultValueFromProps,
         value: valueFromProps,
         disabled = false
       } = nextProps;
@@ -111,25 +111,22 @@ export default class Form extends Component<
         showValidationBeforeTouched = false
       } = nextProps;
 
-      // If a new value has been passed to the Form as a prop then it should take precedence over the last calculated state
-      const value = valueFromProps || valueFromState || {};
+      const value = {
+        ...defaultValueFromProps,
+        ...valueFromState,
+        ...valueFromProps
+      };
 
       const defaultFields = defaultFieldsFromProps || fieldsFromState;
 
-      // Merge value from fields (if set) into form value...
-      // This is done to ensure the form value has the latest value defined...
-      // console.log("Next props", nextProps);
-
       // TODO: Don't use the field value if the value prop has changed...
-      // if (valueFromProps) {
-      defaultFields.forEach(field => {
-        if (field.value) {
-          value[field.name] = field.value;
-        }
-      });
-      // }
-
-      console.log("Form value", value);
+      if (!valueChange) {
+        defaultFields.forEach(field => {
+          if (field.value) {
+            value[field.name] = field.value;
+          }
+        });
+      }
 
       let fields;
       if (defaultFieldsFromProps && defaultFieldsChange) {
@@ -141,7 +138,7 @@ export default class Form extends Component<
 
       // We should reset the touched state of all the fields if the value passed as a prop to the form
       // changes...
-      const resetTouchedState = defaultValueChange;
+      const resetTouchedState = valueChange;
 
       const nextState = getNextStateFromFields({
         fields,
@@ -155,13 +152,13 @@ export default class Form extends Component<
       return {
         ...nextState,
         defaultFields: defaultFieldsFromProps,
+        defaultValue: defaultValueFromProps || defaultValueFromState,
         disabled,
         showValidationBeforeTouched,
         value
       };
-    } else {
-      return null;
     }
+    return null;
   }
 
   onFieldChange(id: string, value: Value) {
@@ -272,7 +269,7 @@ export default class Form extends Component<
   }
 
   createFormContext() {
-    const { fields, value, isValid } = this.state;
+    const { fields, defaultValue, value, isValid } = this.state;
     const {
       renderer = defaultRenderer,
       optionsHandler,
@@ -289,6 +286,7 @@ export default class Form extends Component<
     const context: FormContextData = {
       fields,
       isValid,
+      defaultValue,
       value,
       registerField: this.registerField.bind(this),
       renderer,
@@ -320,13 +318,7 @@ export default class Form extends Component<
       }
     });
 
-    console.log(
-      "Value when rendering form",
-      this.props.value,
-      this.state.value
-    );
     const context = this.createFormContext();
-    console.log("Context value", context.value);
     return (
       <FormContext.Provider value={context}>
         {defaultFields && <FormFragment defaultFields={fields} />}
