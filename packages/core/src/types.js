@@ -342,7 +342,7 @@ export type OmitFieldValue = FieldDef => boolean;
 
 export type FormContextData = {
   fields: FieldDef[],
-  defaulValue: FormValue,
+  defaultValue: FormValue,
   value: FormValue,
   isValid: boolean,
   options: {
