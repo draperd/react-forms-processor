@@ -1,6 +1,6 @@
 {
     "name": "react-forms-processor",
-    "version": "0.0.36",
+    "version": "0.0.37",
     "description": "A forms processor for statically declaring forms with dynamic behaviour",
     "main": "dist/index.js",
     "scripts": {
