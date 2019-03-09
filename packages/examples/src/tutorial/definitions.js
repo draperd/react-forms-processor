@@ -22,6 +22,7 @@ export const visibility: FieldDef[] = [
     name: "key",
     type: "text",
     label: "Name",
+    defaultValue: "Gloria",
     visibleWhen: [
       {
         field: "CHECKBOX",

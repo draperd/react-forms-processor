@@ -39,7 +39,8 @@ class AtlaskitCheckbox extends React.Component<Field> {
               name={name}
               isDisabled={disabled}
               value={stringValue}
-              isChecked={stringValue}
+              initiallyChecked={stringValue === "true"}
+              isChecked={stringValue === "true"}
               isInvalid={!isValid}
               onChange={evt => {
                 onFieldChange(id, evt.isChecked);
@@ -57,7 +58,6 @@ class AtlaskitCheckbox extends React.Component<Field> {
 
 export default (props: FieldDef) => (
   <FieldWrapper {...props}>
-    {/* $FlowFixMe */}
     <AtlaskitCheckbox />
   </FieldWrapper>
 );
