@@ -342,6 +342,10 @@ export const validateField: ValidateField = (
   const { required, visible, validWhen = {}, touched = false } = field;
   let isValid = true;
   let errorMessages = [];
+  const formattedErrorMessage = () => {
+    const errMsg = errorMessages.join(", ");
+    return errMsg.replace(errMsg.substring(1), (errMsgSubStr) => errMsgSubStr.toLowerCase());
+  };
   if (visible) {
     const value = getValueFromField(field);
     const valueProvided = hasValue(value);
@@ -356,7 +360,7 @@ export const validateField: ValidateField = (
       return Object.assign({}, field, {
         isValid: true,
         isDiscretelyInvalid: !isValid,
-        errorMessages: errorMessages.length ? errorMessages.join(", ") : ""
+        errorMessages: errorMessages.length ? formattedErrorMessage() : ""
       });
     }
 
@@ -400,7 +404,7 @@ export const validateField: ValidateField = (
   return Object.assign({}, field, {
     isValid,
     isDiscretelyInvalid: !isValid,
-    errorMessages: errorMessages.join(", ")
+    errorMessages: formattedErrorMessage()
   });
 };
 
