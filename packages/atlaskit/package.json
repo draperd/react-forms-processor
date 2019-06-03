@@ -3,7 +3,7 @@
   "version": "0.0.38",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --transformIgnorePatterns \"node_modules/(?!(@atlaskit))/\"",
     "start": "webpack-dev-server --mode development",
     "transpile": "babel src -d dist --copy-files",
     "prepublishOnly": "npm run transpile",
@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@atlaskit/button": "9.0.4",
-    "@atlaskit/checkbox": "4.0.2",
+    "@atlaskit/checkbox": "7.0.0",
     "@atlaskit/datetime-picker": "^6.4.0",
     "@atlaskit/field-radio-group": "4.0.3",
     "@atlaskit/field-range": "5.0.2",
