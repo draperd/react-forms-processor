@@ -3,7 +3,7 @@ import React from "react";
 import FieldTextArea from "@atlaskit/field-text-area";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "react-forms-processor";
-import { Field as AkField, ErrorMessage } from "@atlaskit/form";
+import { Field as AkField, ErrorMessage, HelperMessage } from "@atlaskit/form";
 
 class AtlaskitFieldTextArea extends React.Component<Field> {
   render() {
@@ -28,7 +28,6 @@ class AtlaskitFieldTextArea extends React.Component<Field> {
       <AkField
         name={name}
         label={label}
-        helperText={description}
         isRequired={required}
         isInvalid={!isValid}
         invalidMessage={errorMessages}
@@ -50,7 +49,11 @@ class AtlaskitFieldTextArea extends React.Component<Field> {
               isInvalid={!isValid}
               shouldFitContainer={shouldFitContainer}
             />
-            {!isValid && <ErrorMessage>{errorMessages}</ErrorMessage>}
+            {!isValid ? (
+              <ErrorMessage>{errorMessages}</ErrorMessage>
+            ) : (
+              <HelperMessage>{description}</HelperMessage>
+            )}
           </React.Fragment>
         )}
       </AkField>

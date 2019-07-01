@@ -4,7 +4,7 @@ import FieldText from "@atlaskit/field-text";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "react-forms-processor";
 import styled from "styled-components";
-import { Field as AkField, ErrorMessage } from "@atlaskit/form";
+import { Field as AkField, ErrorMessage, HelperMessage } from "@atlaskit/form";
 
 const Layout = styled.div`
   label {
@@ -34,7 +34,6 @@ class AtlaskitFieldText extends React.Component<Field> {
       <AkField
         name={name}
         label={label}
-        helperText={description}
         isRequired={required}
         isInvalid={!isValid}
         invalidMessage={errorMessages}
@@ -61,7 +60,11 @@ class AtlaskitFieldText extends React.Component<Field> {
                   shouldFitContainer={shouldFitContainer}
                 />
               </Layout>
-              {!isValid && <ErrorMessage>{errorMessages}</ErrorMessage>}
+              {!isValid ? (
+                <ErrorMessage>{errorMessages}</ErrorMessage>
+              ) : (
+                <HelperMessage>{description}</HelperMessage>
+              )}
             </React.Fragment>
           );
         }}

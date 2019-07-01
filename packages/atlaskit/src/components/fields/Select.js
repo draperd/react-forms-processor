@@ -3,7 +3,7 @@ import React from "react";
 import Select from "@atlaskit/select";
 import { FieldWrapper } from "react-forms-processor";
 import type { Field, FieldDef } from "react-forms-processor";
-import { Field as AkField, ErrorMessage } from "@atlaskit/form";
+import { Field as AkField, ErrorMessage, HelperMessage } from "@atlaskit/form";
 
 class AtlaskitSelect extends React.Component<Field> {
   render() {
@@ -68,7 +68,6 @@ class AtlaskitSelect extends React.Component<Field> {
       <AkField
         name={name}
         label={label}
-        helperText={description}
         isRequired={required}
         isInvalid={isInvalid}
         invalidMessage={errorMessages}
@@ -97,7 +96,12 @@ class AtlaskitSelect extends React.Component<Field> {
               isRequired={required}
               shouldFitContainer={shouldFitContainer}
             />
-            {isInvalid && <ErrorMessage>{errorMessages}</ErrorMessage>}
+
+            {isInvalid ? (
+              <ErrorMessage>{errorMessages}</ErrorMessage>
+            ) : (
+              <HelperMessage>{description}</HelperMessage>
+            )}
           </React.Fragment>
         )}
       </AkField>
