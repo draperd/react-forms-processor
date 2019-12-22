@@ -6,10 +6,16 @@ import type { FormValue, FormButtonProps } from "react-forms-processor";
 
 class FormButton extends React.Component<FormButtonProps> {
   render() {
-    const { isValid, label = "OK", onClick, value = {} } = this.props;
+    const {
+      appearance = "primary",
+      isValid,
+      label = "OK",
+      onClick,
+      value = {}
+    } = this.props;
     return (
       <Button
-        appearance="primary"
+        appearance={appearance}
         isDisabled={!isValid}
         onClick={() => onClick && onClick(value)}
       >
