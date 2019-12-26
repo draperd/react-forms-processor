@@ -12,10 +12,11 @@ export type {
 } from "./types";
 
 export type FormButtonProps = {
+  appearance?: string,
+  isValid?: boolean,
   label?: string,
   onClick: (value: FormValue) => void,
-  value?: FormValue,
-  isValid?: boolean
+  value?: FormValue
 };
 
 export type Value = any;
@@ -216,7 +217,7 @@ export type FieldDef = {
   trimValue?: boolean,
   touched?: boolean, // TODO: Should this actually be on field?
   autofocus?: boolean,
-  shouldFitContainer?: boolean,
+  shouldFitContainer?: boolean
 };
 
 export type Field = FieldDef & {
