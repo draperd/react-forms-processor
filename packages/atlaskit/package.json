@@ -1,6 +1,6 @@
 {
   "name": "react-forms-processor-atlaskit",
-  "version": "0.0.41",
+  "version": "0.0.42",
   "main": "dist/index.js",
   "scripts": {
     "test": "jest --transformIgnorePatterns \"node_modules/(?!(@atlaskit))/\"",
