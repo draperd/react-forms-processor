@@ -342,10 +342,8 @@ export const validateField: ValidateField = (
   const { required, visible, validWhen = {}, touched = false } = field;
   let isValid = true;
   let errorMessages = [];
-  const formattedErrorMessage = () => {
-    const errMsg = errorMessages.join(", ");
-    return errMsg.replace(errMsg.substring(1), (errMsgSubStr) => errMsgSubStr.toLowerCase());
-  };
+  const formattedErrorMessage = () => errorMessages.join(". ");
+
   if (visible) {
     const value = getValueFromField(field);
     const valueProvided = hasValue(value);
