@@ -147,7 +147,7 @@ export default class Form extends Component<
     }
   }
 
-  onFieldChange(id: string, value: Value) {
+  onFieldChange(id: string, value: Value, skipFieldTouched) {
     const {
       optionsHandler,
       validationHandler,
@@ -156,7 +156,10 @@ export default class Form extends Component<
       disabled = false
     } = this.props;
     let { fields } = this.state;
-    fields = updateFieldTouchedState(id, true, fields);
+
+    //skiping the field touch update here
+    if(!skipFieldTouched)
+      fields = updateFieldTouchedState(id, true, fields);  
     fields = updateFieldValue(id, value, fields);
     const nextState = getNextStateFromFields({
       fields,
