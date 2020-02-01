@@ -30,6 +30,10 @@ var _tutorial5 = require("./tutorial3.md");
 
 var _tutorial6 = _interopRequireDefault(_tutorial5);
 
+var _tutorial3_ = require("./tutorial3_1.md");
+
+var _tutorial3_2 = _interopRequireDefault(_tutorial3_);
+
 var _tutorial7 = require("./tutorial4.md");
 
 var _tutorial8 = _interopRequireDefault(_tutorial7);
@@ -61,6 +65,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// $FlowFixMe
 
 // $FlowFixMe
 
@@ -128,6 +134,12 @@ var Tutorial = function (_Component) {
           defaultDefinition: JSON.stringify(_definitions.requiredAndDisabledRules),
           editorTitle: "Requirement and disablement rules",
           editorDescription: _tutorial6.default,
+          renderer: renderer
+        }),
+        _react2.default.createElement(_LiveEditor2.default, {
+          defaultDefinition: JSON.stringify(_definitions.allRulesMustPass),
+          editorTitle: "When all rules must pass",
+          editorDescription: _tutorial3_2.default,
           renderer: renderer
         }),
         _react2.default.createElement(_LiveEditor2.default, {
