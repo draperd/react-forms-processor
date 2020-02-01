@@ -387,3 +387,35 @@ describe("complex test case", () => {
     expect(form.state().isValid).toBe(true);
   });
 });
+
+describe("onFieldChange fn", ()=>{
+  const form = mount(
+    <Form
+      defaultFields={fields}
+      renderer={customRenderer}
+      showValidationBeforeTouched
+    />
+  );
+  form.update();
+
+  test('should not update the field touch state when skipTouchState argument is set to true',()=>{
+    //check initially state of name field for a freshly mounted form
+    let isNameFieldTouched = form.state().fields.find(field=>field.id === 'name').touched;
+    expect(isNameFieldTouched).toBe(false);
+
+    let formFragment = form.find("FormFragment").first();
+    // update a name field through onFieldChange and provide skipTouchState argument
+    formFragment.prop("onFieldChange")('name','Some name',true);
+    form.update();
+    isNameFieldTouched = form.state().fields.find(field=>field.id === 'name').touched;
+    expect(isNameFieldTouched).toBe(false);
+
+    // update a name field through onFieldChange and without the skipTouchState argument 
+    // touched should be subsequently set to true
+    formFragment.prop("onFieldChange")('name','Some name');
+    form.update();
+    isNameFieldTouched = form.state().fields.find(field=>field.id === 'name').touched;
+    expect(isNameFieldTouched).toBe(true);
+
+  })
+});
