@@ -12,7 +12,7 @@ export const singleField: FieldDef[] = [
     defaultValue: "",
     visible: true,
     required: false,
-    disabled: false
+    defaultDisabled: false
   }
 ];
 
@@ -158,11 +158,17 @@ export const fieldsWithOptions: FieldDef[] = [
     options: [
       {
         heading: "Round fruits",
-        items: [{ label: "Apple", value: "A" }, { label: "Orange", value: "O" }]
+        items: [
+          { label: "Apple", value: "A" },
+          { label: "Orange", value: "O" }
+        ]
       },
       {
         heading: "Other shapes",
-        items: [{ label: "Banana", value: "B" }, { label: "Pear", value: "C" }]
+        items: [
+          { label: "Banana", value: "B" },
+          { label: "Pear", value: "C" }
+        ]
       }
     ]
   },
