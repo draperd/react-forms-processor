@@ -343,9 +343,8 @@ export const validateField: ValidateField = (
   let isValid = true;
   let errorMessages = [];
   const formattedErrorMessage = () => {
-    let formattedErrorMessages = "";
     if(errorMessages.length === 0){
-      return formattedErrorMessages;
+      return "";
     }
     else if(errorMessages.length === 1){
       // Don't add punctuation on singular error messages.
@@ -353,6 +352,7 @@ export const validateField: ValidateField = (
     }
     else{
       // Reverse through list of error messages to preserve order
+      let formattedErrorMessages = "";
       errorMessages.slice().reverse().forEach((message)=>{
         const lastChar = message.slice(-1);
         if(lastChar === "." || lastChar ==="!" || lastChar === "?"){
