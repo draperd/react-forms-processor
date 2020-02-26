@@ -20,7 +20,6 @@ var visibility = exports.visibility = [{
   name: "key",
   type: "text",
   label: "Name",
-  defaultValue: "Gloria",
   visibleWhen: [{
     field: "CHECKBOX",
     is: [true]
@@ -58,52 +57,6 @@ var requiredAndDisabledRules = exports.requiredAndDisabledRules = [{
   type: "checkbox",
   label: "Enable the text field",
   defaultValue: true
-}];
-
-var allRulesMustPass = exports.allRulesMustPass = [{
-  id: "BEHAVIOUR",
-  name: "behvaiour",
-  type: "radiogroup",
-  label: "What should change?",
-  description: "Select the attribute to be changed and then confirm the change",
-  defaultValue: "Visibility",
-  options: [{
-    items: ["Visibility", "Requirement", "Disability"]
-  }]
-}, {
-  id: "CONFIRMATION",
-  name: "confirmation",
-  type: "checkbox",
-  label: "Confirm that you want the attribute to change",
-  defaultValue: false
-}, {
-  id: "TARGET",
-  name: "target",
-  type: "text",
-  label: "Target field",
-  description: "This is the field that will be updated",
-  defaultValue: "Sample",
-  visibleWhen: [{
-    field: "BEHAVIOUR",
-    isNot: ["Visibility"]
-  }, {
-    field: "CONFIRMATION",
-    is: [true]
-  }],
-  requiredWhenAll: [{
-    field: "BEHAVIOUR",
-    is: ["Requirement"]
-  }, {
-    field: "CONFIRMATION",
-    is: [true]
-  }],
-  disabledWhenAll: [{
-    field: "BEHAVIOUR",
-    is: ["Disability"]
-  }, {
-    field: "CONFIRMATION",
-    is: [true]
-  }]
 }];
 
 var fieldsWithOptions = exports.fieldsWithOptions = [{

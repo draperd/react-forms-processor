@@ -152,16 +152,12 @@ var LiveEditor = function (_Component) {
                 renderer: renderer,
                 onChange: function onChange(value) {
                   _this2.setState({ value: value });
-                },
-                defaultFields: fieldsToRender,
+                }
+                // value={value}
+                , defaultFields: fieldsToRender,
                 optionsHandler: optionsHandler
               },
-              _react2.default.createElement(_reactFormsProcessorAtlaskit.FormButton, {
-                label: "Preview",
-                onClick: function onClick(value) {
-                  return console.log("Form value", value);
-                }
-              })
+              _react2.default.createElement(_reactFormsProcessorAtlaskit.FormButton, { label: "Preview" })
             )
           ),
           _react2.default.createElement(
