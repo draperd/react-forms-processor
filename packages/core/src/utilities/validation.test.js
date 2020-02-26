@@ -49,7 +49,7 @@ describe("validateField", () => {
     expect(validateField(testField, [testField], true).isValid).toBe(false);
   });
 
-  test("visible, required field with numberical value 0 is valid", () => {
+  test("visible, required field with numerical value 0 is valid", () => {
     const testField = {
       ...field1,
       visible: true,
@@ -97,6 +97,116 @@ describe("validateField", () => {
       value: [1]
     };
     expect(validateField(testField, [testField], true).isValid).toBe(true);
+  });
+
+  test("correctly concats multiple error messages with ? punctuation", () => {
+    const errorMessage = "Where's my data?";
+    const errorMessage2 = "Where is my data!";
+    const testField = {
+      ...field1,
+      visible: true,
+      required: true,
+      value: "",
+      missingValueMessage: errorMessage,
+      validWhen:{
+        isNot:{
+          values:[""],
+          message: errorMessage2,
+        }
+      }
+    };
+    const validationResult = validateField(testField, [testField], true);
+    expect(validationResult.isValid).toBe(false);
+    expect(validationResult.errorMessages).toBe("Where's my data? Where is my data!");
+    expect(validateField(testField, [testField], true).isValid).toBe(false);
+  });
+
+  test("correctly concats multiple error messages with ! punctuation", () => {
+    const errorMessage = "Where's my data!";
+    const errorMessage2 = "Where is my data?";
+    const testField = {
+      ...field1,
+      visible: true,
+      required: true,
+      value: "",
+      missingValueMessage: errorMessage,
+      validWhen:{
+        isNot:{
+          values:[""],
+          message: errorMessage2,
+        }
+      }
+    };
+    const validationResult = validateField(testField, [testField], true);
+    expect(validationResult.isValid).toBe(false);
+    expect(validationResult.errorMessages).toBe("Where's my data! Where is my data?");
+    expect(validateField(testField, [testField], true).isValid).toBe(false);
+  });
+
+  test("correctly concats multiple error messages with no full stop", () => {
+    const errorMessage = "Where's my data";
+    const errorMessage2 = "Where is my data?";
+    const testField = {
+      ...field1,
+      visible: true,
+      required: true,
+      value: "",
+      missingValueMessage: errorMessage,
+      validWhen:{
+        isNot:{
+          values:[""],
+          message: errorMessage2,
+        }
+      }
+    };
+    const validationResult = validateField(testField, [testField], true);
+    expect(validationResult.isValid).toBe(false);
+    expect(validationResult.errorMessages).toBe("Where's my data. Where is my data?");
+    expect(validateField(testField, [testField], true).isValid).toBe(false);
+  });
+
+  test("correctly concats multiple error messages with a full stop", () => {
+    const errorMessage = "Where's my data.";
+    const errorMessage2 = "Where is my data.";
+    const testField = {
+      ...field1,
+      visible: true,
+      required: true,
+      value: "",
+      missingValueMessage: errorMessage,
+      validWhen:{
+        isNot:{
+          values:[""],
+          message: errorMessage2,
+        }
+      }
+    };
+    const validationResult = validateField(testField, [testField], true);
+    expect(validationResult.isValid).toBe(false);
+    expect(validationResult.errorMessages).toBe("Where's my data. Where is my data.");
+    expect(validateField(testField, [testField], true).isValid).toBe(false);
+  });
+
+  test("concats multiple error messages in order", () => {
+    const errorMessage = "This should be first";
+    const errorMessage2 = "This should be second";
+    const testField = {
+      ...field1,
+      visible: true,
+      required: true,
+      value: "",
+      missingValueMessage: errorMessage,
+      validWhen:{
+        isNot:{
+          values:[""],
+          message: errorMessage2,
+        }
+      }
+    };
+    const validationResult = validateField(testField, [testField], true);
+    expect(validationResult.isValid).toBe(false);
+    expect(validationResult.errorMessages).toBe("This should be first. This should be second.");
+    expect(validateField(testField, [testField], true).isValid).toBe(false);
   });
 
   test("visible, required field with missing data shows custom message", () => {
@@ -239,7 +349,7 @@ describe("lengthIsLessThan validator", () => {
     ).toBeUndefined();
   });
 
-  test("with invvalid value", () => {
+  test("with invalid value", () => {
     expect(
       lengthIsLessThan({
         value: "test",
