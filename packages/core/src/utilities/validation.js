@@ -342,7 +342,31 @@ export const validateField: ValidateField = (
   const { required, visible, validWhen = {}, touched = false } = field;
   let isValid = true;
   let errorMessages = [];
-  const formattedErrorMessage = () => errorMessages.join(". ");
+  const formattedErrorMessage = () => {
+    let formattedErrorMessages = "";
+    if(errorMessages.length === 0){
+      return formattedErrorMessages;
+    }
+    else if(errorMessages.length === 1){
+      // Don't add punctuation on singular error messages.
+      return errorMessages[0];
+    }
+    else{
+      // Reverse through list of error messages to preserve order
+      errorMessages.slice().reverse().forEach((message)=>{
+        const lastChar = message.slice(-1);
+        if(lastChar === "." || lastChar ==="!" || lastChar === "?"){
+          formattedErrorMessages = `${message} ${formattedErrorMessages}`;
+        }
+        else {
+          formattedErrorMessages = `${message}. ${formattedErrorMessages}`;
+        }
+      });
+      // Remove trailing space
+      return formattedErrorMessages.slice(0, -1);
+    }
+
+  };
 
   if (visible) {
     const value = getValueFromField(field);
